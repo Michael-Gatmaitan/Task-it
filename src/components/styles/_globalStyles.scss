@@ -1,0 +1,135 @@
+@import "./mixins";
+
+// Default styles
+.default-button {
+  padding: 12px 24px;
+  background-color: $primary;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  transition: 0.1s ease-in;
+
+  @include desktop {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+}
+
+.bordered-button {
+  border: solid 4px $primary;
+  background-color: transparent !important;
+  color: #121212 !important;
+}
+
+.invicible-button {
+  background-color: transparent !important;
+  color: #121212 !important;
+
+  &:hover {
+    background-color: #121212 !important;
+    color: #fff !important;
+  }
+}
+
+// BORDERED CONTAINERS
+.bordered-container {
+  background-color: $white !important;
+  border: solid 2px $border;
+  border-radius: 16px;
+  padding: 12px;
+
+  @include desktop {
+    padding: 18px;
+    border-radius: 24px;
+  }
+}
+
+// Input textbox elements
+.text-box {
+  padding: 16px 12px;
+  font-size: 16px;
+  color: #121212;
+
+  &::placeholder {
+    color: rgba(#121212, 0.6);
+  }
+
+  @include desktop {
+    padding: 20px 16px;
+  }
+}
+
+// Font sizes and styles
+.header1 {
+  // Large header
+  $mobileSize: 64px;
+  $desktopSize: 42px;
+
+  font-family: $inter;
+  font-size: $mobileSize;
+  font-weight: bold;
+
+  @include desktop {
+    font-size: $desktopSize;
+  }
+}
+
+.header2 {
+  $mobileSize: 32px;
+  $desktopSize: 24px;
+
+  font-family: $inter;
+  font-size: $mobileSize;
+  font-weight: bold;
+
+  @include desktop {
+    font-size: $desktopSize;
+  }
+}
+
+.header3 {
+  $mobileSize: 24px;
+  $desktopSize: 18px;
+
+  font-family: $inter;
+  font-size: $mobileSize;
+  font-weight: bold;
+
+  @include desktop {
+    font-size: $desktopSize;
+  }
+}
+
+.label {
+  $mobileSize: 14px;
+  $desktopSize: 12px;
+
+  font-size: $mobileSize;
+
+  @include desktop {
+    font-size: $desktopSize;
+  }
+}
+
+.body-text-title {
+  $mobileSize: 14px;
+  $desktopSize: 12px;
+
+  font-size: $mobileSize;
+
+  @include desktop {
+    font-size: $desktopSize;
+  }
+}
+
+.body-text {
+  $mobileSize: 14px;
+  $desktopSize: 12px;
+
+  font-size: $mobileSize;
+
+  @include desktop {
+    font-size: $desktopSize;
+  }
+}

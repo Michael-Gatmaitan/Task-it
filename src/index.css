@@ -1,0 +1,13 @@
+body {
+  padding: 0 18px;
+}
+@media (min-width: 1024px) {
+  body {
+    padding: 0 60px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,14 @@
+@import "./components/styles/mixins";
+
+body {
+  padding: 0 18px;
+
+  @include desktop {
+    padding: 0 60px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}

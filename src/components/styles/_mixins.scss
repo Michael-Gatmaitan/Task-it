@@ -1,0 +1,36 @@
+// Viewport sizes
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+// Color variables
+$primary: #5b87f8;
+$darker: #0f1975;
+$white: #fcfdff;
+$error: #ff3333;
+$inputBG: #f0f0f2;
+
+$border: #cfd0eb;
+
+// Fonts
+$inter: "Inter", sans-serif;
+$nunito: "Nunito sans", sans-serif;
+
+// FLEX / CENTER ELEMENT
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Media Queries
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
