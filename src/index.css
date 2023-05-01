@@ -1,5 +1,151 @@
+.default-button {
+  padding: 12px 24px;
+  background-color: #5b87f8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  transition: 0.1s ease-in;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (min-width: 1024px) {
+  .default-button {
+    padding: 16px 32px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+}
+
+.bordered-button {
+  border: solid 4px #5b87f8;
+  background-color: transparent !important;
+  color: #121212 !important;
+  padding: 4px 16px;
+}
+@media (min-width: 1024px) {
+  .bordered-button {
+    padding: 8px 24px;
+  }
+}
+
+.invicible-button {
+  background-color: transparent !important;
+  color: #121212 !important;
+}
+.invicible-button:hover {
+  background-color: #121212 !important;
+  color: #fff !important;
+}
+
+.bordered-container {
+  background-color: #fcfdff !important;
+  border: solid 2px #cfd0eb;
+  border-radius: 16px;
+  padding: 12px;
+}
+@media (min-width: 1024px) {
+  .bordered-container {
+    padding: 18px;
+    border-radius: 24px;
+  }
+}
+
+.text-box {
+  padding: 16px 12px;
+  font-size: 16px;
+  color: #121212;
+}
+.text-box::-moz-placeholder {
+  color: rgba(18, 18, 18, 0.6);
+}
+.text-box::placeholder {
+  color: rgba(18, 18, 18, 0.6);
+}
+@media (min-width: 1024px) {
+  .text-box {
+    padding: 20px 16px;
+  }
+}
+
+.header1 {
+  font-family: "Inter", sans-serif;
+  font-size: 64px;
+  font-weight: bold;
+}
+@media (min-width: 1024px) {
+  .header1 {
+    font-size: 42px;
+  }
+}
+
+.header2 {
+  font-family: "Inter", sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+}
+@media (min-width: 1024px) {
+  .header2 {
+    font-size: 24px;
+  }
+}
+
+.header3 {
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+@media (min-width: 1024px) {
+  .header3 {
+    font-size: 18px;
+  }
+}
+
+.label {
+  font-size: 14px;
+}
+@media (min-width: 1024px) {
+  .label {
+    font-size: 12px;
+  }
+}
+
+.body-text-title {
+  font-size: 14px;
+}
+@media (min-width: 1024px) {
+  .body-text-title {
+    font-size: 12px;
+  }
+}
+
+.body-text {
+  font-size: 14px;
+}
+@media (min-width: 1024px) {
+  .body-text {
+    font-size: 12px;
+  }
+}
+
+.stretch {
+  width: calc(100% + 36px);
+  margin-left: -18px;
+}
+@media (min-width: 1024px) {
+  .stretch {
+    width: calc(100% + 120px);
+    margin-left: -60px;
+  }
+}
+
 body {
   padding: 0 18px;
+  margin: 0;
 }
 @media (min-width: 1024px) {
   body {

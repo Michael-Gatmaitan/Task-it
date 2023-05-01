@@ -1,7 +1,9 @@
 @import "./components/styles/mixins";
+@import "./components/styles/globalStyles";
 
 body {
   padding: 0 18px;
+  margin: 0;
 
   @include desktop {
     padding: 0 60px;
