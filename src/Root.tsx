@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import "./components/styles/root.css";
 
