@@ -59,6 +59,11 @@
   padding: 16px 12px;
   font-size: 16px;
   color: #121212;
+  background-color: #f0f0f2;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-family: "Inter", sans-serif;
 }
 .text-box::-moz-placeholder {
   color: rgba(18, 18, 18, 0.6);
@@ -85,12 +90,12 @@
 
 .header2 {
   font-family: "Inter", sans-serif;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: bold;
 }
 @media (min-width: 1024px) {
   .header2 {
-    font-size: 24px;
+    font-size: 32px;
   }
 }
 
@@ -129,6 +134,19 @@
 @media (min-width: 1024px) {
   .body-text {
     font-size: 12px;
+  }
+}
+
+button,
+input[type=submit] {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+@media (min-width: 1024px) {
+  button,
+  input[type=submit] {
+    font-size: 16px;
   }
 }
 
