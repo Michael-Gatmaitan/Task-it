@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "./app/hooks";
+import React from "react";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -21,23 +20,7 @@ import Contact from "./components/pages/Contact";
 import Settings from "./components/pages/Settings";
 import GetStarted from "./components/pages/GetStarted";
 
-// Types
-import { User } from "./app/types";
-
-// Reducers
-import { updateUsers } from "./slices/detectedUsersSlice";
-
 const App: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const users = useAppSelector((state) => state.userListReducer.detectedUsers);
-  const currentUser: User = useAppSelector((state) => state.userReducer);
-
-  useEffect(() => {
-    dispatch(updateUsers(currentUser));
-    console.log(users);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
-
   // Routes
   const router = createBrowserRouter(
     createRoutesFromElements(

@@ -1,10 +1,24 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../app/types";
 
-const initialState: User = JSON.parse(localStorage.getItem("user") || "{}") || {
-  firstName: "",
-  lastName: "",
-  profileImageLink: "",
+interface UserDeviceDB {
+  activeUser: User;
+  deviceAccounts: User[];
+}
+
+const initialState: UserDeviceDB = {
+  activeUser: {
+    username: "",
+    profileImageLink: "",
+    userID: 0,
+
+    projects: [],
+    favoriteProjects: [],
+    doneProjects: [],
+  },
+
+  deviceAccounts: JSON.parse(localStorage.getItem("users") || "[]"),
 };
 
 const userSlice = createSlice({
@@ -12,24 +26,26 @@ const userSlice = createSlice({
   initialState,
 
   reducers: {
-    // set first name
-    setFirstName(state: User, action) {
-      state.firstName = action.payload;
+    // Adding new account
+    addUserAccount(state: UserDeviceDB, action: PayloadAction<User>) {
+      const accountsFromStorage = JSON.parse(
+        localStorage.getItem("users") || "[]"
+      );
+      const { username, profileImageLink, userID } = action.payload;
 
-      localStorage.setItem("user", JSON.stringify(state));
-    },
-    setLastName(state: User, action) {
-      state.lastName = action.payload;
+      const newUser: User = {
+        username: username,
+        profileImageLink: profileImageLink,
+        userID: userID,
+      };
 
-      localStorage.setItem("user", JSON.stringify(state));
-    },
-    setProfileImageLink(state: User, action) {
-      state.profileImageLink = action.payload;
-
-      localStorage.setItem("user", JSON.stringify(state));
+      // Append users
+      const deviceAccountsTemp: User[] = [...accountsFromStorage, newUser];
+      state.deviceAccounts.push(newUser);
+      localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
     },
   },
 });
 
-export const { setFirstName, setLastName } = userSlice.actions;
+export const { addUserAccount } = userSlice.actions;
 export default userSlice.reducer;

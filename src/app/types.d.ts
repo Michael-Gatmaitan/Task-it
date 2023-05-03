@@ -20,9 +20,9 @@ interface Project {
 }
 
 export interface User {
-  firstName: string;
-  lastName: string;
+  username: string;
   profileImageLink: string;
+  userID: number;
 
   // Projects
   projects?: Project[];

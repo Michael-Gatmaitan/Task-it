@@ -101,5 +101,21 @@ nav .starting-buttons {
 }
 
 .sidebar {
+  position: fixed;
+  top: 72px;
+  left: 0;
   width: 100%;
+  height: calc(100% - 72px);
+  background-color: #f00;
+  transition: 50ms ease-in;
+}
+@media (min-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.hide-sidebar {
+  opacity: 0;
+  pointer-events: none;
 }/*# sourceMappingURL=root.css.map */

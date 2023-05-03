@@ -158,6 +158,10 @@ input[type="submit"] {
   font-size: 14px;
   font-weight: 600;
 
+  &:disabled {
+    opacity: 0.6;
+  }
+
   @include desktop {
     font-size: 16px;
   }

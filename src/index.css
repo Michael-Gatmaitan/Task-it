@@ -143,6 +143,10 @@ input[type=submit] {
   font-size: 14px;
   font-weight: 600;
 }
+button:disabled,
+input[type=submit]:disabled {
+  opacity: 0.6;
+}
 @media (min-width: 1024px) {
   button,
   input[type=submit] {
@@ -164,6 +168,7 @@ input[type=submit] {
 body {
   padding: 0 18px;
   margin: 0;
+  background-color: #fcfdff;
 }
 @media (min-width: 1024px) {
   body {
