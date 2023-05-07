@@ -34,3 +34,9 @@ $nunito: "Nunito sans", sans-serif;
     @content;
   }
 }
+
+@mixin customMediaQuery($customSize) {
+  @media (min-width: #{$customSize}) {
+    @content;
+  }
+}

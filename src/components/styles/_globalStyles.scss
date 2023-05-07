@@ -10,7 +10,6 @@
   border: none;
   transition: 0.1s ease-in;
   border-radius: 6px;
-  cursor: pointer;
   text-decoration: none;
   @include flexCenter;
 
@@ -68,6 +67,10 @@
   border: none;
   outline: none;
   font-family: $inter;
+
+  &:focus {
+    outline: solid 2px $border;
+  }
 
   &::placeholder {
     color: rgba(#121212, 0.6);
@@ -157,9 +160,11 @@ input[type="submit"] {
   font-family: $inter;
   font-size: 14px;
   font-weight: 600;
+  cursor: pointer;
 
   &:disabled {
     opacity: 0.6;
+    cursor: default;
   }
 
   @include desktop {

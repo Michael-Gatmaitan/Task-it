@@ -18,6 +18,22 @@
     margin-top: 18px;
   }
 }
+.get-started .input-error-message {
+  width: 100%;
+  padding: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #fff;
+  background-color: #ff3333;
+  border-radius: 6px;
+  margin-top: 12px;
+}
+@media (min-width: 1024px) {
+  .get-started .input-error-message {
+    padding: 18px;
+    font-size: 16px;
+  }
+}
 @media (min-width: 1024px) {
   .get-started {
     grid-template-columns: 1fr auto;

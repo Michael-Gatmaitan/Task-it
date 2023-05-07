@@ -27,6 +27,22 @@
     }
   }
 
+  .input-error-message {
+    width: 100%;
+    padding: 12px;
+    font-family: $inter;
+    font-size: 14px;
+    color: #fff;
+    background-color: $error;
+    border-radius: 6px;
+    margin-top: 12px;
+
+    @include desktop {
+      padding: 18px;
+      font-size: 16px;
+    }
+  }
+
   @include desktop {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto;

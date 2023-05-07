@@ -7,7 +7,6 @@
   border: none;
   transition: 0.1s ease-in;
   border-radius: 6px;
-  cursor: pointer;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -64,6 +63,9 @@
   border: none;
   outline: none;
   font-family: "Inter", sans-serif;
+}
+.text-box:focus {
+  outline: solid 2px #cfd0eb;
 }
 .text-box::-moz-placeholder {
   color: rgba(18, 18, 18, 0.6);
@@ -142,10 +144,12 @@ input[type=submit] {
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 600;
+  cursor: pointer;
 }
 button:disabled,
 input[type=submit]:disabled {
   opacity: 0.6;
+  cursor: default;
 }
 @media (min-width: 1024px) {
   button,

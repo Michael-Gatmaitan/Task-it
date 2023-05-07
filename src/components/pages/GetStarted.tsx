@@ -1,16 +1,59 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { User } from "../../app/types";
 import "../styles/getStarted.css";
 
+// Hooks
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { addUserAccount } from "../../slices/userSlice";
 
-const GetStarted: React.FC = () => {
+// Reducers
+import {
+  // Reducers
+  addUserAccount,
+
+  // Getters of userSlicex`
+  getDeviceAccounts,
+  getUserInputError,
+
+  // Setters
+  setActiveUser,
+  setUserInputError,
+} from "../../slices/userSlice";
+
+// Getters of userSlice
+
+const GetStarted: React.FC = () => (
+  <div className='get-started page'>
+    <DetectedAccounts />
+    <CreateAccount />
+  </div>
+);
+
+const DetectedAccounts: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const users: User[] = useAppSelector(getDeviceAccounts);
+
+  return (
+    <div className='detected-accounts'>
+      {users.map((user: User) => (
+        <div className='detected-account' key={user.userID}>
+          <div className='username'>{user.username}</div>
+          <img src={user.profileImageLink} width='50' />
+          <button
+            className='default-button'
+            onClick={() => dispatch(setActiveUser(user))}
+          >
+            Select account
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const CreateAccount: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const users: User[] = useAppSelector(
-    (state) => state.userReducer.deviceAccounts
-  );
+  const users: User[] = useAppSelector(getDeviceAccounts);
 
   const usernameRef = useRef<HTMLInputElement>(null);
   const imageLinkRef = useRef<HTMLInputElement>(null);
@@ -19,36 +62,47 @@ const GetStarted: React.FC = () => {
     e.preventDefault();
 
     // Set key pair localstorage of user
-    const newUser: User = {
-      username: usernameRef.current?.value || "",
-      profileImageLink: imageLinkRef.current?.value || "",
-      userID: users.length === 0 ? 1 : users.length + 1,
-    };
 
-    dispatch(addUserAccount(newUser));
+    if (usernameRef.current != undefined && imageLinkRef.current != undefined) {
+      const newUser: User = {
+        username: usernameRef.current.value,
+        profileImageLink: imageLinkRef.current.value,
+        userID: users.length + 1,
+      };
 
-    // Set login as true
-  };
+      dispatch(addUserAccount(newUser));
+      dispatch(setActiveUser(newUser));
 
-  const [validInput, setValidInput] = useState(false);
+      usernameRef.current.value = "";
+      imageLinkRef.current.value = "";
+      usernameRef.current.focus();
 
-  const checkValidation = () => {
-    if (
-      (usernameRef.current?.value === "" &&
-        imageLinkRef.current?.value === "") ||
-      usernameRef.current?.value === "" ||
-      imageLinkRef.current?.value === ""
-    ) {
-      setValidInput(true);
-    } else {
-      setValidInput(false);
+      setInvalidInput(true);
     }
   };
 
-  return (
-    <div className='get-started page'>
-      <div className='detected-accounts'></div>
+  // Button disabled by default
+  const [invalidInput, setInvalidInput] = useState(true);
 
+  const checkValidation = () =>
+    setInvalidInput(
+      usernameRef.current?.value === "" || imageLinkRef.current?.value === ""
+    );
+
+  const userInputError = useAppSelector(getUserInputError);
+
+  useEffect(() => {
+    if (userInputError === true) {
+      setTimeout(() => {
+        console.log("Closing the input error message.");
+        dispatch(setUserInputError(false));
+      }, 3000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInputError]);
+
+  return (
+    <>
       <div className='create-account'>
         <div className='header header2'>Create account Locally</div>
 
@@ -79,12 +133,18 @@ const GetStarted: React.FC = () => {
               type='submit'
               value='Create account'
               className='default-button'
-              disabled={validInput}
+              disabled={invalidInput}
             />
           </form>
         </div>
       </div>
-    </div>
+
+      {userInputError && (
+        <div className='input-error-message'>
+          That username already exist, please try another.
+        </div>
+      )}
+    </>
   );
 };
 

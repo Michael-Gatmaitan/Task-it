@@ -4,6 +4,8 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 // Icons
 import BurgerMenu from "../assets/icons/burger-menu.svg";
 import CloseMenu from "../assets/icons/close.svg";
+import { getUserLoggedIn } from "../slices/userSlice";
+import { useAppSelector } from "../app/hooks";
 
 interface NavProps {
   toggleSideBar: boolean;
@@ -44,6 +46,8 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
 
   const location = useLocation();
 
+  const loggedIn = useAppSelector(getUserLoggedIn);
+
   return (
     <nav>
       {/* Logo */}
@@ -76,7 +80,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       </div>
 
       {/* Desktop side buttons */}
-      {location.pathname === "/" && (
+      {location.pathname === "/" && loggedIn === false && (
         <div className='starting-buttons'>
           <Link to={"/"} className='default-button invicible-button'>
             Login

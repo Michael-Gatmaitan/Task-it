@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  // Navigate,
-  // redirect,
+  Navigate,
 } from "react-router-dom";
 
 // Root element
@@ -19,25 +18,29 @@ import Projects from "./components/pages/Projects";
 import Contact from "./components/pages/Contact";
 import Settings from "./components/pages/Settings";
 import GetStarted from "./components/pages/GetStarted";
+import { useAppSelector } from "./app/hooks";
+import { getUserLoggedIn } from "./slices/userSlice";
 
 const App: React.FC = () => {
+  useEffect(() => {
+    document.title = "Task it 📔";
+  }, []);
+
+  const loggedIn = useAppSelector(getUserLoggedIn);
+
   // Routes
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />}>
         <Route
           path='/'
-          // element={
-          //   isLoggedin ? <Home /> : <Navigate replace to={"get-started"} />
-          // }
-          element={<Home />}
+          element={
+            loggedIn ? <Home /> : <Navigate replace to={"get-started"} />
+          }
         />
         <Route
           path='get-started'
-          // element={
-          //   isLoggedin ? <Navigate replace to={"/"} /> : <GetStarted />
-          // }
-          element={<GetStarted />}
+          element={loggedIn ? <Navigate replace to={"/"} /> : <GetStarted />}
         />
         <Route path='about' element={<About />} />
         <Route path='projects' element={<Projects />} />
