@@ -53,21 +53,23 @@ const userSlice = createSlice({
       const deviceAccountsTemp: User[] = [...accountsFromStorage, newUser];
       state.deviceAccounts.push(newUser);
       localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
+      state.loggedIn = true;
     },
 
     setActiveUser(state: UserDeviceDB, action: PayloadAction<User>) {
+      // If input error occured, we will not set it as active user.
+      if (state.userInputError) return;
+
       const newActiveUser: User = {
         username: action.payload.username,
         profileImageLink: action.payload.profileImageLink,
         userID: action.payload.userID,
       };
 
+      console.log("Setting new user", state.userInputError);
+
       state.activeUser = newActiveUser;
       localStorage.setItem("activeUser", JSON.stringify(newActiveUser));
-
-      if (!state.userInputError) {
-        state.loggedIn = true;
-      }
     },
 
     logoutUser(state: UserDeviceDB) {
