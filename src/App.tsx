@@ -18,12 +18,23 @@ import Projects from "./components/pages/Projects";
 import Contact from "./components/pages/Contact";
 import Settings from "./components/pages/Settings";
 import GetStarted from "./components/pages/GetStarted";
-import { useAppSelector } from "./app/hooks";
-import { getUserLoggedIn } from "./slices/userSlice";
+import { useAppSelector, useAppDispatch } from "./app/hooks";
+import {
+  getActiveUser,
+  getUserLoggedIn,
+  setLoggedIn,
+} from "./slices/userSlice";
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const activeUser = useAppSelector(getActiveUser);
+
   useEffect(() => {
     document.title = "Task it 📔";
+
+    if (activeUser.username !== "") {
+      dispatch(setLoggedIn(true));
+    }
   }, []);
 
   const loggedIn = useAppSelector(getUserLoggedIn);
@@ -32,20 +43,37 @@ const App: React.FC = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />}>
+        <Route path='/' element={<Home />} />
         <Route
-          path='/'
+          path='get-started'
           element={
-            loggedIn ? <Home /> : <Navigate replace to={"get-started"} />
+            loggedIn ? <Navigate replace to={"/projects"} /> : <GetStarted />
           }
         />
         <Route
-          path='get-started'
-          element={loggedIn ? <Navigate replace to={"/"} /> : <GetStarted />}
+          path='about'
+          element={
+            loggedIn ? <About /> : <Navigate replace to={"/get-started"} />
+          }
         />
-        <Route path='about' element={<About />} />
-        <Route path='projects' element={<Projects />} />
-        <Route path='contact' element={<Contact />} />
-        <Route path='settings' element={<Settings />} />
+        <Route
+          path='projects'
+          element={
+            loggedIn ? <Projects /> : <Navigate replace to={"/get-started"} />
+          }
+        />
+        <Route
+          path='contact'
+          element={
+            loggedIn ? <Contact /> : <Navigate replace to={"/get-started"} />
+          }
+        />
+        <Route
+          path='settings'
+          element={
+            loggedIn ? <Settings /> : <Navigate replace to={"/get-started"} />
+          }
+        />
 
         <Route path='*' element={<Page404 />} />
       </Route>

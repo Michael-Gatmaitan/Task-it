@@ -60,6 +60,8 @@ const userSlice = createSlice({
       // If input error occured, we will not set it as active user.
       if (state.userInputError) return;
 
+      console.log("Setting active user: ", action.payload);
+
       const newActiveUser: User = {
         username: action.payload.username,
         profileImageLink: action.payload.profileImageLink,
@@ -70,6 +72,8 @@ const userSlice = createSlice({
 
       state.activeUser = newActiveUser;
       localStorage.setItem("activeUser", JSON.stringify(newActiveUser));
+
+      if (!state.loggedIn) state.loggedIn = true;
     },
 
     logoutUser(state: UserDeviceDB) {
@@ -90,6 +94,10 @@ const userSlice = createSlice({
       state.userInputError = action.payload;
     },
 
+    setLoggedIn(state: UserDeviceDB, action: PayloadAction<boolean>) {
+      state.loggedIn = action.payload;
+    },
+
     // editProfileInformation(
     //   state: UserDeviceDB,
     //   action: PayloadAction<EditProfilePayload>
@@ -100,8 +108,13 @@ const userSlice = createSlice({
 });
 
 // Reducers
-export const { addUserAccount, setActiveUser, setUserInputError, logoutUser } =
-  userSlice.actions;
+export const {
+  addUserAccount,
+  setActiveUser,
+  setUserInputError,
+  logoutUser,
+  setLoggedIn,
+} = userSlice.actions;
 
 // getters
 export const getDeviceAccounts = (state: RootState) =>

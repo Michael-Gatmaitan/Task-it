@@ -34,3 +34,7 @@ export interface User {
 interface DetectedUsers {
   detectedUsers: Array<User>;
 }
+
+interface NavButtons {
+  centerButtons: { text: string; path: string; display: string }[];
+}

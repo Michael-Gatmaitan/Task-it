@@ -1,32 +1,28 @@
 import React from "react";
-import { getActiveUser, logoutUser } from "../slices/userSlice";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { logoutUser } from "../slices/userSlice";
+import { useAppDispatch } from "../app/hooks";
+
+import { NavLink } from "react-router-dom";
+
+import type { NavButtons } from "../app/types";
+import ProfileRibbon from "../components/ProfileRibbon";
 
 interface SideBarProps {
   toggleSideBar: boolean;
   setToggleSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  navBarButtons: NavButtons;
 }
 
 const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
   const dispatch = useAppDispatch();
 
-  const { toggleSideBar, setToggleSideBar } = props;
-
-  const activeUser = useAppSelector(getActiveUser);
+  const { toggleSideBar, setToggleSideBar, navBarButtons } = props;
 
   return (
     <div
       className={`sidebar ${!toggleSideBar ? "hide-sidebar" : ""}`}
       onClick={() => setToggleSideBar(false)}
     >
-      {activeUser.username}
-      {activeUser.username && activeUser.username !== "" && (
-        <div className='active-user-card'>
-          <div className='username'>{activeUser.username}</div>
-          {/* <img src={} alt="user-altar" /> */}
-        </div>
-      )}
-
       <button
         onClick={() => {
           console.log("Logged out");
@@ -35,6 +31,16 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
       >
         Log out
       </button>
+
+      <ProfileRibbon platform='mobile' />
+
+      <div className='sidebar-buttons'>
+        {navBarButtons.centerButtons.map((button, key) => (
+          <NavLink to={button.path} className='header2' key={key}>
+            {button.text}
+          </NavLink>
+        ))}
+      </div>
     </div>
   );
 };

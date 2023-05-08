@@ -1,52 +1,30 @@
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // Icons
 import BurgerMenu from "../assets/icons/burger-menu.svg";
 import CloseMenu from "../assets/icons/close.svg";
-import { getUserLoggedIn } from "../slices/userSlice";
+
+// Components
+import ProfileRibbon from "../components/ProfileRibbon";
+
+// Redux
+import { getActiveUser, getUserLoggedIn } from "../slices/userSlice";
 import { useAppSelector } from "../app/hooks";
+
+import type { NavButtons } from "../app/types";
 
 interface NavProps {
   toggleSideBar: boolean;
   setToggleSideBar: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-interface NavButtons {
-  centerButtons: { text: string; path: string }[];
+  navBarButtons: NavButtons;
 }
 
 const Nav: React.FC<NavProps> = (props: NavProps) => {
-  const { toggleSideBar, setToggleSideBar } = props;
-
-  const navBarButtons: NavButtons = {
-    centerButtons: [
-      {
-        text: "Home",
-        path: "/",
-      },
-      {
-        text: "Projects",
-        path: "projects",
-      },
-      {
-        text: "Contact",
-        path: "contact",
-      },
-      {
-        text: "About",
-        path: "about",
-      },
-      {
-        text: "Settings",
-        path: "settings",
-      },
-    ],
-  };
-
-  const location = useLocation();
+  const { toggleSideBar, setToggleSideBar, navBarButtons } = props;
 
   const loggedIn = useAppSelector(getUserLoggedIn);
+  const activeUser = useAppSelector(getActiveUser);
 
   return (
     <nav>
@@ -58,13 +36,15 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
 
       {/* Buttons */}
       <div className='nav-buttons'>
-        {navBarButtons.centerButtons.map(
-          (button: { text: string; path: string }, key) => (
-            <NavLink to={button.path} key={key}>
-              {button.text}
-            </NavLink>
-          )
-        )}
+        {navBarButtons.centerButtons.map((button, key) => (
+          <NavLink
+            to={button.path}
+            key={key}
+            style={{ display: button.display }}
+          >
+            {button.text}
+          </NavLink>
+        ))}
       </div>
 
       {/* Menu */}
@@ -80,15 +60,14 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       </div>
 
       {/* Desktop side buttons */}
-      {location.pathname === "/" && loggedIn === false && (
+      {loggedIn === false ? (
         <div className='starting-buttons'>
-          <Link to={"/"} className='default-button invicible-button'>
-            Login
-          </Link>
           <Link to={"/get-started"} className='default-button bordered-button'>
             Get started
           </Link>
         </div>
+      ) : (
+        <ProfileRibbon platform='desktop' />
       )}
     </nav>
   );
