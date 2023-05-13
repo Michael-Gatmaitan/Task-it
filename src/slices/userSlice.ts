@@ -11,6 +11,26 @@ interface UserDeviceDB {
   loggedIn: boolean;
 }
 
+interface EditProfilePayload {
+  username: string;
+  profileImageLink: string;
+}
+
+const isUsernameAlreadyExists = (
+  deviceAccounts: User[],
+  newUsername: string
+): boolean => {
+  const hasPairUsername = deviceAccounts.filter(
+    (deviceAccount) =>
+      deviceAccount.username.toLowerCase() === newUsername.toLowerCase()
+  );
+
+  console.log("Username already exists on this device.");
+
+  // if hasPairUsername is not empt
+  return hasPairUsername.length !== 0;
+};
+
 const initialState: UserDeviceDB = {
   activeUser: JSON.parse(localStorage.getItem("activeUser") || "{}"),
 
@@ -28,19 +48,26 @@ const userSlice = createSlice({
     addUserAccount(state: UserDeviceDB, action: PayloadAction<User>) {
       // Check if username allready exist
       // if it is, cancel making new user
-      for (const i in state.deviceAccounts) {
-        if (
-          action.payload.username.toLocaleLowerCase() ===
-          state.deviceAccounts[i].username.toLocaleLowerCase()
-        ) {
-          state.userInputError = true;
-          return;
-        }
+      // for (const i in state.deviceAccounts) {
+      //   if (
+      //     action.payload.username.toLocaleLowerCase() ===
+      //     state.deviceAccounts[i].username.toLocaleLowerCase()
+      //   ) {
+      //     state.userInputError = true;
+      //     return;
+      //   }
+      // }
+
+      if (
+        isUsernameAlreadyExists(state.deviceAccounts, action.payload.username)
+      ) {
+        state.userInputError = true;
+        return;
       }
 
-      const accountsFromStorage = JSON.parse(
-        localStorage.getItem("users") || "[]"
-      );
+      // const accountsFromStorage = JSON.parse(
+      //   localStorage.getItem("users") || "[]"
+      // );
       const { username, profileImageLink, userID } = action.payload;
 
       const newUser: User = {
@@ -50,9 +77,10 @@ const userSlice = createSlice({
       };
 
       // Append users
-      const deviceAccountsTemp: User[] = [...accountsFromStorage, newUser];
+      // const deviceAccountsTemp: User[] = [...accountsFromStorage, newUser];
       state.deviceAccounts.push(newUser);
-      localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
+
+      // localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
       state.loggedIn = true;
     },
 
@@ -71,7 +99,6 @@ const userSlice = createSlice({
       console.log("Setting new user", state.userInputError);
 
       state.activeUser = newActiveUser;
-      localStorage.setItem("activeUser", JSON.stringify(newActiveUser));
 
       if (!state.loggedIn) state.loggedIn = true;
     },
@@ -83,8 +110,9 @@ const userSlice = createSlice({
         userID: 0,
       };
 
+      console.log(state.loggedIn);
+
       state.activeUser = userLoggedout;
-      localStorage.setItem("activeUser", JSON.stringify(userLoggedout));
 
       // Set logged in as false
       state.loggedIn = false;
@@ -98,12 +126,48 @@ const userSlice = createSlice({
       state.loggedIn = action.payload;
     },
 
-    // editProfileInformation(
-    //   state: UserDeviceDB,
-    //   action: PayloadAction<EditProfilePayload>
-    // ) {
-    //   // Edit current user profile
-    // },
+    editProfileInformation(
+      state: UserDeviceDB,
+      action: PayloadAction<EditProfilePayload>
+    ) {
+      /* If the username already used in other account,
+      this function will stop */
+      if (
+        isUsernameAlreadyExists(state.deviceAccounts, action.payload.username)
+      ) {
+        console.log(
+          `Cannot replace the username: ${state.activeUser.username}
+          with ${action.payload.username} because it is alreaady in use by another user
+          in this device.`
+        );
+
+        return;
+      }
+
+      // Edit current user profile
+      const item = state.deviceAccounts.find(
+        (account) => account.username === state.activeUser.username
+      );
+
+      if (item != undefined) {
+        const {
+          username: editedUsername,
+          profileImageLink: editedProfileImageLink,
+        } = action.payload;
+
+        const indexOfUserInDB = state.deviceAccounts.indexOf(item);
+
+        // Change properties of user in DB
+        state.deviceAccounts[indexOfUserInDB].username = editedUsername;
+        state.deviceAccounts[indexOfUserInDB].profileImageLink =
+          editedProfileImageLink;
+
+        state.activeUser.username = editedUsername;
+        state.activeUser.profileImageLink = editedProfileImageLink;
+
+        // Set to localstorage
+      }
+    },
   },
 });
 
@@ -114,6 +178,7 @@ export const {
   setUserInputError,
   logoutUser,
   setLoggedIn,
+  editProfileInformation,
 } = userSlice.actions;
 
 // getters

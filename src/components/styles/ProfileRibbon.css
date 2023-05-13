@@ -4,17 +4,18 @@
   gap: 12px;
   align-items: center;
   grid-template-columns: 58px auto 32px;
+  position: relative;
 }
 .profile-ribbon .profile-image {
   width: 58px;
   height: 58px;
   background-color: #eee;
   border-radius: 50%;
+  overflow: hidden;
 }
 .profile-ribbon .profile-image img {
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 .profile-ribbon .profile-username {
   font-family: "Inter", sans-serif;
@@ -24,9 +25,11 @@
 .profile-ribbon .profile-navigate-down-icon {
   width: 32px;
   height: 32px;
+  border-radius: 4px;
+  transition: 0.1s ease;
 }
 .profile-ribbon .profile-navigate-down-icon :hover {
-  background-color: #f00;
+  background-color: #eee;
 }
 .profile-ribbon .profile-navigate-down-icon img {
   width: 100%;
@@ -36,5 +39,37 @@
   .profile-ribbon {
     display: grid;
     max-width: 200px;
+  }
+}
+.profile-ribbon .edit-profile {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 24px + 2px);
+  border-radius: 16px;
+}
+.profile-ribbon .edit-profile form .little-header {
+  margin-bottom: 8px;
+  font: 16px "Inter", sans-serif;
+  font-weight: 600;
+}
+.profile-ribbon .edit-profile form input[type=text] {
+  width: 100%;
+  margin-bottom: 12px;
+}
+.profile-ribbon .edit-profile .edit-profile-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.profile-ribbon .edit-profile .edit-profile-buttons .log-out-button {
+  padding: 8px;
+  background-color: #ff3333;
+}
+.profile-ribbon .edit-profile .edit-profile-buttons .close-edit-profile {
+  padding: 10px 8px;
+}
+@media (min-width: 1024px) {
+  .profile-ribbon .edit-profile {
+    width: 300px;
+    right: 0;
   }
 }/*# sourceMappingURL=ProfileRibbon.css.map */

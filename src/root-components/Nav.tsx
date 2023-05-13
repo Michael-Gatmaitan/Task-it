@@ -9,7 +9,7 @@ import CloseMenu from "../assets/icons/close.svg";
 import ProfileRibbon from "../components/ProfileRibbon";
 
 // Redux
-import { getActiveUser, getUserLoggedIn } from "../slices/userSlice";
+import { getUserLoggedIn } from "../slices/userSlice";
 import { useAppSelector } from "../app/hooks";
 
 import type { NavButtons } from "../app/types";
@@ -24,7 +24,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
   const { toggleSideBar, setToggleSideBar, navBarButtons } = props;
 
   const loggedIn = useAppSelector(getUserLoggedIn);
-  const activeUser = useAppSelector(getActiveUser);
+  // const activeUser = useAppSelector(getActiveUser);
 
   return (
     <nav>

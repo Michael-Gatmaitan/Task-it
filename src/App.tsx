@@ -24,8 +24,11 @@ import {
   getUserLoggedIn,
   setLoggedIn,
 } from "./slices/userSlice";
+import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
 const App: React.FC = () => {
+  useLocalStorageUpdater();
+
   const dispatch = useAppDispatch();
   const activeUser = useAppSelector(getActiveUser);
 
