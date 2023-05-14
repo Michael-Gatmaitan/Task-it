@@ -25,8 +25,6 @@ const isUsernameAlreadyExists = (
       deviceAccount.username.toLowerCase() === newUsername.toLowerCase()
   );
 
-  console.log("Username already exists on this device.");
-
   // if hasPairUsername is not empt
   return hasPairUsername.length !== 0;
 };
@@ -46,18 +44,6 @@ const userSlice = createSlice({
   reducers: {
     // Adding new account
     addUserAccount(state: UserDeviceDB, action: PayloadAction<User>) {
-      // Check if username allready exist
-      // if it is, cancel making new user
-      // for (const i in state.deviceAccounts) {
-      //   if (
-      //     action.payload.username.toLocaleLowerCase() ===
-      //     state.deviceAccounts[i].username.toLocaleLowerCase()
-      //   ) {
-      //     state.userInputError = true;
-      //     return;
-      //   }
-      // }
-
       if (
         isUsernameAlreadyExists(state.deviceAccounts, action.payload.username)
       ) {
@@ -81,6 +67,7 @@ const userSlice = createSlice({
       state.deviceAccounts.push(newUser);
 
       // localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
+      console.log("from addueraccount");
       state.loggedIn = true;
     },
 
@@ -96,9 +83,9 @@ const userSlice = createSlice({
         userID: action.payload.userID,
       };
 
-      console.log("Setting new user", state.userInputError);
-
       state.activeUser = newActiveUser;
+
+      console.log("new user?");
 
       if (!state.loggedIn) state.loggedIn = true;
     },
@@ -150,12 +137,17 @@ const userSlice = createSlice({
       );
 
       if (item != undefined) {
-        const {
+        let {
           username: editedUsername,
           profileImageLink: editedProfileImageLink,
         } = action.payload;
 
         const indexOfUserInDB = state.deviceAccounts.indexOf(item);
+
+        // If edited image link value is empty, set it to previous value
+        if (editedProfileImageLink === "")
+          editedProfileImageLink = state.activeUser.profileImageLink;
+        if (editedUsername === "") editedUsername = state.activeUser.username;
 
         // Change properties of user in DB
         state.deviceAccounts[indexOfUserInDB].username = editedUsername;

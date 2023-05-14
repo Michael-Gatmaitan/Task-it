@@ -15,16 +15,15 @@ import { useAppSelector } from "../app/hooks";
 import type { NavButtons } from "../app/types";
 
 interface NavProps {
-  toggleSideBar: boolean;
-  setToggleSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   navBarButtons: NavButtons;
+  toggleSidebar: boolean;
+  setToggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Nav: React.FC<NavProps> = (props: NavProps) => {
-  const { toggleSideBar, setToggleSideBar, navBarButtons } = props;
+  const { navBarButtons, toggleSidebar, setToggleSidebar } = props;
 
   const loggedIn = useAppSelector(getUserLoggedIn);
-  // const activeUser = useAppSelector(getActiveUser);
 
   return (
     <nav>
@@ -37,11 +36,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       {/* Buttons */}
       <div className='nav-buttons'>
         {navBarButtons.centerButtons.map((button, key) => (
-          <NavLink
-            to={button.path}
-            key={key}
-            style={{ display: button.display }}
-          >
+          <NavLink to={button.path} key={key}>
             {button.text}
           </NavLink>
         ))}
@@ -50,9 +45,9 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       {/* Menu */}
       <div
         className='menu-container'
-        onClick={() => setToggleSideBar(!toggleSideBar)}
+        onClick={() => setToggleSidebar(!toggleSidebar)}
       >
-        {toggleSideBar ? (
+        {toggleSidebar ? (
           <img src={CloseMenu} alt='Close-Menu' />
         ) : (
           <img src={BurgerMenu} alt='Open-Menu' />

@@ -46,6 +46,7 @@
   width: 100%;
   top: calc(100% + 24px + 2px);
   border-radius: 16px;
+  z-index: 99;
 }
 .profile-ribbon .edit-profile form .little-header {
   margin-bottom: 8px;
@@ -56,15 +57,12 @@
   width: 100%;
   margin-bottom: 12px;
 }
-.profile-ribbon .edit-profile .edit-profile-buttons {
+.profile-ribbon .edit-profile form .edit-profile-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 8px;
 }
-.profile-ribbon .edit-profile .edit-profile-buttons .log-out-button {
-  padding: 8px;
-  background-color: #ff3333;
-}
-.profile-ribbon .edit-profile .edit-profile-buttons .close-edit-profile {
+.profile-ribbon .edit-profile form .edit-profile-buttons .close-edit-profile {
   padding: 10px 8px;
 }
 @media (min-width: 1024px) {

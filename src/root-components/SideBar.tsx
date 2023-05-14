@@ -1,41 +1,30 @@
-import React, { useEffect } from "react";
-import { getUserLoggedIn, logoutUser } from "../slices/userSlice";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import React from "react";
+import { useAppDispatch } from "../app/hooks";
 
 import { NavLink } from "react-router-dom";
 
 import type { NavButtons } from "../app/types";
 import ProfileRibbon from "../components/ProfileRibbon";
 
+import { logoutUser } from "../slices/userSlice";
+// Reducers and getters, top: Reducers, bottom: Getters
+
+// svg
+import LogOutIcon from "../assets/icons/logout.svg";
+
 interface SideBarProps {
-  toggleSideBar: boolean;
-  setToggleSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   navBarButtons: NavButtons;
+  toggleSidebar: boolean;
+  setToggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
   const dispatch = useAppDispatch();
 
-  const loggedIn = useAppSelector(getUserLoggedIn);
-
-  useEffect(() => {
-    if (loggedIn === false && toggleSideBar) setToggleSideBar(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn]);
-
-  const { toggleSideBar, setToggleSideBar, navBarButtons } = props;
+  const { navBarButtons, toggleSidebar, setToggleSidebar } = props;
 
   return (
-    <div className={`sidebar ${!toggleSideBar ? "hide-sidebar" : ""}`}>
-      <button
-        onClick={() => {
-          console.log("Logged out");
-          dispatch(logoutUser());
-        }}
-      >
-        Log out
-      </button>
-
+    <div className={`sidebar ${!toggleSidebar ? "hide-sidebar" : ""}`}>
       <ProfileRibbon platform='mobile' />
 
       <div className='sidebar-buttons'>
@@ -43,12 +32,23 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
           <NavLink
             to={button.path}
             className='header2'
-            onClick={() => setToggleSideBar(false)}
+            onClick={() => setToggleSidebar(false)}
             key={key}
           >
             {button.text}
           </NavLink>
         ))}
+
+        <button
+          className='default-button logout-button'
+          onClick={() => {
+            dispatch(logoutUser());
+            setToggleSidebar(false);
+          }}
+        >
+          <img src={LogOutIcon} alt='logout' />
+          Log out
+        </button>
       </div>
     </div>
   );

@@ -13,51 +13,67 @@ import { getUserLoggedIn } from "./slices/userSlice";
 
 const Root: React.FC = () => {
   // States
-  const [toggleSideBar, setToggleSideBar] = useState(false);
 
   const loggedIn = useAppSelector(getUserLoggedIn);
 
   const navBarButtons: NavButtons = {
-    centerButtons: [
-      {
-        text: "Home",
-        path: "/",
-        display: "block",
-      },
-      {
-        text: "Projects",
-        path: "projects",
-        display: loggedIn ? "block" : "none",
-      },
-      {
-        text: "Contact",
-        path: "contact",
-        display: "block",
-      },
-      {
-        text: "About",
-        path: "about",
-        display: "block",
-      },
-      {
-        text: "Settings",
-        path: "settings",
-        display: "block",
-      },
-    ],
+    centerButtons: loggedIn
+      ? [
+          {
+            text: "Home",
+            path: "/",
+          },
+          {
+            text: "Projects",
+            path: "projects",
+          },
+          {
+            text: "Contact",
+            path: "contact",
+          },
+          {
+            text: "About",
+            path: "about",
+          },
+          {
+            text: "Settings",
+            path: "settings",
+          },
+        ]
+      : [
+          {
+            text: "Home",
+            path: "/",
+          },
+          {
+            text: "Get started",
+            path: "get-started",
+          },
+          {
+            text: "Contact",
+            path: "contact",
+          },
+          {
+            text: "About",
+            path: "about",
+          },
+        ],
   };
+
+  const [toggleSidebar, setToggleSidebar] = useState(false);
 
   return (
     <div className='root'>
       <Nav
-        toggleSideBar={toggleSideBar}
-        setToggleSideBar={setToggleSideBar}
         navBarButtons={navBarButtons}
+        toggleSidebar={toggleSidebar}
+        setToggleSidebar={setToggleSidebar}
       />
+
       <SideBar
-        toggleSideBar={toggleSideBar}
-        setToggleSideBar={setToggleSideBar}
         navBarButtons={navBarButtons}
+        toggleSidebar={toggleSidebar}
+        setToggleSidebar={setToggleSidebar}
       />
 
       <Outlet />

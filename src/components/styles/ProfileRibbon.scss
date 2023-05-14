@@ -55,6 +55,7 @@
     width: 100%;
     top: calc(100% + 24px + 2px);
     border-radius: 16px;
+    z-index: 99;
 
     form {
       .little-header {
@@ -67,19 +68,15 @@
         width: 100%;
         margin-bottom: 12px;
       }
-    }
 
-    .edit-profile-buttons {
-      display: flex;
-      justify-content: space-between;
+      .edit-profile-buttons {
+        display: flex;
+        justify-content: flex-start;
+        gap: 8px;
 
-      .log-out-button {
-        padding: 8px;
-        background-color: $error;
-      }
-
-      .close-edit-profile {
-        padding: 10px 8px;
+        .close-edit-profile {
+          padding: 10px 8px;
+        }
       }
     }
 

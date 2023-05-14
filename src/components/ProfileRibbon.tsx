@@ -5,12 +5,9 @@ import {
   editProfileInformation,
   getActiveUser,
   getUserLoggedIn,
-  logoutUser,
 } from "../slices/userSlice";
 
 import "./styles/ProfileRibbon.css";
-
-import LogOutIcon from "../assets/icons/logout.svg";
 
 interface ProfileRibbonProps {
   platform: "desktop" | "mobile";
@@ -85,8 +82,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
       editUsernameRef.current.value = "";
       editImageLinkRef.current.value = "";
-
       setToggleEditProfile(false);
+    } else {
+      console.log("Invalid edit profile attributes.");
     }
   };
 
@@ -102,6 +100,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           className='text-box'
           ref={editUsernameRef}
           placeholder='Edit username'
+          name='username'
         />
         <div className='little-header'>Profile image link</div>
         <input
@@ -109,27 +108,20 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           className='text-box'
           ref={editImageLinkRef}
           placeholder='Edit image link'
+          name='profile-image-link'
         />
 
-        <input type='submit' value='submit' />
+        <div className='edit-profile-buttons'>
+          <input type='submit' value='Edit info' className='default-button' />
+
+          <button
+            className='default-button invicible-button close-edit-profile'
+            onClick={() => setToggleEditProfile(false)}
+          >
+            Close
+          </button>
+        </div>
       </form>
-
-      <div className='edit-profile-buttons'>
-        <button
-          className='default-button log-out-button'
-          onClick={() => dispatch(logoutUser())}
-        >
-          <img src={LogOutIcon} alt='logout' />
-          Log out
-        </button>
-
-        <button
-          className='default-button invicible-button close-edit-profile'
-          onClick={() => setToggleEditProfile(false)}
-        >
-          Close
-        </button>
-      </div>
     </div>
   ) : null;
 };

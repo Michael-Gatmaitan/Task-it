@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import UserReducer from "../slices/userSlice";
-import DetectedUsers from "../slices/detectedUsersSlice";
+import TreeStateReducer from "../slices/treeStateSlice";
 
 export const store = configureStore({
   reducer: {
     userReducer: UserReducer,
-    userListReducer: DetectedUsers,
+    treeStateReducer: TreeStateReducer,
   },
 });
 

@@ -19,26 +19,23 @@ import Contact from "./components/pages/Contact";
 import Settings from "./components/pages/Settings";
 import GetStarted from "./components/pages/GetStarted";
 import { useAppSelector, useAppDispatch } from "./app/hooks";
-import {
-  getActiveUser,
-  getUserLoggedIn,
-  setLoggedIn,
-} from "./slices/userSlice";
+import { getUserLoggedIn, logoutUser } from "./slices/userSlice";
 import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
 const App: React.FC = () => {
   useLocalStorageUpdater();
 
   const dispatch = useAppDispatch();
-  const activeUser = useAppSelector(getActiveUser);
 
   useEffect(() => {
     document.title = "Task it 📔";
 
-    if (activeUser.username !== "") {
-      dispatch(setLoggedIn(true));
-    }
-  }, []);
+    document.body.onload = () => {
+      dispatch(logoutUser());
+    };
+    // Make sure on every log in or reload, there's no active user
+    // and loggedIn is false.
+  });
 
   const loggedIn = useAppSelector(getUserLoggedIn);
 
@@ -46,17 +43,11 @@ const App: React.FC = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />}>
-        <Route path='/' element={<Home />} />
+        <Route index path='/' element={<Home />} />
         <Route
           path='get-started'
           element={
             loggedIn ? <Navigate replace to={"/projects"} /> : <GetStarted />
-          }
-        />
-        <Route
-          path='about'
-          element={
-            loggedIn ? <About /> : <Navigate replace to={"/get-started"} />
           }
         />
         <Route
@@ -65,12 +56,11 @@ const App: React.FC = () => {
             loggedIn ? <Projects /> : <Navigate replace to={"/get-started"} />
           }
         />
-        <Route
-          path='contact'
-          element={
-            loggedIn ? <Contact /> : <Navigate replace to={"/get-started"} />
-          }
-        />
+
+        <Route path='about' element={<About />} />
+
+        <Route path='contact' element={<Contact />} />
+
         <Route
           path='settings'
           element={

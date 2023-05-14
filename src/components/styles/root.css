@@ -6,6 +6,7 @@ nav {
   align-items: center;
   position: sticky;
   top: 0;
+  background-color: #fcfdff;
   margin-bottom: 35px;
 }
 nav .logo-container {
@@ -107,6 +108,7 @@ nav .starting-buttons {
   height: calc(100% - 72px);
   background-color: #fcfdff;
   padding: 18px;
+  z-index: 99;
 }
 .sidebar .sidebar-buttons {
   margin-top: 24px;
@@ -121,10 +123,33 @@ nav .starting-buttons {
   background-color: transparent;
   color: #121212;
   text-decoration: none;
+  position: relative;
+  transition: 0.2s ease;
+}
+.sidebar .sidebar-buttons a::before {
+  content: "";
+  height: 100%;
+  width: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background-color: #5b87f8;
+  transition: 0.2s ease;
+}
+.sidebar .sidebar-buttons a:hover {
+  color: #fff;
+}
+.sidebar .sidebar-buttons a:hover::before {
+  width: 100%;
 }
 .sidebar .sidebar-buttons .active {
   color: #fff;
   background: linear-gradient(90deg, #5b87f8, rgba(91, 135, 248, 0));
+}
+.sidebar .sidebar-buttons .logout-button {
+  background-color: #ff3333;
+  gap: 4px;
 }
 @media (min-width: 1024px) {
   .sidebar {

@@ -36,5 +36,5 @@ interface DetectedUsers {
 }
 
 interface NavButtons {
-  centerButtons: { text: string; path: string; display: string }[];
+  centerButtons: { text: string; path: string }[];
 }
