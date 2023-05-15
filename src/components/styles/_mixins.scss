@@ -9,11 +9,23 @@ $white: #fcfdff;
 $error: #ff3333;
 $inputBG: #f0f0f2;
 
+$hover_blue: darken(
+  $color: $primary,
+  $amount: 15,
+);
+
 $border: #cfd0eb;
 
 // Fonts
 $inter: "Inter", sans-serif;
 $nunito: "Nunito sans", sans-serif;
+
+@mixin fontProps($family, $color, $size: 15px, $weight: 400) {
+  font-family: $family;
+  color: $color;
+  font-size: $size;
+  font-weight: $weight;
+}
 
 // FLEX / CENTER ELEMENT
 @mixin flexCenter {

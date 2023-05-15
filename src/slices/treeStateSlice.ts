@@ -1,29 +1,25 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
+// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// import { RootState } from "../app/store";
 
-interface TreeStateInterface {
-  toggleSidebar: boolean;
-}
+// interface TreeStateInterface {
+//   toggleSidebar: boolean;
+// }
 
-const initialState: TreeStateInterface = {
-  toggleSidebar: false,
-};
+// const initialState: TreeStateInterface = {
+//   toggleSidebar: false,
+// };
 
-const treeStateSlice = createSlice({
-  name: "treeStateReducer",
-  initialState,
-  reducers: {
-    setToggleSidebar(state, action: PayloadAction<boolean>) {
-      state.toggleSidebar = action.payload;
-    },
-  },
-});
+// const treeStateSlice = createSlice({
+//   name: "treeStateReducer",
+//   initialState,
+//   reducers: {
+//     setToggleSidebar(state, action: PayloadAction<boolean>) {
+//       state.toggleSidebar = action.payload;
+//     },
+//   },
+// });
 
-const getters = {
-  getToggleSidebar: (state: RootState) => state.treeStateReducer.toggleSidebar,
-};
+// export const { getToggleSidebar } = getters;
 
-export const { getToggleSidebar } = getters;
-
-export const { setToggleSidebar } = treeStateSlice.actions;
-export default treeStateSlice.reducer;
+// export const { setToggleSidebar } = treeStateSlice.actions;
+// export default treeStateSlice.reducer;

@@ -40,7 +40,9 @@ nav .nav-buttons a {
   text-decoration: none;
   position: relative;
   color: #121212;
-  font-weight: 500;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: 0.1s ease;
 }
 nav .nav-buttons a:after {
   content: "";
@@ -52,6 +54,10 @@ nav .nav-buttons a:after {
   background-color: #5b87f8;
   opacity: 0;
   border-radius: 0 0 4px 4px;
+  transition: 0.1s ease;
+}
+nav .nav-buttons a:hover {
+  background-color: #f1f1f1;
 }
 nav .nav-buttons .active:after {
   opacity: 1;

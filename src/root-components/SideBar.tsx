@@ -1,16 +1,15 @@
 import React from "react";
-import { useAppDispatch } from "../app/hooks";
 
 import { NavLink } from "react-router-dom";
 
 import type { NavButtons } from "../app/types";
 import ProfileRibbon from "../components/ProfileRibbon";
 
-import { logoutUser } from "../slices/userSlice";
 // Reducers and getters, top: Reducers, bottom: Getters
+import { useAppSelector } from "../app/hooks";
+import { getUserLoggedIn } from "../slices/userSlice";
 
-// svg
-import LogOutIcon from "../assets/icons/logout.svg";
+import LogoutButton from "../components/reusable-buttons/LogoutButton";
 
 interface SideBarProps {
   navBarButtons: NavButtons;
@@ -19,9 +18,9 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
-  const dispatch = useAppDispatch();
-
   const { navBarButtons, toggleSidebar, setToggleSidebar } = props;
+
+  const isLoggedIn = useAppSelector(getUserLoggedIn);
 
   return (
     <div className={`sidebar ${!toggleSidebar ? "hide-sidebar" : ""}`}>
@@ -39,16 +38,9 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
           </NavLink>
         ))}
 
-        <button
-          className='default-button logout-button'
-          onClick={() => {
-            dispatch(logoutUser());
-            setToggleSidebar(false);
-          }}
-        >
-          <img src={LogOutIcon} alt='logout' />
-          Log out
-        </button>
+        {isLoggedIn ? (
+          <LogoutButton setToggleSidebar={setToggleSidebar} />
+        ) : null}
       </div>
     </div>
   );
