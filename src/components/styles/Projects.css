@@ -1,0 +1,8 @@
+.projects .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.projects .page-header .create-new-project {
+  padding: 10px 19px;
+}/*# sourceMappingURL=Projects.css.map */

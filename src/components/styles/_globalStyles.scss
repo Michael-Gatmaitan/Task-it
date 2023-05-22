@@ -22,7 +22,7 @@
 
 .bordered-button {
   // padding:
-  border: solid 4px $primary;
+  border: solid 4px #f00;
   background-color: transparent !important;
   color: #121212 !important;
 
@@ -31,6 +31,7 @@
 
   // Property change related to Hover
   position: relative;
+  z-index: 0;
   overflow: hidden;
 
   &:before {

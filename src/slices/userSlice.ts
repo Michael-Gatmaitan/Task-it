@@ -1,15 +1,9 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, current } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../app/types";
 import { RootState } from "../app/store";
 
-interface UserDeviceDB {
-  activeUser: User;
-  deviceAccounts: User[];
-
-  userInputError: boolean;
-  loggedIn: boolean;
-}
+import type { Project, UserDeviceDB } from "../app/types";
 
 interface EditProfilePayload {
   username: string;
@@ -60,6 +54,7 @@ const userSlice = createSlice({
         username: username,
         profileImageLink: profileImageLink,
         userID: userID,
+        projects: [],
       };
 
       // Append users
@@ -81,6 +76,7 @@ const userSlice = createSlice({
         username: action.payload.username,
         profileImageLink: action.payload.profileImageLink,
         userID: action.payload.userID,
+        projects: action.payload.projects,
       };
 
       state.activeUser = newActiveUser;
@@ -95,6 +91,7 @@ const userSlice = createSlice({
         username: "",
         profileImageLink: "",
         userID: 0,
+        projects: [],
       };
 
       console.log(state.loggedIn);
@@ -160,6 +157,46 @@ const userSlice = createSlice({
         // Set to localstorage
       }
     },
+
+    // Project reducers
+    addProject(state: UserDeviceDB) {
+      if (state.activeUser.projects === undefined) {
+        state.activeUser.projects = [];
+      }
+
+      const newProject: Project = {
+        projectTitle: `Project #${state.activeUser.projects.length + 1}`,
+        projectDescription: "Project description",
+        dateCreated: new Date().getDate(),
+      };
+
+      const indexOfUserInDB = state.deviceAccounts.findIndex(
+        (acc) => acc.userID === state.activeUser.userID
+      );
+
+      state.activeUser.projects.push(newProject);
+      state.deviceAccounts[indexOfUserInDB] = state.activeUser;
+    },
+
+    deleteProject(state: UserDeviceDB, action: PayloadAction<Project>) {
+      console.log("Project to delete: ", action.payload);
+
+      const duplicateOfProjectToDelete = state.activeUser.projects.find(
+        (e) => e.projectTitle === action.payload.projectTitle
+      );
+
+      if (!duplicateOfProjectToDelete) {
+        console.log("Project on workspace not found.");
+        return;
+      }
+
+      const indexOfProjectToDelete = state.activeUser.projects.indexOf(
+        duplicateOfProjectToDelete
+      );
+
+      // Perfom deletion of item
+      state.activeUser.projects.splice(indexOfProjectToDelete, 1);
+    },
   },
 });
 
@@ -171,6 +208,10 @@ export const {
   logoutUser,
   setLoggedIn,
   editProfileInformation,
+
+  // Projects
+  addProject,
+  deleteProject,
 } = userSlice.actions;
 
 // getters

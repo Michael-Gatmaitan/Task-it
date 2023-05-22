@@ -34,6 +34,7 @@ const CreateAccount: React.FC = () => {
       const newUser: User = {
         username: usernameRef.current.value,
         profileImageLink: imageLinkRef.current.value,
+        projects: [],
         userID: users.length + 1,
       };
 

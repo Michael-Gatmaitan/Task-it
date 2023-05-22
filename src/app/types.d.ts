@@ -1,3 +1,11 @@
+export interface UserDeviceDB {
+  activeUser: User;
+  deviceAccounts: User[];
+
+  userInputError: boolean;
+  loggedIn: boolean;
+}
+
 /**** USER Types *****/
 interface Todo {
   title: string;
@@ -10,13 +18,13 @@ interface Card {
   todos: Todo[];
 }
 
-interface Project {
-  projectTItle: string;
-  projectDescription: string;
-  favorite: boolean;
-  done: boolean;
-  dateCreated: Date;
-  cards: Card[];
+export interface Project {
+  projectTitle: string;
+  projectDescription?: string;
+  favorite?: boolean;
+  done?: boolean;
+  dateCreated: number;
+  cards?: Card[];
 }
 
 export interface User {
@@ -25,14 +33,14 @@ export interface User {
   userID: number;
 
   // Projects
-  projects?: Project[];
+  projects: Project[];
   favoriteProjects?: Project[];
   doneProjects?: Project[];
 }
 
 /**** DETECTED USERS Types ****/
 interface DetectedUsers {
-  detectedUsers: Array<User>;
+  detectedUsers: User[];
 }
 
 interface NavButtons {

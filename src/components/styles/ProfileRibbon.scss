@@ -8,6 +8,7 @@
   align-items: center;
   grid-template-columns: 58px auto 32px;
   position: relative;
+  z-index: 100;
 
   .profile-image {
     width: 58px;

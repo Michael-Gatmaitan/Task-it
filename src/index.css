@@ -21,11 +21,12 @@
 }
 
 .bordered-button {
-  border: solid 4px #5b87f8;
+  border: solid 4px #f00;
   background-color: transparent !important;
   color: #121212 !important;
   padding: 4px 16px;
   position: relative;
+  z-index: 0;
   overflow: hidden;
 }
 .bordered-button:before {
