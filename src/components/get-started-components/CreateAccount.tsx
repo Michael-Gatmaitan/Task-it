@@ -38,8 +38,6 @@ const CreateAccount: React.FC = () => {
         userID: users.length + 1,
       };
 
-      console.log(userInputError);
-
       dispatch(addUserAccount(newUser));
       dispatch(setActiveUser(newUser));
 

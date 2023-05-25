@@ -5,4 +5,40 @@
 }
 .projects .page-header .create-new-project {
   padding: 10px 19px;
+}
+.projects .create-project-modal {
+  width: 80%;
+  background-color: #5b87f8;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+}
+.projects .create-project-modal .modal-header {
+  margin-bottom: 12px;
+}
+.projects .create-project-modal form {
+  display: grid;
+  gap: 8px;
+}
+.projects .create-project-modal form .input-container .label {
+  margin-bottom: 2px;
+}
+.projects .create-project-modal form .modal-buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  margin-top: 30px;
+}
+@media (min-width: 1024px) {
+  .projects .create-project-modal {
+    width: 400px;
+  }
+  .projects .create-project-modal form .input-container .label {
+    margin-bottom: 4px;
+  }
+  .projects .create-project-modal form .modal-buttons {
+    margin-top: 40px;
+  }
 }/*# sourceMappingURL=Projects.css.map */

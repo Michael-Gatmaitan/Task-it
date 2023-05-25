@@ -8,7 +8,8 @@ import { getDeviceAccounts, setActiveUser } from "../../slices/userSlice";
 const DetectedAccounts: React.FC = () => {
   const users: User[] = useAppSelector(getDeviceAccounts);
 
-  return (
+  // Display only if there is 1 or more user in device
+  return users.length !== 0 ? (
     <div className='detected-accounts'>
       <div className='header header2'>Detected accounts</div>
       <div className='detected-account-list'>
@@ -17,7 +18,7 @@ const DetectedAccounts: React.FC = () => {
         ))}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 const DisplayAccount: React.FC<{ user: User }> = (props) => {

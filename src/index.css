@@ -19,52 +19,19 @@
     border-radius: 8px;
   }
 }
+.default-button:hover {
+  background-color: #0f1975;
+}
 
 .bordered-button {
-  border: solid 4px #f00;
+  border: solid 4px #5b87f8;
   background-color: transparent !important;
   color: #121212 !important;
   padding: 4px 16px;
-  position: relative;
-  z-index: 0;
-  overflow: hidden;
-}
-.bordered-button:before {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  transform: translate(-50%, 50%);
-  border-radius: 50%;
-  background-color: #5b87f8;
-  transition: 0.5s ease;
-  z-index: -2;
-}
-.bordered-button:after {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  transform: translate(-50%, 50%);
-  border-radius: 50%;
-  background-color: #1251f5;
-  transition: 0.1s ease;
-  z-index: -1;
-}
-.bordered-button:active:after {
-  width: 400px;
-  height: 400px;
 }
 .bordered-button:hover {
   color: #fff !important;
-}
-.bordered-button:hover:before {
-  width: 400px;
-  height: 400px;
+  background-color: #5b87f8 !important;
 }
 @media (min-width: 1024px) {
   .bordered-button {
@@ -100,6 +67,7 @@
   border-radius: 6px;
   border: none;
   outline: none;
+  width: 100%;
   font-family: "Inter", sans-serif;
   color: #121212;
   font-size: 16px;
@@ -159,36 +127,36 @@
 .label {
   font-family: "Inter", sans-serif;
   color: #121212;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
 }
 @media (min-width: 1024px) {
   .label {
-    font-size: 12px !important;
+    font-size: 14px !important;
   }
 }
 
 .body-text-title {
   font-family: "Inter", sans-serif;
   color: #121212;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 @media (min-width: 1024px) {
   .body-text-title {
-    font-size: 12px !important;
+    font-size: 14px !important;
   }
 }
 
 .body-text {
   font-family: "Inter", sans-serif;
   color: rgba(18, 18, 18, 0.8);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 @media (min-width: 1024px) {
   .body-text {
-    font-size: 12px !important;
+    font-size: 14px !important;
   }
 }
 

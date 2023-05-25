@@ -1,6 +1,6 @@
-export interface UserDeviceDB {
+export interface AppState {
   activeUser: User;
-  deviceAccounts: User[];
+  accounts: User[];
 
   userInputError: boolean;
   loggedIn: boolean;
@@ -22,8 +22,10 @@ export interface Project {
   projectTitle: string;
   projectDescription?: string;
   favorite?: boolean;
+  dateCreated: string;
+  dueDate?: string;
+  id: number;
   done?: boolean;
-  dateCreated: number;
   cards?: Card[];
 }
 

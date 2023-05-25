@@ -1,16 +1,15 @@
-import { PayloadAction, current } from "@reduxjs/toolkit";
+import { PayloadAction as PA, current } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "../app/types";
 import { RootState } from "../app/store";
 
-import type { Project, UserDeviceDB } from "../app/types";
+import type { User, Project, AppState } from "../app/types";
 
 interface EditProfilePayload {
   username: string;
   profileImageLink: string;
 }
 
-const isUsernameAlreadyExists = (
+const usernameExists = (
   deviceAccounts: User[],
   newUsername: string
 ): boolean => {
@@ -23,10 +22,10 @@ const isUsernameAlreadyExists = (
   return hasPairUsername.length !== 0;
 };
 
-const initialState: UserDeviceDB = {
+const initialState: AppState = {
   activeUser: JSON.parse(localStorage.getItem("activeUser") || "{}"),
 
-  deviceAccounts: JSON.parse(localStorage.getItem("users") || "[]"),
+  accounts: JSON.parse(localStorage.getItem("users") || "[]"),
   userInputError: false,
   loggedIn: false,
 };
@@ -37,17 +36,12 @@ const userSlice = createSlice({
 
   reducers: {
     // Adding new account
-    addUserAccount(state: UserDeviceDB, action: PayloadAction<User>) {
-      if (
-        isUsernameAlreadyExists(state.deviceAccounts, action.payload.username)
-      ) {
+    addUserAccount(state: AppState, action: PA<User>) {
+      if (usernameExists(state.accounts, action.payload.username)) {
         state.userInputError = true;
         return;
       }
 
-      // const accountsFromStorage = JSON.parse(
-      //   localStorage.getItem("users") || "[]"
-      // );
       const { username, profileImageLink, userID } = action.payload;
 
       const newUser: User = {
@@ -59,34 +53,27 @@ const userSlice = createSlice({
 
       // Append users
       // const deviceAccountsTemp: User[] = [...accountsFromStorage, newUser];
-      state.deviceAccounts.push(newUser);
+      state.accounts.push(newUser);
 
       // localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
       console.log("from addueraccount");
       state.loggedIn = true;
     },
 
-    setActiveUser(state: UserDeviceDB, action: PayloadAction<User>) {
+    setActiveUser(state: AppState, action: PA<User>) {
       // If input error occured, we will not set it as active user.
       if (state.userInputError) return;
 
       console.log("Setting active user: ", action.payload);
 
-      const newActiveUser: User = {
-        username: action.payload.username,
-        profileImageLink: action.payload.profileImageLink,
-        userID: action.payload.userID,
-        projects: action.payload.projects,
-      };
-
+      // Set new user logged in
+      const newActiveUser: User = action.payload;
       state.activeUser = newActiveUser;
-
-      console.log("new user?");
 
       if (!state.loggedIn) state.loggedIn = true;
     },
 
-    logoutUser(state: UserDeviceDB) {
+    logoutUser(state: AppState) {
       const userLoggedout: User = {
         username: "",
         profileImageLink: "",
@@ -94,31 +81,24 @@ const userSlice = createSlice({
         projects: [],
       };
 
-      console.log(state.loggedIn);
-
       state.activeUser = userLoggedout;
 
-      // Set logged in as false
+      // Reset data & Logout user
       state.loggedIn = false;
     },
 
-    setUserInputError(state: UserDeviceDB, action: PayloadAction<boolean>) {
+    setUserInputError(state: AppState, action: PA<boolean>) {
       state.userInputError = action.payload;
     },
 
-    setLoggedIn(state: UserDeviceDB, action: PayloadAction<boolean>) {
+    setLoggedIn(state: AppState, action: PA<boolean>) {
       state.loggedIn = action.payload;
     },
 
-    editProfileInformation(
-      state: UserDeviceDB,
-      action: PayloadAction<EditProfilePayload>
-    ) {
+    editProfileInformation(state: AppState, action: PA<EditProfilePayload>) {
       /* If the username already used in other account,
       this function will stop */
-      if (
-        isUsernameAlreadyExists(state.deviceAccounts, action.payload.username)
-      ) {
+      if (usernameExists(state.accounts, action.payload.username)) {
         console.log(
           `Cannot replace the username: ${state.activeUser.username}
           with ${action.payload.username} because it is alreaady in use by another user
@@ -129,8 +109,8 @@ const userSlice = createSlice({
       }
 
       // Edit current user profile
-      const item = state.deviceAccounts.find(
-        (account) => account.username === state.activeUser.username
+      const item = state.accounts.find(
+        (deviceAcc) => state.activeUser.userID === deviceAcc.userID
       );
 
       if (item != undefined) {
@@ -139,7 +119,7 @@ const userSlice = createSlice({
           profileImageLink: editedProfileImageLink,
         } = action.payload;
 
-        const indexOfUserInDB = state.deviceAccounts.indexOf(item);
+        const indexOfUserInDB = state.accounts.indexOf(item);
 
         // If edited image link value is empty, set it to previous value
         if (editedProfileImageLink === "")
@@ -147,38 +127,34 @@ const userSlice = createSlice({
         if (editedUsername === "") editedUsername = state.activeUser.username;
 
         // Change properties of user in DB
-        state.deviceAccounts[indexOfUserInDB].username = editedUsername;
-        state.deviceAccounts[indexOfUserInDB].profileImageLink =
+        state.accounts[indexOfUserInDB].username = editedUsername;
+        state.accounts[indexOfUserInDB].profileImageLink =
           editedProfileImageLink;
 
         state.activeUser.username = editedUsername;
         state.activeUser.profileImageLink = editedProfileImageLink;
-
-        // Set to localstorage
       }
     },
 
     // Project reducers
-    addProject(state: UserDeviceDB) {
+    addProject(state: AppState, action: PA<Project>) {
       if (state.activeUser.projects === undefined) {
         state.activeUser.projects = [];
       }
 
-      const newProject: Project = {
-        projectTitle: `Project #${state.activeUser.projects.length + 1}`,
-        projectDescription: "Project description",
-        dateCreated: new Date().getDate(),
-      };
+      const newProject: Project = action.payload;
 
-      const indexOfUserInDB = state.deviceAccounts.findIndex(
+      console.log(current(state.activeUser.projects));
+
+      const indexOfUserInDB = state.accounts.findIndex(
         (acc) => acc.userID === state.activeUser.userID
       );
 
       state.activeUser.projects.push(newProject);
-      state.deviceAccounts[indexOfUserInDB] = state.activeUser;
+      state.accounts[indexOfUserInDB] = state.activeUser;
     },
 
-    deleteProject(state: UserDeviceDB, action: PayloadAction<Project>) {
+    deleteProject(state: AppState, action: PA<Project>) {
       console.log("Project to delete: ", action.payload);
 
       const duplicateOfProjectToDelete = state.activeUser.projects.find(
@@ -216,7 +192,7 @@ export const {
 
 // getters
 export const getDeviceAccounts = (state: RootState) =>
-  state.userReducer.deviceAccounts;
+  state.userReducer.accounts;
 export const getActiveUser = (state: RootState) => state.userReducer.activeUser;
 export const getUserInputError = (state: RootState) =>
   state.userReducer.userInputError;
