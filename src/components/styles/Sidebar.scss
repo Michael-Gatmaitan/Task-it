@@ -1,0 +1,70 @@
+@import "./mixins";
+
+.sidebar {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 72px);
+  background-color: $white;
+  padding: 18px;
+  z-index: 99;
+
+  .sidebar-buttons {
+    margin-top: 24px;
+    display: grid;
+    gap: 10px;
+
+    a {
+      width: calc(100% + (18px * 2));
+      padding: 10px 18px;
+      margin-left: -18px;
+      display: block;
+      background-color: transparent;
+      color: #121212;
+      text-decoration: none;
+      position: relative;
+      transition: 0.2s ease;
+
+      &::before {
+        content: "";
+        height: 100%;
+        width: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        background-color: $primary;
+        transition: 0.2s ease;
+      }
+
+      &:hover {
+        color: #fff;
+
+        &::before {
+          width: 100%;
+        }
+      }
+    }
+
+    .active {
+      color: #fff;
+      background: linear-gradient(90deg, $primary, rgba($primary, 0));
+    }
+
+    // logout button
+    .logout-button {
+      background-color: $error;
+      gap: 4px;
+    }
+  }
+
+  @include desktop {
+    display: none;
+  }
+}
+
+.hide-sidebar {
+  opacity: 0;
+  pointer-events: none;
+}

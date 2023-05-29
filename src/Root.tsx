@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import "./components/styles/root.css";
 
 // Components
 import Nav from "./root-components/Nav";
 import SideBar from "./root-components/SideBar";
+
+// CSS styles
+import "./components/styles/Nav.css";
+import "./components/styles/Sidebar.css";
 
 // Types
 import type { NavButtons } from "./app/types";
