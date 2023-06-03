@@ -9,6 +9,7 @@ import Modalbackground from "../ModalContainer";
 
 // MUI
 import Button from "@mui/material/Button";
+import { Settings } from "@mui/icons-material";
 
 const Projects: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -117,6 +118,16 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
     dispatch(addProject(newProjectToAdd));
   };
 
+  const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
+
+  const nameValueOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.trim() === "") {
+      setSubmitDisabled(true);
+    } else {
+      setSubmitDisabled(false);
+    }
+  };
+
   return (
     <>
       <div className='create-project-modal bordered-container'>
@@ -129,10 +140,11 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
               type='text'
               className='text-box'
               placeholder='Project name'
+              onChange={nameValueOnChange}
               ref={projectNameRef}
             />
             {titleExistErr ? (
-              <Button color='primary' className='label'>
+              <Button color='primary' variant='contained' className='label'>
                 Title already exists
               </Button>
             ) : null}
@@ -161,7 +173,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
           <div className='modal-buttons'>
             <input
               type='submit'
-              disabled={projectNameRef?.current?.value === ""}
+              disabled={submitDisabled}
               className='default-button'
             />
             <button

@@ -30,10 +30,11 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
         {navBarButtons.centerButtons.map((button, key) => (
           <NavLink
             to={button.path}
-            className='header2'
+            className='header2 sidebar-button'
             onClick={() => setToggleSidebar(false)}
             key={key}
           >
+            <button.Icon />
             {button.text}
           </NavLink>
         ))}

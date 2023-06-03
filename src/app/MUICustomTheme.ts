@@ -2,13 +2,12 @@ import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   status: {
-    danger: "#ff0000",
+    error: "#fff",
   },
 
   palette: {
     primary: {
-      // main: "#5b87f8",
-      main: "#000",
+      main: "#5b87f8",
       darker: "#0f1975",
     },
   },
@@ -17,13 +16,13 @@ export const theme = createTheme({
 declare module "@mui/material/styles" {
   interface Theme {
     status: {
-      danger: React.CSSProperties["color"];
+      error: React.CSSProperties["color"];
     };
   }
 
   interface ThemeOptions {
     status: {
-      danger: React.CSSProperties["color"];
+      error: React.CSSProperties["color"];
     };
   }
 

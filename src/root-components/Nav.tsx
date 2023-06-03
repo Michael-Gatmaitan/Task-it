@@ -12,7 +12,7 @@ import ProfileRibbon from "../components/ProfileRibbon";
 import { getUserLoggedIn } from "../slices/userSlice";
 import { useAppSelector } from "../app/hooks";
 
-import type { NavButtons } from "../app/types";
+import type { NavButton, NavButtons } from "../app/types";
 
 interface NavProps {
   navBarButtons: NavButtons;
@@ -37,6 +37,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       <div className='nav-buttons'>
         {navBarButtons.centerButtons.map((button, key) => (
           <NavLink to={button.path} key={key}>
+            <button.Icon />
             {button.text}
           </NavLink>
         ))}

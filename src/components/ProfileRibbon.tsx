@@ -8,6 +8,7 @@ import {
 } from "../slices/userSlice";
 
 import "./styles/ProfileRibbon.css";
+import { Box, Button, ButtonGroup, TextField } from "@mui/material";
 
 interface ProfileRibbonProps {
   platform: "desktop" | "mobile";
@@ -66,23 +67,49 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
   const dispatch = useAppDispatch();
 
+  const setDefaultValueOfState = () => {
+    if (
+      editUsernameRef?.current !== null &&
+      editImageLinkRef?.current !== null
+    ) {
+      editUsernameRef.current.getElementsByTagName("input")[0].value = "";
+      editImageLinkRef.current.getElementsByTagName("input")[0].value = "";
+    }
+
+    /*
+      Set all state back to default when profile EDITED or
+      profile ribbon is CLOSED
+    */
+
+    setToggleEditProfile(false);
+
+    setImageLink("");
+    setPreviewImage(false);
+    setDisablePreviewImage(true);
+    setDisableSubmitButton(true);
+    setPreviewImage(false);
+  };
+
   const handleProfileEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (
-      editUsernameRef.current?.value !== undefined &&
-      editImageLinkRef.current?.value !== undefined
+      editUsernameRef?.current !== null &&
+      editImageLinkRef?.current !== null
     ) {
+      const editUsernameValue =
+        editUsernameRef.current.getElementsByTagName("input")[0].value;
+      const editProfileLinkValue =
+        editImageLinkRef.current.getElementsByTagName("input")[0].value;
+
       dispatch(
         editProfileInformation({
-          username: editUsernameRef.current.value,
-          profileImageLink: editImageLinkRef.current.value,
+          username: editUsernameValue,
+          profileImageLink: editProfileLinkValue,
         })
       );
 
-      editUsernameRef.current.value = "";
-      editImageLinkRef.current.value = "";
-      setToggleEditProfile(false);
+      setDefaultValueOfState();
     } else {
       console.log("Invalid edit profile attributes.");
     }
@@ -91,36 +118,120 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const editUsernameRef = useRef<HTMLInputElement>(null);
   const editImageLinkRef = useRef<HTMLInputElement>(null);
 
+  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
+  const [usernameFieldError, setUsernameFieldError] = useState(false);
+
+  const usernameValueOnChange = () => {
+    if (editUsernameRef?.current === null) return;
+    const usernameField =
+      editUsernameRef.current.getElementsByTagName("input")[0];
+    const usernameVal = usernameField.value;
+
+    setDisableSubmitButton(usernameVal === "");
+    setUsernameFieldError(usernameVal === "");
+  };
+
+  const [imageLink, setImageLink] = useState<string>("");
+  const [previewImage, setPreviewImage] = useState<boolean>(false);
+  const [disablePreviewImage, setDisablePreviewImage] = useState<boolean>(true);
+
+  const imageLinkValueOnChange = () => {
+    if (editImageLinkRef?.current === null) return;
+    const imageLinkField =
+      editImageLinkRef.current.getElementsByTagName("input")[0];
+    const imageLinkVal = imageLinkField.value;
+
+    if (previewImage && imageLinkVal === "") {
+      setPreviewImage(false);
+    }
+
+    setImageLink(imageLinkVal);
+    setDisablePreviewImage(imageLinkVal === "");
+    setDisableSubmitButton(imageLinkVal === "");
+  };
+
   return toggleEditProfile ? (
     <div className='edit-profile bordered-container'>
-      <form name='profile-editor' onSubmit={handleProfileEditSubmit}>
-        <div className='little-header'>Name</div>
-        <input
-          type='text'
-          className='text-box'
-          ref={editUsernameRef}
-          placeholder='Edit username'
-          name='username'
-        />
-        <div className='little-header'>Profile image link</div>
-        <input
-          type='text'
-          className='text-box'
-          ref={editImageLinkRef}
-          placeholder='Edit image link'
-          name='profile-image-link'
-        />
+      <form id='profile-editor' onSubmit={handleProfileEditSubmit}>
+        <Box
+          sx={{
+            "& .MuiTextField-root": {
+              mb: 1.5,
+              width: "100%",
+            },
+          }}
+        >
+          <TextField
+            label={usernameFieldError ? "New name required" : "Edit name"}
+            variant='outlined'
+            ref={editUsernameRef}
+            error={usernameFieldError}
+            onChange={usernameValueOnChange}
+          />
 
-        <div className='edit-profile-buttons'>
-          <input type='submit' value='Edit info' className='default-button' />
+          <Box
+            sx={{
+              "&": {
+                display: "grid",
+                gap: 1,
+                gridTemplateColumns: "1fr auto",
+              },
 
-          <button
-            className='default-button invicible-button close-edit-profile'
-            onClick={() => setToggleEditProfile(false)}
+              "& .MuiButton-contained": {
+                mb: 1.5,
+                boxShadow: "none",
+              },
+            }}
+          >
+            <TextField
+              label='Edit image link'
+              variant='outlined'
+              ref={editImageLinkRef}
+              onChange={imageLinkValueOnChange}
+            />
+
+            <Button
+              variant='contained'
+              disabled={disablePreviewImage}
+              onClick={() => setPreviewImage(true)}
+            >
+              Preview image
+            </Button>
+          </Box>
+        </Box>
+
+        {previewImage ? (
+          <div className='image-preview'>
+            <img src={imageLink} loading='lazy' />
+          </div>
+        ) : null}
+
+        <Box
+          sx={{
+            "&": {
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 1,
+            },
+          }}
+        >
+          <Button
+            variant='contained'
+            type='submit'
+            form='profile-editor'
+            disabled={disableSubmitButton}
+          >
+            Edit info
+          </Button>
+
+          <Button
+            variant='contained'
+            color='error'
+            onClick={() => setDefaultValueOfState()}
           >
             Close
-          </button>
-        </div>
+          </Button>
+        </Box>
       </form>
     </div>
   ) : null;

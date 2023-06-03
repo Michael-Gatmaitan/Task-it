@@ -1,3 +1,42 @@
+.MuiButtonGroup-root {
+  box-shadow: none;
+}
+
+.MuiButton-root {
+  padding: 8px 20px;
+  text-transform: capitalize;
+  font-size: 14px;
+  border-radius: 6px;
+  font-family: "Inter", sans-serif;
+  box-shadow: none;
+}
+@media (min-width: 1024px) {
+  .MuiButton-root {
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+}
+
+.MuiButton-text {
+  color: #f00;
+}
+
+.mui-button {
+  padding: 2px;
+  border-radius: 6px;
+  text-transform: capitalize;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  box-shadow: none;
+}
+@media (min-width: 1024px) {
+  .mui-button {
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+}
+
 .default-button {
   padding: 12px 24px;
   background-color: #5b87f8;

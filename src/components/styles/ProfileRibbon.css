@@ -49,22 +49,15 @@
   border-radius: 16px;
   z-index: 99;
 }
-.profile-ribbon .edit-profile form .little-header {
-  margin-bottom: 8px;
-  font: 16px "Inter", sans-serif;
-  font-weight: 600;
-}
-.profile-ribbon .edit-profile form input[type=text] {
+.profile-ribbon .edit-profile form .image-preview {
   width: 100%;
-  margin-bottom: 12px;
-}
-.profile-ribbon .edit-profile form .edit-profile-buttons {
+  margin-bottom: 1.5rem;
   display: flex;
-  justify-content: flex-start;
-  gap: 8px;
+  align-items: center;
+  justify-content: center;
 }
-.profile-ribbon .edit-profile form .edit-profile-buttons .close-edit-profile {
-  padding: 10px 8px;
+.profile-ribbon .edit-profile form .image-preview img {
+  width: 50%;
 }
 @media (min-width: 1024px) {
   .profile-ribbon .edit-profile {

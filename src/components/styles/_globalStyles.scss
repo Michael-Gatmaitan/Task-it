@@ -1,5 +1,46 @@
 @import "./mixins";
 
+// Customize MUI contained button
+.MuiButtonGroup-root {
+  box-shadow: none;
+}
+
+.MuiButton-root {
+  padding: 8px 20px;
+  text-transform: capitalize;
+  font-size: 14px;
+  border-radius: 6px;
+  font-family: $inter;
+  box-shadow: none;
+
+  @include desktop {
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+}
+
+.MuiButton-contained {
+}
+
+.MuiButton-text {
+  color: #f00;
+}
+
+.mui-button {
+  padding: 2px;
+  border-radius: 6px;
+  text-transform: capitalize;
+  font-size: 14px;
+  font-family: $inter;
+  box-shadow: none;
+
+  @include desktop {
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+}
+
 // Default styles
 .default-button {
   padding: 12px 24px;

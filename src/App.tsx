@@ -22,6 +22,9 @@ import { useAppSelector, useAppDispatch } from "./app/hooks";
 import { getUserLoggedIn, logoutUser } from "./slices/userSlice";
 import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
+// MUI StyledEngineProvider
+import StyledEngineProvider from "@mui/material/StyledEngineProvider";
+
 const App: React.FC = () => {
   useLocalStorageUpdater();
 
@@ -73,7 +76,11 @@ const App: React.FC = () => {
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <StyledEngineProvider injectFirst>
+      <RouterProvider router={router} />
+    </StyledEngineProvider>
+  );
 };
 
 export default App;

@@ -17,7 +17,9 @@
   width: calc(100% + 36px);
   padding: 10px 18px;
   margin-left: -18px;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   background-color: transparent;
   color: #121212;
   text-decoration: none;
@@ -36,14 +38,11 @@
   transition: 0.2s ease;
 }
 .sidebar .sidebar-buttons a:hover {
-  color: #fff;
-}
-.sidebar .sidebar-buttons a:hover::before {
-  width: 100%;
+  color: #5b87f8;
 }
 .sidebar .sidebar-buttons .active {
   color: #fff;
-  background: linear-gradient(90deg, #5b87f8, rgba(91, 135, 248, 0));
+  background: linear-gradient(90deg, #5b87f8, rgba(91, 135, 248, 0.1), rgba(91, 135, 248, 0));
 }
 .sidebar .sidebar-buttons .logout-button {
   background-color: #ff3333;

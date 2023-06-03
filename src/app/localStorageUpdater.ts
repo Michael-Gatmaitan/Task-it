@@ -9,6 +9,12 @@ export const useLocalStorageUpdater = () => {
   const activeUser = useAppSelector(getActiveUser);
   const deviceAccounts = useAppSelector(getDeviceAccounts);
 
+  const { userID } = activeUser;
+
+  useEffect(() => {
+    console.log("only ID changed, means changing user occured");
+  }, [userID]);
+
   useEffect(() => {
     localStorage.setItem("activeUser", JSON.stringify(activeUser));
 

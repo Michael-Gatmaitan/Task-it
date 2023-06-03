@@ -15,11 +15,14 @@
     display: grid;
     gap: 10px;
 
+    // 'a' or 'sidebar-button'
     a {
       width: calc(100% + (18px * 2));
       padding: 10px 18px;
       margin-left: -18px;
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 4px;
       background-color: transparent;
       color: #121212;
       text-decoration: none;
@@ -39,17 +42,22 @@
       }
 
       &:hover {
-        color: #fff;
+        color: $primary;
 
-        &::before {
-          width: 100%;
-        }
+        // &::before {
+        //   width: 100%;
+        // }
       }
     }
 
     .active {
       color: #fff;
-      background: linear-gradient(90deg, $primary, rgba($primary, 0));
+      background: linear-gradient(
+        90deg,
+        $primary,
+        rgba($primary, 0.1),
+        rgba($primary, 0)
+      );
     }
 
     // logout button

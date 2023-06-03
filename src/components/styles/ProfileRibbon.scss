@@ -59,24 +59,13 @@
     z-index: 99;
 
     form {
-      .little-header {
-        margin-bottom: 8px;
-        font: 16px $inter;
-        font-weight: 600;
-      }
-
-      input[type="text"] {
+      .image-preview {
         width: 100%;
-        margin-bottom: 12px;
-      }
+        margin-bottom: 1.5rem;
+        @include flexCenter;
 
-      .edit-profile-buttons {
-        display: flex;
-        justify-content: flex-start;
-        gap: 8px;
-
-        .close-edit-profile {
-          padding: 10px 8px;
+        img {
+          width: 50%;
         }
       }
     }
