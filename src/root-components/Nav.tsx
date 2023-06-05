@@ -5,6 +5,9 @@ import { Link, NavLink } from "react-router-dom";
 import BurgerMenu from "../assets/icons/burger-menu.svg";
 import CloseMenu from "../assets/icons/close.svg";
 
+// MUI Icons
+import { MenuRounded, CloseRounded } from "@mui/icons-material";
+
 // Components
 import ProfileRibbon from "../components/ProfileRibbon";
 
@@ -12,7 +15,7 @@ import ProfileRibbon from "../components/ProfileRibbon";
 import { getUserLoggedIn } from "../slices/userSlice";
 import { useAppSelector } from "../app/hooks";
 
-import type { NavButton, NavButtons } from "../app/types";
+import type { NavButtons } from "../app/types";
 
 interface NavProps {
   navBarButtons: NavButtons;
@@ -38,7 +41,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
         {navBarButtons.centerButtons.map((button, key) => (
           <NavLink to={button.path} key={key}>
             <button.Icon />
-            {button.text}
+            <span>{button.text}</span>
           </NavLink>
         ))}
       </div>
@@ -48,11 +51,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
         className='menu-container'
         onClick={() => setToggleSidebar(!toggleSidebar)}
       >
-        {toggleSidebar ? (
-          <img src={CloseMenu} alt='Close-Menu' />
-        ) : (
-          <img src={BurgerMenu} alt='Open-Menu' />
-        )}
+        {toggleSidebar ? <CloseRounded /> : <MenuRounded />}
       </div>
 
       {/* Desktop side buttons */}

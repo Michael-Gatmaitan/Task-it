@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { addProject, deleteProject } from "../../slices/userSlice";
+import { addProject, deleteProject, logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";
 import type { Project } from "../../app/types";
 
@@ -8,8 +8,7 @@ import "../styles/Projects.css";
 import Modalbackground from "../ModalContainer";
 
 // MUI
-import Button from "@mui/material/Button";
-import { Settings } from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 const Projects: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -43,15 +42,23 @@ const Projects: React.FC = () => {
               <div>{project.projectTitle}</div>
               <div>{project.projectDescription}</div>
 
-              <button
-                className='default-button'
+              <Button
+                variant='contained'
                 onClick={() => dispatch(deleteProject(project))}
               >
                 Delete project
-              </button>
+              </Button>
             </div>
           ))
         : null}
+
+      <Button
+        variant='outlined'
+        color='error'
+        onClick={() => dispatch(logoutUser())}
+      >
+        Log out
+      </Button>
 
       {showCreateProjectModal ? (
         <CreateProjectModal

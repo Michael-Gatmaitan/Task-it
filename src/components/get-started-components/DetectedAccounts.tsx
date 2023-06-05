@@ -5,6 +5,9 @@ import { User } from "../../app/types";
 // Redux reducers and states
 import { getDeviceAccounts, setActiveUser } from "../../slices/userSlice";
 
+// MUI
+import { Button } from "@mui/material";
+
 const DetectedAccounts: React.FC = () => {
   const users: User[] = useAppSelector(getDeviceAccounts);
 
@@ -34,12 +37,15 @@ const DisplayAccount: React.FC<{ user: User }> = (props) => {
 
         <div className='account-username'>{user.username}</div>
       </div>
-      <button
+      {/* <button
         className='default-button select-account-button'
         onClick={() => dispatch(setActiveUser(user))}
       >
         Select account
-      </button>
+      </button> */}
+      <Button variant='contained' onClick={() => dispatch(setActiveUser(user))}>
+        Select account
+      </Button>
     </div>
   );
 };

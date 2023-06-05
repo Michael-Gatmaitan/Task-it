@@ -20,6 +20,14 @@ const usernameExists = (
 };
 
 const userReducers = {
+  updateAccounts(state: AppState) {
+    const { activeUser, accounts } = state;
+    const index = accounts.findIndex((acc) => activeUser.userID === acc.userID);
+
+    state.accounts[index] = activeUser;
+    localStorage.setItem("users", JSON.stringify(accounts));
+  },
+
   addUserAccount(state: AppState, action: PA<User>) {
     if (usernameExists(state.accounts, action.payload.username)) {
       state.userInputError = true;
@@ -40,7 +48,7 @@ const userReducers = {
     state.accounts.push(newUser);
 
     // localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
-    console.log("from addueraccount");
+    console.log("from add user account");
     state.loggedIn = true;
   },
 
@@ -82,7 +90,10 @@ const userReducers = {
   editProfileInformation(state: AppState, action: PA<EditProfilePayload>) {
     /* If the username already used in other account,
     this function will stop */
-    if (usernameExists(state.accounts, action.payload.username)) {
+    if (
+      usernameExists(state.accounts, action.payload.username) &&
+      action.payload.username !== state.activeUser.username
+    ) {
       console.log(
         `Cannot replace the username: ${state.activeUser.username}
         with ${action.payload.username} because it is alreaady in use by another user
@@ -111,8 +122,8 @@ const userReducers = {
       if (editedUsername === "") editedUsername = state.activeUser.username;
 
       // Change properties of user in DB
-      state.accounts[indexOfUserInDB].username = editedUsername;
-      state.accounts[indexOfUserInDB].profileImageLink = editedProfileImageLink;
+      // state.accounts[indexOfUserInDB].username = editedUsername;
+      // state.accounts[indexOfUserInDB].profileImageLink = editedProfileImageLink;
 
       state.activeUser.username = editedUsername;
       state.activeUser.profileImageLink = editedProfileImageLink;

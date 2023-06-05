@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+
+// MUI Components
+import { Button, TextField } from "@mui/material";
+
 import { User } from "../../app/types";
 // Hooks
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -32,8 +36,8 @@ const CreateAccount: React.FC = () => {
 
     if (usernameRef.current != undefined && imageLinkRef.current != undefined) {
       const newUser: User = {
-        username: usernameRef.current.value,
-        profileImageLink: imageLinkRef.current.value,
+        username: usernameValue,
+        profileImageLink: imageLinkValue,
         projects: [],
         userID: users.length + 1,
       };
@@ -41,8 +45,8 @@ const CreateAccount: React.FC = () => {
       dispatch(addUserAccount(newUser));
       dispatch(setActiveUser(newUser));
 
-      usernameRef.current.value = "";
-      imageLinkRef.current.value = "";
+      setUsernameValue("");
+      setImageLinkValue("");
       usernameRef.current.focus();
 
       setInvalidInput(true);
@@ -50,12 +54,19 @@ const CreateAccount: React.FC = () => {
   };
 
   // Button disabled by default
-  const [invalidInput, setInvalidInput] = useState(true);
+  const [invalidInput, setInvalidInput] = useState<boolean>(true);
 
-  const checkValidation = () =>
-    setInvalidInput(
-      usernameRef.current?.value === "" || imageLinkRef.current?.value === ""
-    );
+  // State values
+  const [usernameValue, setUsernameValue] = useState<string>("");
+  const [imageLinkValue, setImageLinkValue] = useState<string>("");
+
+  const checkValidation = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    setStateFunc: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    setStateFunc(e.target.value);
+    setInvalidInput(usernameValue === "" || imageLinkValue === "");
+  };
 
   const userInputError = useAppSelector(getUserInputError);
 
@@ -80,29 +91,39 @@ const CreateAccount: React.FC = () => {
             name='create-account-form'
             onSubmit={handleSubmit}
           >
-            <input
+            {/* <input
               type='text'
               className='text-box'
               placeholder='Username'
               name='username'
               ref={usernameRef}
               onChange={checkValidation}
-            />
-            <input
+            /> */}
+            {/* <input
               type='text'
               className='text-box'
               placeholder='Profile Image Link'
               name='profile-image-link'
               ref={imageLinkRef}
               onChange={checkValidation}
+            /> */}
+            <TextField
+              variant='outlined'
+              label='Username'
+              onChange={(e) => checkValidation(e, setUsernameValue)}
+              ref={usernameRef}
             />
 
-            <input
-              type='submit'
-              value='Create account'
-              className='default-button create-account-button'
-              disabled={invalidInput}
+            <TextField
+              variant='outlined'
+              label='Profile image link'
+              onChange={(e) => checkValidation(e, setImageLinkValue)}
+              ref={imageLinkRef}
             />
+
+            <Button type='submit' variant='contained' disabled={invalidInput}>
+              Create account
+            </Button>
           </form>
         </div>
       </div>

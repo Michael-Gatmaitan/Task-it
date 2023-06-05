@@ -8,12 +8,15 @@
 }
 .get-started .detected-accounts .detected-account-list {
   max-height: 300px;
-  overflow-y: scroll;
   margin-top: 12px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   gap: 12px;
+}
+.get-started .detected-accounts .detected-account-list .detected-account {
+  display: grid;
+  gap: 8px;
 }
 .get-started .detected-accounts .detected-account-list .detected-account .account-info {
   display: grid;
@@ -36,16 +39,15 @@
   font-size: 18px;
   font-weight: 600;
 }
-.get-started .detected-accounts .detected-account-list .detected-account .select-account-button {
-  width: 100%;
-  margin-top: 8px;
-}
 @media (min-width: 1024px) {
   .get-started .detected-accounts .detected-account-list {
     margin-top: 18px;
     max-height: calc(100vh - 130px - 39px - 12px - 36px);
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: auto;
+  }
+  .get-started .detected-accounts .detected-account-list .detected-account {
+    gap: 12px;
   }
 }
 .get-started .create-account .form-container {

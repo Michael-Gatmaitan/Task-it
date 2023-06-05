@@ -12,10 +12,17 @@
 }
 @media (min-width: 1024px) {
   .MuiButton-root {
-    padding: 14px 28px;
+    padding: 12px 24px;
     font-size: 16px;
     border-radius: 8px;
   }
+}
+
+.MuiButton-outlined {
+  border: solid 3px;
+}
+.MuiButton-outlined:hover {
+  border: solid 3px;
 }
 
 .MuiButton-text {

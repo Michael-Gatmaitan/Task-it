@@ -31,6 +31,7 @@ const userSlice = createSlice({
 // Reducers
 export const {
   // User reducers
+  updateAccounts,
   addUserAccount,
   setActiveUser,
   setUserInputError,
