@@ -57,7 +57,6 @@ const ProfileRibbon: React.FC<ProfileRibbonProps> = ({ platform }) => {
         toggleEditProfile={toggleEditProfile}
         setToggleEditProfile={setToggleEditProfile}
         username={username}
-        profileImageLink={profileImageLink}
       />
     </div>
   ) : null;
@@ -67,122 +66,68 @@ interface EditProfileModalProps {
   toggleEditProfile: boolean;
   setToggleEditProfile: React.Dispatch<React.SetStateAction<boolean>>;
   username: string;
-  profileImageLink: string;
 }
 
 const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
-  const {
-    toggleEditProfile,
-    setToggleEditProfile,
-    username,
-    profileImageLink,
-  } = props;
+  const { toggleEditProfile, setToggleEditProfile, username } = props;
 
   const dispatch = useAppDispatch();
 
   const setDefaultValueOfStates = () => {
-    if (
-      editUsernameRef?.current !== null &&
-      editImageLinkRef?.current !== null
-    ) {
-      editUsernameRef.current.getElementsByTagName("input")[0].value = "";
-      editImageLinkRef.current.getElementsByTagName("input")[0].value = "";
-    }
-
     /*
       Set all state back to default when profile EDITED or
       profile ribbon is CLOSED
     */
 
     setToggleEditProfile(false);
-
-    // setImageLink("");
     setDisablePreviewImage(false);
     setPreviewImage(false);
+
+    // Set all state value to empty.
   };
 
-  const handleProfileEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const [editUsernameValue, setEditUsernameValue] = useState<string>("");
+  const [editImageLinkValue, setEditImageLinkValue] = useState<string>("");
 
-    console.log(e);
-
-    if (
-      editUsernameRef?.current !== null &&
-      editImageLinkRef?.current !== null
-    ) {
-      const editUsernameValue =
-        editUsernameRef.current.getElementsByTagName("input")[0].value;
-      const editProfileLinkValue =
-        editImageLinkRef.current.getElementsByTagName("input")[0].value;
-
-      dispatch(
-        editProfileInformation({
-          username: editUsernameValue,
-          profileImageLink: editProfileLinkValue,
-        })
-      );
-
-      setDefaultValueOfStates();
-    } else {
-      console.log("Invalid edit profile attributes.");
-    }
-  };
-
-  const editUsernameRef = useRef<HTMLInputElement>(null);
-  const editImageLinkRef = useRef<HTMLInputElement>(null);
-
-  const [usernameFieldError, setUsernameFieldError] = useState(false);
-
-  // Check both validation
-  const [usernameValidation, setUsernameValidation] = useState(false);
-  const [profileImageValidation, setProfileImageValidation] = useState(false);
-
-  const usernameValueOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const usernameTFieldVal = e.target.value.trim();
-
-    // Setting error if input is == to username
-    setUsernameFieldError(usernameTFieldVal === username);
-
-    //
-    setUsernameValidation(
-      usernameTFieldVal === "" || usernameTFieldVal === username
-    );
-    console.log(usernameTFieldVal, username);
-  };
-
-  // States for previewing images
-  const [imageLink, setImageLink] = useState<string>(profileImageLink);
   const [previewImage, setPreviewImage] = useState<boolean>(false);
   const [disablePreviewImage, setDisablePreviewImage] =
     useState<boolean>(false);
 
-  const imageLinkValueOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const imageLinkVal = e.target.value.trim();
+  const [userInputError, setUserInputError] = useState<boolean>(true);
 
-    if (previewImage && imageLinkVal === "") setPreviewImage(false);
-
-    setImageLink(imageLinkVal);
-    setDisablePreviewImage(imageLinkVal === "");
-
-    setProfileImageValidation(imageLinkVal === "");
-  };
-
-  const isFormNotValid = usernameValidation || profileImageValidation;
-
-  // Debugging logical error purposes
   useEffect(() => {
-    console.log(
-      `Is form valid: ${usernameValidation} + ${profileImageValidation} = ${isFormNotValid}`
+    console.log(editUsernameValue, editImageLinkValue);
+
+    const usernameVal = editUsernameValue.trim();
+    const imgVal = editImageLinkValue.trim();
+
+    setUserInputError(
+      usernameVal.trim() === "" ||
+        usernameVal.trim() === username ||
+        imgVal.trim() === ""
     );
-  }, [usernameValidation, profileImageValidation, isFormNotValid]);
+
+    setDisablePreviewImage(imgVal === "");
+  }, [editUsernameValue, editImageLinkValue, username]);
+
+  const handleProfileEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    dispatch(
+      editProfileInformation({
+        username: editUsernameValue,
+        profileImageLink: editImageLinkValue,
+      })
+    );
+
+    setDefaultValueOfStates();
+  };
 
   return (
     <div
       className='edit-profile bordered-container'
       style={{
         display: toggleEditProfile ? "grid" : "none",
-        // opacity: toggleEditProfile ? 1 : 0,
-        // pointerEvents: toggleEditProfile ? "auto" : "none",
       }}
     >
       <form id='profile-editor' onSubmit={handleProfileEditSubmit}>
@@ -195,12 +140,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           }}
         >
           <TextField
-            label={usernameFieldError ? "Enter new name" : "Edit name"}
+            label={"Enter new name"}
             variant='outlined'
-            ref={editUsernameRef}
-            error={usernameFieldError}
-            defaultValue={username}
-            onChange={usernameValueOnChange}
+            value={editUsernameValue}
+            error={editUsernameValue === username}
+            onChange={(e) => setEditUsernameValue(e.target.value)}
           />
 
           <Box
@@ -220,9 +164,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
             <TextField
               label='Edit image link'
               variant='outlined'
-              ref={editImageLinkRef}
-              defaultValue={profileImageLink}
-              onChange={imageLinkValueOnChange}
+              value={editImageLinkValue}
+              onChange={(e) => setEditImageLinkValue(e.target.value)}
+              // defaultValue={profileImageLink}
             />
 
             <Button
@@ -235,9 +179,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           </Box>
         </Box>
 
-        {previewImage ? (
+        {previewImage && editImageLinkValue !== "" ? (
           <div className='image-preview'>
-            <img src={imageLink} loading='lazy' />
+            <img src={editImageLinkValue} loading='lazy' />
           </div>
         ) : null}
 
@@ -254,8 +198,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
             variant='contained'
             type='submit'
             form='profile-editor'
-            // disabled={disableSubmitButton}
-            disabled={isFormNotValid}
+            disabled={userInputError}
           >
             Edit info
           </Button>
