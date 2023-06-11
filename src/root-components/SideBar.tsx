@@ -34,7 +34,7 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
             onClick={() => setToggleSidebar(false)}
             key={key}
           >
-            <button.Icon />
+            <button.Icon fontSize='large' />
             {button.text}
           </NavLink>
         ))}

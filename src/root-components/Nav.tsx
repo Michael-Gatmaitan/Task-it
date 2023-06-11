@@ -1,15 +1,14 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-// Icons
-import BurgerMenu from "../assets/icons/burger-menu.svg";
-import CloseMenu from "../assets/icons/close.svg";
-
 // MUI Icons
 import { MenuRounded, CloseRounded } from "@mui/icons-material";
 
 // Components
 import ProfileRibbon from "../components/ProfileRibbon";
+
+// MUI
+import { Button } from "@mui/material";
 
 // Redux
 import { getUserLoggedIn } from "../slices/userSlice";
@@ -51,14 +50,18 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
         className='menu-container'
         onClick={() => setToggleSidebar(!toggleSidebar)}
       >
-        {toggleSidebar ? <CloseRounded /> : <MenuRounded />}
+        {toggleSidebar ? (
+          <CloseRounded fontSize='large' />
+        ) : (
+          <MenuRounded fontSize='large' />
+        )}
       </div>
 
       {/* Desktop side buttons */}
       {loggedIn === false ? (
         <div className='starting-buttons'>
-          <Link to={"/get-started"} className='default-button bordered-button'>
-            Get started
+          <Link to={"/get-started"}>
+            <Button variant='outlined'>Get started</Button>
           </Link>
         </div>
       ) : (

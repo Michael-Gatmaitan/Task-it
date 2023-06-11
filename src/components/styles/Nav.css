@@ -8,6 +8,7 @@ nav {
   top: 0;
   background-color: #fcfdff;
   margin-bottom: 35px;
+  z-index: 100;
 }
 nav .logo-container {
   display: flex;
@@ -62,6 +63,9 @@ nav .nav-buttons a:after {
 nav .nav-buttons a:hover {
   background-color: #f1f1f1;
 }
+nav .nav-buttons a span {
+  display: none;
+}
 nav .nav-buttons .active:after {
   opacity: 1;
 }
@@ -80,7 +84,7 @@ nav .starting-buttons {
   display: none;
   gap: 12px;
 }
-@media (min-width: 1024px) {
+@media (min-width: 700px) {
   nav {
     padding: 15px 0;
     margin-bottom: 24px;
@@ -93,18 +97,23 @@ nav .starting-buttons {
     font-size: 28px;
   }
 }
-@media (min-width: 1024px) and (min-width: 1024px) {
+@media (min-width: 700px) and (min-width: 700px) {
   nav .nav-buttons {
     display: flex;
   }
 }
-@media (min-width: 1024px) and (min-width: 1024px) {
+@media (min-width: 700px) and (min-width: 700px) {
   nav .menu-container {
     display: none;
   }
 }
-@media (min-width: 1024px) and (min-width: 1024px) {
+@media (min-width: 700px) and (min-width: 700px) {
   nav .starting-buttons {
     display: flex;
+  }
+}
+@media (min-width: 1024px) {
+  nav .nav-buttons a span {
+    display: block;
   }
 }/*# sourceMappingURL=Nav.css.map */

@@ -9,8 +9,8 @@ nav {
   position: sticky;
   top: 0;
   background-color: $white;
-
   margin-bottom: 35px;
+  z-index: $idx_navigation;
 
   .logo-container {
     display: flex;
@@ -69,6 +69,10 @@ nav {
       &:hover {
         background-color: #f1f1f1;
       }
+
+      span {
+        display: none;
+      }
     }
 
     .active {
@@ -95,7 +99,7 @@ nav {
   }
 
   // Desktop
-  @include desktop {
+  @include customMediaQuery(700px) {
     padding: 15px 0;
     margin-bottom: 24px;
 
@@ -110,20 +114,30 @@ nav {
     }
 
     .nav-buttons {
-      @include desktop {
+      @include customMediaQuery(700px) {
         display: flex;
       }
     }
 
     .menu-container {
-      @include desktop {
+      @include customMediaQuery(700px) {
         display: none;
       }
     }
 
     .starting-buttons {
-      @include desktop {
+      @include customMediaQuery(700px) {
         display: flex;
+      }
+    }
+  }
+
+  @include desktop {
+    .nav-buttons {
+      a {
+        span {
+          display: block;
+        }
       }
     }
   }

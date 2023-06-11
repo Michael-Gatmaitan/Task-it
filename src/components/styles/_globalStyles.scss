@@ -23,8 +23,16 @@
 .MuiButton-outlined {
   border: solid 3px;
 
+  // Same as 'padding: calc(8px - 3) calc(20px - 3);'
+  padding: 5px 17px;
+
   &:hover {
+    padding: 5px 17px;
     border: solid 3px;
+  }
+
+  @include desktop {
+    padding: 9px 21px;
   }
 }
 

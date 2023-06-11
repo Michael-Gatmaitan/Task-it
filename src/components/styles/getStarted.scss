@@ -16,12 +16,16 @@
 
     .detected-account-list {
       max-height: 300px;
-      // overflow-y: scroll;
+      overflow-y: scroll;
       margin-top: 12px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       grid-template-rows: auto;
       gap: 12px;
+
+      @include customMediaQuery(600px) {
+        grid-template-columns: 1fr 1fr;
+      }
 
       .detected-account {
         display: grid;

@@ -8,11 +8,17 @@
 }
 .get-started .detected-accounts .detected-account-list {
   max-height: 300px;
+  overflow-y: scroll;
   margin-top: 12px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
   gap: 12px;
+}
+@media (min-width: 600px) {
+  .get-started .detected-accounts .detected-account-list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .get-started .detected-accounts .detected-account-list .detected-account {
   display: grid;

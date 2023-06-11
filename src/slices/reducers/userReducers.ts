@@ -90,10 +90,7 @@ const userReducers = {
   editProfileInformation(state: AppState, action: PA<EditProfilePayload>) {
     /* If the username already used in other account,
     this function will stop */
-    if (
-      usernameExists(state.accounts, action.payload.username) &&
-      action.payload.username !== state.activeUser.username
-    ) {
+    if (usernameExists(state.accounts, action.payload.username)) {
       console.log(
         `Cannot replace the username: ${state.activeUser.username}
         with ${action.payload.username} because it is alreaady in use by another user
@@ -114,16 +111,12 @@ const userReducers = {
         profileImageLink: editedProfileImageLink,
       } = action.payload;
 
-      const indexOfUserInDB = state.accounts.indexOf(item);
+      // const indexOfUserInDB = state.accounts.indexOf(item);
 
       // If edited image link value is empty, set it to previous value
       if (editedProfileImageLink === "")
         editedProfileImageLink = state.activeUser.profileImageLink;
       if (editedUsername === "") editedUsername = state.activeUser.username;
-
-      // Change properties of user in DB
-      // state.accounts[indexOfUserInDB].username = editedUsername;
-      // state.accounts[indexOfUserInDB].profileImageLink = editedProfileImageLink;
 
       state.activeUser.username = editedUsername;
       state.activeUser.profileImageLink = editedProfileImageLink;

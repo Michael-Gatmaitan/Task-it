@@ -7,8 +7,8 @@ import type { Project } from "../../app/types";
 import "../styles/Projects.css";
 import Modalbackground from "../ModalContainer";
 
-// MUI
-import { Button } from "@mui/material";
+// MUI components
+import { Button, TextField } from "@mui/material";
 
 const Projects: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,11 +16,10 @@ const Projects: React.FC = () => {
     (state: RootState) => state.userReducer.activeUser.projects
   );
 
-  const [showCreateProjectModal, setShowCreateProjectModal] =
-    useState<boolean>(false);
+  const [showProjectModal, setShowProjectModal] = useState<boolean>(false);
 
   const showModal = () => {
-    setShowCreateProjectModal(true);
+    setShowProjectModal(true);
   };
 
   return (
@@ -28,12 +27,16 @@ const Projects: React.FC = () => {
       <div className='page-header'>
         <div className='page-title header2'>Projects {projects.length}</div>
 
-        <button
+        {/* <button
           className='create-new-project default-button bordered-button'
           onClick={showModal}
         >
+          Create new project 
+        </button>*/}
+
+        <Button variant='outlined' onClick={showModal}>
           Create new project
-        </button>
+        </Button>
       </div>
 
       {projects !== undefined
@@ -60,27 +63,29 @@ const Projects: React.FC = () => {
         Log out
       </Button>
 
-      {showCreateProjectModal ? (
-        <CreateProjectModal
-          showCreateProjectModal={showCreateProjectModal}
-          setShowCreateProjectModal={setShowCreateProjectModal}
+      {showProjectModal ? (
+        <ProjectModal
+          showProjectModal={showProjectModal}
+          setShowProjectModal={setShowProjectModal}
         />
       ) : null}
     </div>
   );
 };
 
-interface CreateProjectModalProps {
-  showCreateProjectModal: boolean;
-  setShowCreateProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
+/** CREATE PROJECT MODAL */
+
+interface ProjectModalProps {
+  showProjectModal: boolean;
+  setShowProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
+const ProjectModal: React.FC<ProjectModalProps> = (props) => {
   const projects = useAppSelector(
     (state: RootState) => state.userReducer.activeUser.projects
   );
   const dispatch = useAppDispatch();
-  const { showCreateProjectModal, setShowCreateProjectModal } = props;
+  const { showProjectModal, setShowProjectModal } = props;
 
   const projectNameRef = useRef<HTMLInputElement>(null);
   const projectDescriptionRef = useRef<HTMLInputElement>(null);
@@ -185,7 +190,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
             />
             <button
               className='default-button bordered-button'
-              onClick={() => setShowCreateProjectModal(false)}
+              onClick={() => setShowProjectModal(false)}
             >
               Cancel
             </button>
@@ -194,8 +199,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
       </div>
 
       <Modalbackground
-        showModal={showCreateProjectModal}
-        setShowModal={setShowCreateProjectModal}
+        showModal={showProjectModal}
+        setShowModal={setShowProjectModal}
       />
     </>
   );

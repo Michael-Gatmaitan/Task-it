@@ -1,6 +1,3 @@
-import React from "react";
-import { SvgIconProps } from "@material-ui/core/SvgIcon";
-
 export interface AppState {
   activeUser: User;
   accounts: User[];
@@ -52,7 +49,7 @@ export interface NavButton {
   text: string;
   path: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string; }
+  Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string };
 }
 
 interface NavButtons {
