@@ -59,7 +59,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
 
       {/* Desktop side buttons */}
       {loggedIn === false ? (
-        <div className='starting-buttons'>
+        <div className='get-started-button-container'>
           <Link to={"/get-started"}>
             <Button variant='outlined'>Get started</Button>
           </Link>

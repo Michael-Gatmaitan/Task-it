@@ -93,13 +93,13 @@ nav {
     }
   }
 
-  .starting-buttons {
+  .get-started-button-container {
     display: none;
     gap: 12px;
   }
 
   // Desktop
-  @include customMediaQuery(700px) {
+  @include tablet {
     padding: 15px 0;
     margin-bottom: 24px;
 
@@ -114,21 +114,15 @@ nav {
     }
 
     .nav-buttons {
-      @include customMediaQuery(700px) {
-        display: flex;
-      }
+      display: flex;
     }
 
     .menu-container {
-      @include customMediaQuery(700px) {
-        display: none;
-      }
+      display: none;
     }
 
-    .starting-buttons {
-      @include customMediaQuery(700px) {
-        display: flex;
-      }
+    .get-started-button-container {
+      display: flex;
     }
   }
 

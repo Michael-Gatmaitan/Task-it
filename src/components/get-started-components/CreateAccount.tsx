@@ -21,14 +21,6 @@ import {
   setUserInputError,
 } from "../../slices/userSlice";
 
-// Profile images imports
-import ProfileImage1 from "../../assets/profile-images/profile_image_1.png";
-import ProfileImage2 from "../../assets/profile-images/profile_image_2.png";
-import ProfileImage3 from "../../assets/profile-images/profile_image_3.png";
-import ProfileImage4 from "../../assets/profile-images/profile_image_4.png";
-import ProfileImage5 from "../../assets/profile-images/profile_image_5.png";
-import ProfileImage6 from "../../assets/profile-images/profile_image_6.png";
-
 const CreateAccount: React.FC = () => {
   const dispatch = useAppDispatch();
 
@@ -39,7 +31,7 @@ const CreateAccount: React.FC = () => {
 
     const newUser: User = {
       username: usernameValue,
-      profileImageLink: imageLinkValue,
+      profileImageLink: imageLinkValue === "" ? selectedImage : imageLinkValue,
       projects: [],
       userID: users[users.length - 1].userID + 1,
     };
@@ -60,16 +52,18 @@ const CreateAccount: React.FC = () => {
   const [usernameValue, setUsernameValue] = useState<string>("");
   const [imageLinkValue, setImageLinkValue] = useState<string>("");
 
+  // Selecting custom profile image states
+  const [selectedImage, setSelectedImage] = useState<string>("");
+
   const userInputError = useAppSelector(getUserInputError);
 
   useEffect(() => {
-    console.log(usernameValue, imageLinkValue);
-
     // Disable 'create acount' button if 1 or both of input is empty.
     setInvalidInput(
-      usernameValue.trim() === "" || imageLinkValue.trim() === ""
+      usernameValue.trim() === "" ||
+        (imageLinkValue.trim() === "" && selectedImage === "")
     );
-  }, [usernameValue, imageLinkValue]);
+  }, [usernameValue, imageLinkValue, selectedImage]);
 
   useEffect(() => {
     // This variable changes its value on /* userReducers.ts */
@@ -84,8 +78,7 @@ const CreateAccount: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInputError]);
 
-  // Selecting custom profile image states
-  const [selectedImage, setSelectedImage] = useState<string>("");
+  useEffect(() => setImageLinkValue(""), [selectedImage]);
 
   return (
     <div className='create-account'>
@@ -111,6 +104,7 @@ const CreateAccount: React.FC = () => {
             label='Profile image link'
             required
             value={imageLinkValue}
+            disabled={selectedImage !== ""}
             onChange={(e) => setImageLinkValue(e.target.value)}
           />
 
@@ -133,7 +127,10 @@ const CreateAccount: React.FC = () => {
             ))}
           </div> */}
 
-          <SelectProfileImage setSelectedImage={setSelectedImage} />
+          <SelectProfileImage
+            setSelectedImage={setSelectedImage}
+            imageLinkValue={imageLinkValue}
+          />
 
           <Button type='submit' variant='contained' disabled={invalidInput}>
             Create account
@@ -152,30 +149,61 @@ const CreateAccount: React.FC = () => {
 
 interface SelectProfileImageProps {
   setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
+  imageLinkValue: string;
 }
 
 const SelectProfileImage: React.FC<SelectProfileImageProps> = (props) => {
-  const { setSelectedImage } = props;
+  const { setSelectedImage, imageLinkValue } = props;
 
   const profile_images: string[] = [
-    ProfileImage1,
-    ProfileImage2,
-    ProfileImage3,
-    ProfileImage4,
-    ProfileImage5,
-    ProfileImage6,
+    "./profile-images/profile_image_1.png",
+    "./profile-images/profile_image_2.png",
+    "./profile-images/profile_image_3.png",
+    "./profile-images/profile_image_4.png",
+    "./profile-images/profile_image_5.png",
+    "./profile-images/profile_image_6.png",
   ];
 
+  const activateTile = (profile_image: string) => {
+    const profile_image_els: Array<Element> = [
+      ...document.getElementsByClassName("profile-image"),
+    ];
+
+    if (profile_image_els === undefined) return;
+
+    const idx = profile_images.findIndex((img) => img === profile_image);
+
+    if (profile_image_els[idx].classList.contains("selected-profile")) {
+      profile_image_els[idx].classList.remove("selected-profile");
+      setSelectedImage("");
+      return;
+    }
+
+    profile_image_els.map((el, i) => {
+      if (i === idx) el.classList.add("selected-profile");
+      else el.classList.remove("selected-profile");
+    });
+
+    setSelectedImage(profile_image);
+  };
+
   return (
-    <div className='select-profile-images'>
+    <div
+      className='select-profile-images'
+      style={{
+        opacity: imageLinkValue.trim() !== "" ? 0.6 : 1,
+        pointerEvents: imageLinkValue.trim() !== "" ? "none" : "auto",
+      }}
+    >
       <div className='header2'>Select profile image</div>
       <div className='profile-images'>
-        {profile_images.map((profile_image) => (
-          <div className='profile-image'>
-            <img
-              src={profile_image}
-              onClick={() => setSelectedImage(profile_image)}
-            />
+        {profile_images.map((profile_image, i) => (
+          <div
+            className='profile-image'
+            onClick={() => activateTile(profile_image)}
+            key={i}
+          >
+            <img src={profile_image} />
           </div>
         ))}
       </div>

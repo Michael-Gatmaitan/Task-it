@@ -263,13 +263,13 @@ input[type=submit]:disabled {
 }
 
 body {
-  padding: 0 18px;
+  padding: 0 18px 18px 18px;
   margin: 0;
   background-color: #fcfdff;
 }
 @media (min-width: 1024px) {
   body {
-    padding: 0 60px;
+    padding: 0 60px 60px 60px;
   }
 }
 

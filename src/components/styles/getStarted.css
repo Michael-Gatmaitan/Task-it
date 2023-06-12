@@ -67,13 +67,28 @@
 .get-started .create-account .form-container #create-account-form .select-profile-images .profile-images {
   display: grid;
   gap: 8px;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.get-started .create-account .form-container #create-account-form .select-profile-images .profile-images .header2 {
+  padding: 8px 0;
+}
+.get-started .create-account .form-container #create-account-form .select-profile-images .profile-images .profile-image {
+  border-radius: 16px;
+  background-color: #5b87f8;
+  transition: 0.1s ease-in;
 }
 .get-started .create-account .form-container #create-account-form .select-profile-images .profile-images .profile-image img {
   border-radius: 8px;
   width: 100%;
   height: 100%;
+}
+.get-started .create-account .form-container #create-account-form .select-profile-images .profile-images .selected-profile {
+  padding: 8px;
+}
+@media (min-width: 700px) and (max-width: 1023px) {
+  .get-started .create-account .form-container #create-account-form .select-profile-images .profile-images {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 .get-started .create-account .form-container #create-account-form .create-account-button {
   z-index: 0;

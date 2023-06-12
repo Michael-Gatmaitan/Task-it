@@ -2,12 +2,12 @@
 @import "./components/styles/globalStyles";
 
 body {
-  padding: 0 18px;
+  padding: 0 18px 18px 18px;
   margin: 0;
   background-color: $white;
 
   @include desktop {
-    padding: 0 60px;
+    padding: 0 60px 60px 60px;
   }
 }
 
