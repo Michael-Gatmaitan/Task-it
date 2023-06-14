@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import SelectProfileImage from "../reusable/selectProfileImage/SelectProfileImage";
 
 // MUI Components
 import { Button, TextField } from "@mui/material";
 
 import { User } from "../../app/types";
+
 // Hooks
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
@@ -33,7 +35,7 @@ const CreateAccount: React.FC = () => {
       username: usernameValue,
       profileImageLink: imageLinkValue === "" ? selectedImage : imageLinkValue,
       projects: [],
-      userID: users[users.length - 1].userID + 1,
+      userID: users.length === 0 ? 0 : users[users.length - 1].userID + 1,
     };
 
     dispatch(addUserAccount(newUser));
@@ -103,29 +105,10 @@ const CreateAccount: React.FC = () => {
             variant='outlined'
             label='Profile image link'
             required
-            value={imageLinkValue}
+            value={selectedImage !== "" ? selectedImage : imageLinkValue}
             disabled={selectedImage !== ""}
             onChange={(e) => setImageLinkValue(e.target.value)}
           />
-
-          {/* Select image */}
-          {/* <div
-            className='builtin-images'
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto auto",
-              gap: 8,
-            }}
-          >
-            {["red", "blue", "green"].map((color) => (
-              <div
-                style={{
-                  backgroundColor: color,
-                  height: 50,
-                }}
-              ></div>
-            ))}
-          </div> */}
 
           <SelectProfileImage
             setSelectedImage={setSelectedImage}
@@ -143,70 +126,6 @@ const CreateAccount: React.FC = () => {
           That username already exist, please try another.
         </div>
       ) : null}
-    </div>
-  );
-};
-
-interface SelectProfileImageProps {
-  setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
-  imageLinkValue: string;
-}
-
-const SelectProfileImage: React.FC<SelectProfileImageProps> = (props) => {
-  const { setSelectedImage, imageLinkValue } = props;
-
-  const profile_images: string[] = [
-    "./profile-images/profile_image_1.png",
-    "./profile-images/profile_image_2.png",
-    "./profile-images/profile_image_3.png",
-    "./profile-images/profile_image_4.png",
-    "./profile-images/profile_image_5.png",
-    "./profile-images/profile_image_6.png",
-  ];
-
-  const activateTile = (profile_image: string) => {
-    const profile_image_els: Array<Element> = [
-      ...document.getElementsByClassName("profile-image"),
-    ];
-
-    if (profile_image_els === undefined) return;
-
-    const idx = profile_images.findIndex((img) => img === profile_image);
-
-    if (profile_image_els[idx].classList.contains("selected-profile")) {
-      profile_image_els[idx].classList.remove("selected-profile");
-      setSelectedImage("");
-      return;
-    }
-
-    profile_image_els.map((el, i) => {
-      if (i === idx) el.classList.add("selected-profile");
-      else el.classList.remove("selected-profile");
-    });
-
-    setSelectedImage(profile_image);
-  };
-
-  return (
-    <div
-      className='select-profile-images'
-      style={{
-        opacity: imageLinkValue.trim() !== "" ? 0.6 : 1,
-        pointerEvents: imageLinkValue.trim() !== "" ? "none" : "auto",
-      }}
-    >
-      <div className='header2'>Select profile image</div>
-      <div className='profile-images'>
-        {profile_images.map((profile_image, i) => (
-          <div
-            className='profile-image'
-            onClick={() => activateTile(profile_image)}
-            key={i}
-          >
-            <img src={profile_image} />
-          </div>
-        ))}
-      </div>
     </div>
   );
 };

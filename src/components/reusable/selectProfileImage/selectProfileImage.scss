@@ -1,0 +1,47 @@
+@import "../../styles/mixins";
+
+// Select profile images
+.select-profile-images {
+  display: grid;
+  gap: 8px;
+
+  .profile-images {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .profile-image-root {
+      border-radius: 4px;
+      background-color: $primary;
+      transition: 0.1s ease-in;
+
+      img {
+        border-radius: 4px;
+        width: 100%;
+        height: 100%;
+      }
+
+      &:hover {
+        padding: 4px;
+      }
+    }
+
+    .selected-profile {
+      padding: 8px;
+      background-color: $darker;
+
+      &:hover {
+        padding: 8px;
+      }
+    }
+
+    @include tablet {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    }
+  }
+}

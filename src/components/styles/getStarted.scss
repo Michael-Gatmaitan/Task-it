@@ -82,40 +82,6 @@
         display: grid;
         grid-gap: 8px;
 
-        // Select profile images
-        .select-profile-images {
-          .profile-images {
-            display: grid;
-            gap: 8px;
-            grid-template-columns: 1fr 1fr 1fr;
-            // grid-auto-rows: 1fr;
-
-            .header2 {
-              padding: 8px 0;
-            }
-
-            .profile-image {
-              border-radius: 16px;
-              background-color: $primary;
-              transition: 0.1s ease-in;
-
-              img {
-                border-radius: 8px;
-                width: 100%;
-                height: 100%;
-              }
-            }
-
-            .selected-profile {
-              padding: 8px;
-            }
-
-            @include tablet {
-              grid-template-columns: repeat(6, 1fr);
-            }
-          }
-        }
-
         .create-account-button {
           z-index: 0;
         }

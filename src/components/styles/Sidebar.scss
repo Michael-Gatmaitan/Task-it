@@ -9,6 +9,11 @@
   background-color: $white;
   padding: 18px;
   z-index: 99;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .sidebar-buttons {
     margin-top: 24px;

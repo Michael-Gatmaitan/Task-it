@@ -7,6 +7,10 @@
   background-color: #fcfdff;
   padding: 18px;
   z-index: 99;
+  overflow-y: scroll;
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
 }
 .sidebar .sidebar-buttons {
   margin-top: 24px;

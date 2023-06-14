@@ -1,0 +1,40 @@
+.select-profile-images {
+  display: grid;
+  gap: 8px;
+}
+.select-profile-images .profile-images {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.select-profile-images .profile-images .profile-image-root {
+  border-radius: 4px;
+  background-color: #5b87f8;
+  transition: 0.1s ease-in;
+}
+.select-profile-images .profile-images .profile-image-root img {
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+}
+.select-profile-images .profile-images .profile-image-root:hover {
+  padding: 4px;
+}
+.select-profile-images .profile-images .selected-profile {
+  padding: 8px;
+  background-color: #0f1975;
+}
+.select-profile-images .profile-images .selected-profile:hover {
+  padding: 8px;
+}
+@media (min-width: 700px) {
+  .select-profile-images .profile-images {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .select-profile-images .profile-images {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+}/*# sourceMappingURL=selectProfileImage.css.map */

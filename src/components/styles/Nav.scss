@@ -39,7 +39,6 @@ nav {
     transform: translateX(-50%);
 
     a {
-      display: block;
       padding: 14px;
       font-family: $inter;
       font-size: 15px;
@@ -127,6 +126,10 @@ nav {
   }
 
   @include desktop {
+    // .menu-container {
+    //   display: none;
+    // }
+
     .nav-buttons {
       a {
         span {

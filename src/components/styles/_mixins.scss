@@ -42,7 +42,7 @@ $idx_behindModal: 98;
 
 // Media Queries
 @mixin tablet {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+  @media (min-width: #{$tablet-width}) {
     @content;
   }
 }

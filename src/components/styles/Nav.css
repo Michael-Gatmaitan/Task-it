@@ -34,7 +34,6 @@ nav .nav-buttons {
   transform: translateX(-50%);
 }
 nav .nav-buttons a {
-  display: block;
   padding: 14px;
   font-family: "Inter", sans-serif;
   font-size: 15px;
@@ -84,7 +83,7 @@ nav .get-started-button-container {
   display: none;
   gap: 12px;
 }
-@media (min-width: 700px) and (max-width: 1023px) {
+@media (min-width: 700px) {
   nav {
     padding: 15px 0;
     margin-bottom: 24px;

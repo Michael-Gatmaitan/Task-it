@@ -22,8 +22,8 @@
   display: grid;
   gap: 8px;
 }
-.projects .create-project-modal form .input-container .label {
-  margin-bottom: 2px;
+.projects .create-project-modal form .input-container .MuiTextField-root {
+  width: 100%;
 }
 .projects .create-project-modal form .modal-buttons {
   display: grid;

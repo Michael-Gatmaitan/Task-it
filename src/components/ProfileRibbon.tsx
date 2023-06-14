@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import SelectProfileImage from "./reusable/selectProfileImage/SelectProfileImage";
+
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   editProfileInformation,
@@ -79,11 +81,15 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
       profile ribbon is CLOSED
     */
 
+    console.log("Closing all states");
+
     setToggleEditProfile(false);
     setDisablePreviewImage(false);
     setPreviewImage(false);
 
     // Set all state value to empty.
+    setEditUsernameValue("");
+    setEditImageLinkValue("");
   };
 
   const [editUsernameValue, setEditUsernameValue] = useState<string>("");
@@ -93,30 +99,33 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const [disablePreviewImage, setDisablePreviewImage] =
     useState<boolean>(false);
 
+  const [selectedImage, setSelectedImage] = useState<string>("");
+
   const [userInputError, setUserInputError] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log(editUsernameValue, editImageLinkValue);
-
     const usernameVal = editUsernameValue.trim();
     const imgVal = editImageLinkValue.trim();
 
     setUserInputError(
       usernameVal.trim() === "" ||
         usernameVal.trim() === username ||
-        imgVal.trim() === ""
+        (imgVal.trim() === "" && selectedImage === "")
     );
 
     setDisablePreviewImage(imgVal === "");
-  }, [editUsernameValue, editImageLinkValue, username]);
+  }, [editUsernameValue, editImageLinkValue, username, selectedImage]);
 
-  const handleProfileEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEditProfileSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log("Edit Submitted.");
 
     dispatch(
       editProfileInformation({
         username: editUsernameValue,
-        profileImageLink: editImageLinkValue,
+        profileImageLink:
+          selectedImage !== "" ? selectedImage : editImageLinkValue,
       })
     );
 
@@ -130,7 +139,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
         display: toggleEditProfile ? "grid" : "none",
       }}
     >
-      <form id='profile-editor' onSubmit={handleProfileEditSubmit}>
+      <form id='profile-editor' onSubmit={handleEditProfileSubmit}>
         <Box
           sx={{
             "& .MuiTextField-root": {
@@ -164,7 +173,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
             <TextField
               label='Edit image link'
               variant='outlined'
-              value={editImageLinkValue}
+              value={selectedImage !== "" ? selectedImage : editImageLinkValue}
+              disabled={selectedImage !== ""}
               onChange={(e) => setEditImageLinkValue(e.target.value)}
               // defaultValue={profileImageLink}
             />
@@ -185,6 +195,12 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           </div>
         ) : null}
 
+        {/* Fix error: DOM handling */}
+        <SelectProfileImage
+          imageLinkValue={editImageLinkValue}
+          setSelectedImage={setSelectedImage}
+        />
+
         <Box
           sx={{
             "&": {
@@ -194,12 +210,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
             },
           }}
         >
-          <Button
-            variant='contained'
-            type='submit'
-            form='profile-editor'
-            disabled={userInputError}
-          >
+          <Button variant='contained' type='submit' disabled={userInputError}>
             Edit info
           </Button>
 
