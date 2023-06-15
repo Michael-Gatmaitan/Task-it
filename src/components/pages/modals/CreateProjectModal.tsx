@@ -103,7 +103,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
               type='date'
               className='text-box'
               placeholder='Due date'
-              // onChange={(e) => set(e.target.value)}
+              onChange={(e) => setDueDate(e.target.value)}
             />
           </div>
 

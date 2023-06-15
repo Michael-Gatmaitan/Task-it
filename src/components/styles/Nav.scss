@@ -84,6 +84,7 @@ nav {
   .menu-container {
     width: 32px;
     height: 32px;
+    color: $primary;
     @include flexCenter;
 
     img {

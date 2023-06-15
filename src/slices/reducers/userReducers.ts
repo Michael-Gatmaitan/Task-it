@@ -44,10 +44,7 @@ const userReducers = {
     };
 
     // Append users
-    // const deviceAccountsTemp: User[] = [...accountsFromStorage, newUser];
     state.accounts.push(newUser);
-
-    // localStorage.setItem("users", JSON.stringify(deviceAccountsTemp));
     console.log("from add user account");
     state.loggedIn = true;
   },

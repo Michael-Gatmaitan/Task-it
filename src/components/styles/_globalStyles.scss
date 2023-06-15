@@ -150,8 +150,8 @@
 // Font sizes and styles
 .header1 {
   // Large header
-  $mobileSize: 64px;
-  $desktopSize: 42px;
+  $mobileSize: 42px;
+  $desktopSize: 92px;
 
   @include fontProps($inter, #121212, $mobileSize, bold);
 
@@ -193,11 +193,11 @@
   }
 }
 
-.body-text-title {
-  $mobileSize: 12px;
-  $desktopSize: 14px;
+.header-text-description {
+  $mobileSize: 18px;
+  $desktopSize: 23px;
 
-  @include fontProps($inter, #121212, $mobileSize, bold);
+  @include fontProps($inter, rgba(#121212, 0.8), $mobileSize, 500);
 
   @include desktop {
     font-size: $desktopSize !important;
@@ -205,10 +205,10 @@
 }
 
 .body-text {
-  $mobileSize: 12px;
-  $desktopSize: 14px;
+  $mobileSize: 16px;
+  $desktopSize: 18px;
 
-  @include fontProps($inter, rgba(#121212, 0.8), $mobileSize, bold);
+  @include fontProps($inter, rgba(#121212, 0.8), $mobileSize, 400);
 
   @include desktop {
     font-size: $desktopSize !important;

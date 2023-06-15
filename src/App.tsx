@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -18,8 +18,8 @@ import Projects from "./components/pages/Projects";
 import Contact from "./components/pages/Contact";
 import Settings from "./components/pages/Settings";
 import GetStarted from "./components/pages/GetStarted";
-import { useAppSelector, useAppDispatch } from "./app/hooks";
-import { getUserLoggedIn, logoutUser } from "./slices/userSlice";
+import { useAppSelector } from "./app/hooks";
+import { getUserLoggedIn } from "./slices/userSlice";
 import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
 // MUI StyledEngineProvider
@@ -27,18 +27,6 @@ import StyledEngineProvider from "@mui/material/StyledEngineProvider";
 
 const App: React.FC = () => {
   useLocalStorageUpdater();
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    document.title = "Task it 📔";
-
-    document.body.onload = () => {
-      dispatch(logoutUser());
-    };
-    // Make sure on every log in or reload, there's no active user
-    // and loggedIn is false.
-  });
 
   const loggedIn = useAppSelector(getUserLoggedIn);
 

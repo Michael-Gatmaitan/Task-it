@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./hooks";
-import {
-  getActiveUser,
-  getDeviceAccounts,
-  updateAccounts,
-} from "../slices/userSlice";
+import { getActiveUser, updateAccounts } from "../slices/userSlice";
 
 /* For every update of ActiveUser and DeviceAccounts 
   we should also update the localStorage */
@@ -13,7 +9,6 @@ export const useLocalStorageUpdater = () => {
   const dispatch = useAppDispatch();
 
   const activeUser = useAppSelector(getActiveUser);
-  // const deviceAccounts = useAppSelector(getDeviceAccounts);
 
   const { userID } = activeUser;
 

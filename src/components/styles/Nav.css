@@ -71,6 +71,7 @@ nav .nav-buttons .active:after {
 nav .menu-container {
   width: 32px;
   height: 32px;
+  color: #5b87f8;
   display: flex;
   align-items: center;
   justify-content: center;

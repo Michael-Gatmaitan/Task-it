@@ -144,12 +144,12 @@
 .header1 {
   font-family: "Inter", sans-serif;
   color: #121212;
-  font-size: 64px;
+  font-size: 42px;
   font-weight: bold;
 }
 @media (min-width: 1024px) {
   .header1 {
-    font-size: 42px !important;
+    font-size: 92px !important;
   }
 }
 
@@ -189,27 +189,27 @@
   }
 }
 
-.body-text-title {
+.header-text-description {
   font-family: "Inter", sans-serif;
-  color: #121212;
-  font-size: 12px;
-  font-weight: bold;
+  color: rgba(18, 18, 18, 0.8);
+  font-size: 18px;
+  font-weight: 500;
 }
 @media (min-width: 1024px) {
-  .body-text-title {
-    font-size: 14px !important;
+  .header-text-description {
+    font-size: 23px !important;
   }
 }
 
 .body-text {
   font-family: "Inter", sans-serif;
   color: rgba(18, 18, 18, 0.8);
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 400;
 }
 @media (min-width: 1024px) {
   .body-text {
-    font-size: 14px !important;
+    font-size: 18px !important;
   }
 }
 
@@ -276,4 +276,14 @@ body {
 * {
   box-sizing: border-box;
   outline: none;
+}
+
+::-moz-selection {
+  background-color: #0f1975;
+  color: #fff;
+}
+
+::selection {
+  background-color: #0f1975;
+  color: #fff;
 }/*# sourceMappingURL=index.css.map */
