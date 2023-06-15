@@ -22,10 +22,6 @@
   border: solid 3px;
   padding: 5px 17px;
 }
-.MuiButton-outlined:hover {
-  padding: 5px 17px;
-  border: solid 3px;
-}
 @media (min-width: 1024px) {
   .MuiButton-outlined {
     padding: 9px 21px;

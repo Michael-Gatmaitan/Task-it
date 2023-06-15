@@ -5,6 +5,27 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
+  const cardValues = [
+    {
+      cardTitle: "Project",
+      cardDescription: `This will act as your Project's parent component, where
+        Boards and Cards are placed. Enjoy creating projects by using
+        Task-it as your project organizer.`,
+    },
+    {
+      cardTitle: "Boards",
+      cardDescription: `Boards will act as container of your cards, boards can have a 
+        label like “On going”, “Processing” , “Done”. Just like a Kanban 
+        board, this will make you see the progress.`,
+    },
+    {
+      cardTitle: "Cards",
+      cardDescription: `Boards will act as container of your cards, boards can have a 
+        label like “On going”, “Processing” , “Done”. Just like a Kanban board, 
+        this will make you see the progress.`,
+    },
+  ];
+
   return (
     <div className='home page'>
       <div className='header-container'>
@@ -31,7 +52,7 @@ const Home: React.FC = () => {
             <div className='header2'>Backendless</div>
 
             <div className='body-text'>
-              Taskit saves data on device's local storage that makes it fast to
+              Taskiit saves data on device's local storage that makes it fast to
               access all the data you store.
             </div>
           </div>
@@ -40,10 +61,37 @@ const Home: React.FC = () => {
             <div className='header2'>All ready, already</div>
 
             <div className='body-text'>
-              Taskit has features you need to organize your projects and making
+              Taskiit has features you need to organize your projects and making
               workflow easier to maintain.
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className='cards'>
+        {cardValues.map((card, i) => (
+          <div className='card-container bordered-container' key={i}>
+            <div className='card-presenter bordered-container'></div>
+
+            <div className='card-info'>
+              <div className='card-title header2'>{card.cardTitle}</div>
+
+              <div className='card-description body-text'>
+                {card.cardDescription}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className='why'>
+        <div className='why-title'>Why?</div>
+
+        <div className='why-description body-text'>
+          Task-it is a tool for organizing projects, activities, assignments for
+          you, specially for students. It is designed and developed by a 1st
+          year BSIT student from Philippines that wants to help students to
+          organize their works easily for more motivation nad inspiration.
         </div>
       </div>
     </div>

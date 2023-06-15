@@ -21,7 +21,6 @@
 
     .sub-headers {
       display: grid;
-      // flex-direction: column;
       gap: 55px;
 
       .sub-header-container {
@@ -54,6 +53,81 @@
         grid-template-columns: 40ch 40ch;
         width: 250px;
         gap: 120px;
+      }
+    }
+  }
+
+  .cards {
+    display: grid;
+    overflow-x: scroll;
+    grid-template-columns: repeat(3, 250px);
+    gap: 14px;
+    margin-top: 150px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card-container {
+      padding: 12px 12px 30px 12px;
+      background-color: $primary;
+
+      .card-presenter {
+        width: 100%;
+        // Change height base on input image
+        background-color: $primary;
+        border-radius: 8px !important;
+        height: 80px;
+        margin-bottom: 12px;
+      }
+
+      .card-info {
+        display: grid;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    @include desktop {
+      overflow-x: auto;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+
+      .card-container {
+        padding: 18px 18px 30px 18px;
+
+        .card-presenter {
+          margin-bottom: 24px;
+          height: 150px;
+        }
+      }
+    }
+  }
+
+  .why {
+    margin-top: 80px;
+    text-align: center;
+
+    .why-title {
+      @include fontProps($inter, $darker, 34px, 700);
+    }
+
+    .why-description {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    @include desktop {
+      margin-top: 110px;
+
+      .why-title {
+        font-size: 48px !important;
+      }
+
+      .why-description {
+        margin: auto;
+        width: calc(100% * 0.7);
+        margin-top: 24px;
       }
     }
   }

@@ -80,7 +80,7 @@ const CreateAccount: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInputError]);
 
-  useEffect(() => setImageLinkValue(""), [selectedImage]);
+  useEffect(() => setImageLinkValue(""), [imageLinkValue]);
 
   return (
     <div className='create-account'>
