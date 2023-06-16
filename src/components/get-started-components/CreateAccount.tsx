@@ -22,6 +22,7 @@ import {
   setActiveUser,
   setUserInputError,
 } from "../../slices/userSlice";
+import { useIsUsernameExist } from "../../app/formValidation";
 
 const CreateAccount: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -59,13 +60,16 @@ const CreateAccount: React.FC = () => {
 
   const userInputError = useAppSelector(getUserInputError);
 
+  const usernameExist = useIsUsernameExist(usernameValue);
+
   useEffect(() => {
     // Disable 'create acount' button if 1 or both of input is empty.
     setInvalidInput(
       usernameValue.trim() === "" ||
+        usernameExist ||
         (imageLinkValue.trim() === "" && selectedImage === "")
     );
-  }, [usernameValue, imageLinkValue, selectedImage]);
+  }, [usernameValue, imageLinkValue, selectedImage, usernameExist]);
 
   useEffect(() => {
     // This variable changes its value on /* userReducers.ts */
@@ -94,7 +98,8 @@ const CreateAccount: React.FC = () => {
         >
           <TextField
             variant='outlined'
-            label='Username'
+            label={usernameExist ? "Username already exist" : "Enter new name"}
+            error={usernameExist}
             required
             value={usernameValue}
             id='create-account-username'

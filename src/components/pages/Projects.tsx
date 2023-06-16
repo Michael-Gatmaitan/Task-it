@@ -28,7 +28,9 @@ const Projects: React.FC = () => {
   return (
     <div className='projects page'>
       <div className='page-header'>
-        <div className='page-title header2'>Projects {projects.length}</div>
+        <div className='page-title header2'>
+          Projects {projects.length && " 0"}
+        </div>
 
         {/* <button
           className='create-new-project default-button bordered-button'
@@ -40,6 +42,7 @@ const Projects: React.FC = () => {
         <Button variant='outlined' onClick={showModal}>
           Create new project
         </Button>
+        <Button variant='contained'>Create new project</Button>
       </div>
 
       {projects !== undefined

@@ -53,11 +53,14 @@
   .edit-profile {
     position: absolute;
     width: 100%;
-    top: calc(100% + 24px + 2px);
+    top: calc(100% + 24px);
     border-radius: 16px;
     z-index: 99;
 
     form {
+      display: grid;
+      gap: 12px;
+
       .image-preview {
         width: 100%;
         margin-bottom: 1.5rem;

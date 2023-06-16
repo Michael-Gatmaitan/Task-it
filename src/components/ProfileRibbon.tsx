@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SelectProfileImage from "./reusable/selectProfileImage/SelectProfileImage";
 
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -11,6 +11,7 @@ import {
 import "./styles/ProfileRibbon.css";
 import { Box, Button, TextField } from "@mui/material";
 import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
+import { useIsUsernameExist } from "../app/formValidation";
 
 interface ProfileRibbonProps {
   platform: "desktop" | "mobile";
@@ -103,6 +104,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
   const [userInputError, setUserInputError] = useState<boolean>(true);
 
+  // custom hook that validates exists username.
+  const usernameExist = useIsUsernameExist(editUsernameValue);
+
   useEffect(() => {
     const usernameVal = editUsernameValue.trim();
     const imgVal = editImageLinkValue.trim();
@@ -110,11 +114,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     setUserInputError(
       usernameVal.trim() === "" ||
         usernameVal.trim() === username ||
+        usernameExist ||
         (imgVal.trim() === "" && selectedImage === "")
     );
 
     setDisablePreviewImage(imgVal === "");
-  }, [editUsernameValue, editImageLinkValue, username, selectedImage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    editUsernameValue,
+    editImageLinkValue,
+    username,
+    selectedImage,
+    usernameExist,
+  ]);
 
   const handleEditProfileSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -142,17 +154,26 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
       <form id='profile-editor' onSubmit={handleEditProfileSubmit}>
         <Box
           sx={{
+            "&": {
+              display: "grid",
+              gap: "12px",
+            },
             "& .MuiTextField-root": {
-              mb: 1.5,
               width: "100%",
             },
           }}
         >
           <TextField
-            label={"Enter new name"}
+            label={
+              editUsernameValue === username
+                ? "Same username detected"
+                : usernameExist
+                ? "Username already exist"
+                : "Enter new name"
+            }
             variant='outlined'
             value={editUsernameValue}
-            error={editUsernameValue === username}
+            error={editUsernameValue === username || usernameExist}
             onChange={(e) => setEditUsernameValue(e.target.value)}
           />
 
@@ -165,13 +186,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
               },
 
               "& .MuiButton-contained": {
-                mb: 1.5,
                 boxShadow: "none",
               },
             }}
           >
             <TextField
-              label='Edit image link'
+              label={
+                selectedImage !== "" ? "Custom profile" : "Edit image link"
+              }
               variant='outlined'
               value={selectedImage !== "" ? selectedImage : editImageLinkValue}
               disabled={selectedImage !== ""}

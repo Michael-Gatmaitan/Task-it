@@ -15,7 +15,8 @@ const usernameExists = (
       deviceAccount.username.toLowerCase() === newUsername.toLowerCase()
   );
 
-  // if hasPairUsername is not empt
+  // if hasPairUsername is not empty
+  // return state.deviceAccounts.find(acc => acc.username === newUsername) !== undefined
   return hasPairUsername.length !== 0;
 };
 

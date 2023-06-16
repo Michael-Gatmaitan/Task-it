@@ -22,18 +22,21 @@
 
 .MuiButton-outlined {
   border: solid 3px;
-
   // Same as 'padding: calc(8px - 3) calc(20px - 3);'
   padding: 5px 17px;
+
+  &:hover {
+    border: solid 3px;
+  }
 
   @include desktop {
     padding: 9px 21px;
   }
 }
 
-.MuiButton-text {
-  color: #f00;
-}
+// .MuiButton-text {
+//   color: #f00;
+// }
 
 .mui-button {
   padding: 2px;
@@ -109,7 +112,8 @@
 // BORDERED CONTAINERS
 .bordered-container {
   background-color: $white !important;
-  border: solid 2px $border;
+  // border: solid 2px $border;
+  box-shadow: inset 0 0 0 2px $border;
   border-radius: 16px;
   padding: 12px;
 
