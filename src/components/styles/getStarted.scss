@@ -82,6 +82,27 @@
         display: grid;
         grid-gap: 8px;
 
+        .input-image-container {
+          display: grid;
+          width: 100%;
+          grid-template-columns: auto 56px;
+          grid-template-rows: 100%;
+          gap: 12px;
+
+          .display-image {
+            width: 56px;
+            height: 56px;
+            overflow: hidden;
+            border-radius: 50%;
+            background-color: #f00;
+            @include flexCenter;
+
+            img {
+              width: 100%;
+            }
+          }
+        }
+
         .create-account-button {
           z-index: 0;
         }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SelectProfileImage from "../reusable/selectProfileImage/SelectProfileImage";
 
 // MUI Components
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Box } from "@mui/material";
 
 import { User } from "../../app/types";
 
@@ -22,7 +22,10 @@ import {
   setActiveUser,
   setUserInputError,
 } from "../../slices/userSlice";
-import { useIsUsernameExist } from "../../app/formValidation";
+import {
+  useImageLinkChecker,
+  useIsUsernameExist,
+} from "../../app/formValidation";
 
 const CreateAccount: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -84,7 +87,7 @@ const CreateAccount: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInputError]);
 
-  useEffect(() => setImageLinkValue(""), [imageLinkValue]);
+  const isImageLinkValid = useImageLinkChecker(imageLinkValue);
 
   return (
     <div className='create-account'>
@@ -106,14 +109,27 @@ const CreateAccount: React.FC = () => {
             onChange={(e) => setUsernameValue(e.target.value)}
           />
 
-          <TextField
-            variant='outlined'
-            label='Profile image link'
-            required
-            value={selectedImage !== "" ? selectedImage : imageLinkValue}
-            disabled={selectedImage !== ""}
-            onChange={(e) => setImageLinkValue(e.target.value)}
-          />
+          <div className='input-image-container'>
+            <TextField
+              variant='outlined'
+              label={
+                imageLinkValue.length >= 5 && !isImageLinkValid
+                  ? "Link is not valid"
+                  : "Profile image link"
+              }
+              required
+              error={imageLinkValue.length >= 5 && !isImageLinkValid}
+              value={selectedImage !== "" ? selectedImage : imageLinkValue}
+              disabled={selectedImage !== ""}
+              onChange={(e) => setImageLinkValue(e.target.value)}
+            />
+
+            {isImageLinkValid ? (
+              <div className='display-image'>
+                <img src={imageLinkValue} alt='profile-image' />
+              </div>
+            ) : null}
+          </div>
 
           <SelectProfileImage
             setSelectedImage={setSelectedImage}

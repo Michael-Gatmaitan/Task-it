@@ -64,6 +64,26 @@
   display: grid;
   grid-gap: 8px;
 }
+.get-started .create-account .form-container #create-account-form .input-image-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto 56px;
+  grid-template-rows: 100%;
+  gap: 12px;
+}
+.get-started .create-account .form-container #create-account-form .input-image-container .display-image {
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #f00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.get-started .create-account .form-container #create-account-form .input-image-container .display-image img {
+  width: 100%;
+}
 .get-started .create-account .form-container #create-account-form .create-account-button {
   z-index: 0;
 }

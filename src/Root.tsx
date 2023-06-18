@@ -23,6 +23,7 @@ import {
   InfoRounded as AboutIcon,
   PlayCircleFilledWhiteRounded as GetStartedIcon,
 } from "@mui/icons-material";
+import Footer from "./components/Footer";
 
 const Root: React.FC = () => {
   // States
@@ -99,6 +100,8 @@ const Root: React.FC = () => {
       />
 
       <Outlet />
+
+      <Footer />
     </div>
   );
 };
