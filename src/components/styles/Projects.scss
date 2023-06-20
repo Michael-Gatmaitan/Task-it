@@ -7,7 +7,40 @@
     align-items: center;
 
     .create-new-project {
-      padding: 10px 19px;
+      display: flex;
+      gap: 4px;
+
+      .button-text {
+        display: none;
+      }
+    }
+  }
+
+  // Project container
+  .projects-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+
+      .project-title {
+        max-width: 80%;
+        background-color: #f00;
+      }
+
+      .toggle-project-options {
+        padding: 5px;
+        border-radius: 4px;
+        background-color: $inputBG;
+      }
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
   }
 
@@ -19,7 +52,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: $idx_modal;
+    z-index: $idx_mainModal;
 
     .modal-header {
       margin-bottom: 12px;
@@ -42,8 +75,18 @@
         margin-top: 30px;
       }
     }
+  }
 
-    @include desktop {
+  @include desktop {
+    .page-header {
+      .create-new-project {
+        .button-text {
+          display: block;
+        }
+      }
+    }
+
+    .create-project-modal {
       width: 400px;
 
       form {

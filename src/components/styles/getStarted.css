@@ -37,8 +37,8 @@
   overflow: hidden;
 }
 .get-started .detected-accounts .detected-account-list .detected-account .account-info .account-image img {
+  height: auto;
   width: 100%;
-  height: 100%;
 }
 .get-started .detected-accounts .detected-account-list .detected-account .account-info .account-username {
   font-family: "Inter", sans-serif;
@@ -82,6 +82,7 @@
   justify-content: center;
 }
 .get-started .create-account .form-container #create-account-form .input-image-container .display-image img {
+  height: auto;
   width: 100%;
 }
 .get-started .create-account .form-container #create-account-form .create-account-button {

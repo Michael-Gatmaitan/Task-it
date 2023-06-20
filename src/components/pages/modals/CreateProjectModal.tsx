@@ -7,8 +7,6 @@ import type { Project } from "../../../app/types";
 // MUI
 import { Button, TextField } from "@mui/material";
 
-import Modalbackground from "../../ModalContainer";
-
 /** CREATE PROJECT MODAL */
 
 interface CreateProjectModalProps {
@@ -62,6 +60,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
     };
 
     dispatch(addProject(newProjectToAdd));
+    setShowCreateProjectModal(false);
   };
 
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
@@ -70,63 +69,62 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
     setSubmitDisabled(projectTitle.trim() === "");
   }, [projectTitle]);
 
+  const propagationStopper = (e: React.MouseEvent<HTMLDivElement>) =>
+    e.stopPropagation();
+
   return (
-    <>
-      <div className='create-project-modal bordered-container'>
-        <div className='modal-header header2'>Create Project</div>
+    <div
+      className='create-project-modal bordered-container'
+      onClick={propagationStopper}
+    >
+      <div className='modal-header header2'>Create Project</div>
 
-        <form name='create-project' onSubmit={handleSubmitAddProject}>
-          <div className='input-container'>
-            <TextField
-              variant='outlined'
-              label='Project name'
-              onChange={(e) => setProjectTitle(e.target.value)}
-            />
-            {titleExistErr ? (
-              <Button color='primary' variant='contained' className='label'>
-                Title already exists
-              </Button>
-            ) : null}
-          </div>
-
-          <div className='input-container'>
-            <TextField
-              variant='outlined'
-              label='Description (Optional)'
-              onChange={(e) => setProjectDescription(e.target.value)}
-            />
-          </div>
-
-          <div className='input-container'>
-            <div className='label'>Due date</div>
-            <input
-              type='date'
-              className='text-box'
-              placeholder='Due date'
-              onChange={(e) => setDueDate(e.target.value)}
-            />
-          </div>
-
-          <div className='modal-buttons'>
-            <Button type='submit' variant='contained' disabled={submitDisabled}>
-              Create
+      <form name='create-project' onSubmit={handleSubmitAddProject}>
+        <div className='input-container'>
+          <TextField
+            variant='outlined'
+            label='Project name'
+            onChange={(e) => setProjectTitle(e.target.value)}
+          />
+          {titleExistErr ? (
+            <Button color='primary' variant='contained' className='label'>
+              Title already exists
             </Button>
+          ) : null}
+        </div>
 
-            <Button
-              variant='outlined'
-              onClick={() => setShowCreateProjectModal(false)}
-            >
-              Cancel
-            </Button>
-          </div>
-        </form>
-      </div>
+        <div className='input-container'>
+          <TextField
+            variant='outlined'
+            label='Description (Optional)'
+            onChange={(e) => setProjectDescription(e.target.value)}
+          />
+        </div>
 
-      <Modalbackground
-        showModal={showCreateProjectModal}
-        setShowModal={setShowCreateProjectModal}
-      />
-    </>
+        <div className='input-container'>
+          <div className='label'>Due date</div>
+          <input
+            type='date'
+            className='text-box'
+            placeholder='Due date'
+            onChange={(e) => setDueDate(e.target.value)}
+          />
+        </div>
+
+        <div className='modal-buttons'>
+          <Button type='submit' variant='contained' disabled={submitDisabled}>
+            Create
+          </Button>
+
+          <Button
+            variant='outlined'
+            onClick={() => setShowCreateProjectModal(false)}
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 

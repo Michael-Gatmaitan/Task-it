@@ -125,7 +125,7 @@ const CreateAccount: React.FC = () => {
             />
 
             {isImageLinkValid ? (
-              <div className='display-image'>
+              <div className='display-image profile-image'>
                 <img src={imageLinkValue} alt='profile-image' />
               </div>
             ) : null}

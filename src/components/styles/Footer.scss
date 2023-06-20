@@ -1,0 +1,134 @@
+@import "mixins";
+
+.footer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(3, auto);
+  padding: 18px 0 105px 0;
+  margin-top: 180px;
+  gap: 35px;
+
+  .developer-info {
+    .head-info {
+      display: grid;
+      grid-template-columns: 60px auto;
+      grid-template-rows: 60px;
+      gap: 8px;
+      margin-bottom: 12px;
+
+      .developer-pic {
+        width: 100%;
+        height: 100%;
+        background-color: $inputBG;
+        border-radius: 12px;
+      }
+
+      .developer {
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .label {
+          margin-bottom: 8px;
+        }
+      }
+    }
+
+    .webicons {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(5, 40px);
+
+      .webicon-container {
+        padding: 5px;
+        display: inline;
+        text-decoration: none;
+        color: #121212;
+        background-color: $inputBG;
+        border-radius: 8px;
+        transition: 0.1s ease-in;
+        @include flexCenter;
+
+        .webicon {
+          width: 30px;
+          height: 30px;
+        }
+
+        &:hover {
+          background-color: $primary;
+
+          .webicon {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .send-email-form {
+    .field-container {
+      display: grid;
+      margin-bottom: 8px;
+      gap: 8px;
+
+      .MuiTextField-root {
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .start-creating {
+    .header2 {
+      margin-bottom: 8px;
+    }
+  }
+
+  @include desktop {
+    grid-template-rows: auto;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 210px;
+    padding: 42px 0 120px 0;
+
+    .developer-info {
+      .head-info {
+        grid-template-columns: 100px auto;
+        grid-template-rows: 100px;
+        gap: 18px;
+
+        .developer {
+          .label {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .webicons {
+        gap: 12px;
+
+        .webicon-container {
+          padding: 8px;
+
+          .webicon {
+            width: 50px;
+          }
+        }
+      }
+    }
+
+    .send-email-form {
+      .field-container {
+        margin-bottom: 18px;
+      }
+    }
+
+    .start-creating {
+      .header2 {
+        margin-bottom: 18px;
+      }
+    }
+  }
+}

@@ -23,7 +23,18 @@ const usernameExists = (
 const userReducers = {
   updateAccounts(state: AppState) {
     const { activeUser, accounts } = state;
-    const index = accounts.findIndex((acc) => activeUser.userID === acc.userID);
+    let index;
+
+    if (accounts.length === 0) {
+      index = 0;
+      localStorage.setItem("users", JSON.stringify([]));
+      return;
+    } else {
+      index = accounts.findIndex((acc) => activeUser.userID === acc.userID);
+    }
+
+    // Update the accounts if there's change in activeUser state
+    // console.log(current(activeUser), state.loggedIn);
 
     state.accounts[index] = activeUser;
     localStorage.setItem("users", JSON.stringify(accounts));

@@ -163,12 +163,12 @@
 .header3 {
   font-family: "Inter", sans-serif;
   color: #121212;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
 }
 @media (min-width: 1024px) {
   .header3 {
-    font-size: 18px !important;
+    font-size: 24px !important;
   }
 }
 
@@ -255,6 +255,17 @@ input[type=submit]:disabled {
 
 ::-webkit-scrollbar {
   width: 16px;
+}
+
+.profile-image {
+  overflow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-image img {
+  height: auto !important;
+  width: 100% !important;
 }
 
 body {

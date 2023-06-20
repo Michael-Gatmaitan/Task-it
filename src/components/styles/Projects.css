@@ -4,7 +4,35 @@
   align-items: center;
 }
 .projects .page-header .create-new-project {
-  padding: 10px 19px;
+  display: flex;
+  gap: 4px;
+}
+.projects .page-header .create-new-project .button-text {
+  display: none;
+}
+.projects .projects-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.projects .projects-container .project-header {
+  display: flex;
+  justify-content: space-between;
+}
+.projects .projects-container .project-header .project-title {
+  max-width: 80%;
+  background-color: #f00;
+}
+.projects .projects-container .project-header .toggle-project-options {
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #f0f0f2;
+}
+@media (min-width: 1024px) {
+  .projects .projects-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
 }
 .projects .create-project-modal {
   width: 80%;
@@ -13,7 +41,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 99;
+  z-index: 102;
 }
 .projects .create-project-modal .modal-header {
   margin-bottom: 12px;
@@ -32,6 +60,9 @@
   margin-top: 30px;
 }
 @media (min-width: 1024px) {
+  .projects .page-header .create-new-project .button-text {
+    display: block;
+  }
   .projects .create-project-modal {
     width: 400px;
   }

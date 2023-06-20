@@ -22,21 +22,14 @@ const projectReducers = {
   deleteProject(state: AppState, action: PA<Project>) {
     console.log("Project to delete: ", action.payload);
 
-    const duplicateOfProjectToDelete = state.activeUser.projects.find(
+    const indexOfProjectToDelete = state.activeUser.projects.findIndex(
       (e) => e.projectTitle === action.payload.projectTitle
     );
 
-    if (!duplicateOfProjectToDelete) {
-      console.log("Project on workspace not found.");
-      return;
+    if (indexOfProjectToDelete !== -1) {
+      // Perfom deletion of item
+      state.activeUser.projects.splice(indexOfProjectToDelete, 1);
     }
-
-    const indexOfProjectToDelete = state.activeUser.projects.indexOf(
-      duplicateOfProjectToDelete
-    );
-
-    // Perfom deletion of item
-    state.activeUser.projects.splice(indexOfProjectToDelete, 1);
   },
 };
 

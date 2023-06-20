@@ -1,9 +1,9 @@
 .sidebar {
   position: fixed;
-  top: 72px;
+  top: 58px;
   left: 0;
   width: 100%;
-  height: calc(100% - 72px);
+  height: calc(100% - 58px);
   background-color: #fcfdff;
   padding: 18px;
   z-index: 99;

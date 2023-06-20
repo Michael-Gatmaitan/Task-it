@@ -21,10 +21,10 @@ $inter: "Inter", sans-serif;
 $nunito: "Nunito sans", sans-serif;
 
 // z-index value, it's weird but i guess it will help me :)
+$idx_mainModal: 102;
 $idx_modalBackground: 101;
 $idx_navigation: 100;
-$idx_modal: 99;
-$idx_behindModal: 98;
+$idx_behindModal: 99;
 
 @mixin fontProps($family, $color, $size: 15px, $weight: 400) {
   font-family: $family;

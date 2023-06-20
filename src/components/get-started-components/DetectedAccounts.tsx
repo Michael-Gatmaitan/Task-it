@@ -31,7 +31,7 @@ const DisplayAccount: React.FC<{ user: User }> = (props) => {
   return (
     <div className='detected-account bordered-container' key={user.userID}>
       <div className='account-info'>
-        <div className='account-image'>
+        <div className='account-image profile-image'>
           <img src={user.profileImageLink} width='50' />
         </div>
 

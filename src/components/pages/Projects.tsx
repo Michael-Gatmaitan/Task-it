@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deleteProject, logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";
-import type { Project } from "../../app/types";
+import type { Project as ProjectType } from "../../app/types";
 
 // Modal
 import CreateProjectModal from "./modals/CreateProjectModal";
+
+import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
 
 import "../styles/Projects.css";
 
 // MUI components
 import { Button } from "@mui/material";
+import { AddCircleRounded } from "@mui/icons-material";
+import ModalContainer from "../ModalContainer";
 
 const Projects: React.FC = () => {
   const dispatch = useAppDispatch();
-  const projects: Project[] = useAppSelector(
+  const projects: ProjectType[] = useAppSelector(
     (state: RootState) => state.userReducer.activeUser.projects
   );
 
@@ -32,34 +36,28 @@ const Projects: React.FC = () => {
           Projects {projects.length && " 0"}
         </div>
 
-        {/* <button
-          className='create-new-project default-button bordered-button'
+        <Button
+          variant='outlined'
           onClick={showModal}
+          className='create-new-project'
         >
-          Create new project 
-        </button>*/}
-
-        <Button variant='outlined' onClick={showModal}>
-          Create new project
+          <AddCircleRounded />
+          <span className='button-text'>Create new project</span>
         </Button>
-        <Button variant='contained'>Create new project</Button>
       </div>
 
-      {projects !== undefined
-        ? projects.map((project, i) => (
-            <div key={i}>
-              <div>{project.projectTitle}</div>
-              <div>{project.projectDescription}</div>
+      {/* <Button
+        variant='contained'
+        onClick={() => dispatch(deleteProject(project))}
+      >
+        Delete project
+      </Button> */}
 
-              <Button
-                variant='contained'
-                onClick={() => dispatch(deleteProject(project))}
-              >
-                Delete project
-              </Button>
-            </div>
-          ))
-        : null}
+      <div className='projects-container'>
+        {projects !== undefined
+          ? projects.map((project, i) => <Project project={project} key={i} />)
+          : null}
+      </div>
 
       <Button
         variant='outlined'
@@ -68,13 +66,39 @@ const Projects: React.FC = () => {
       >
         Log out
       </Button>
-
       {showCreateProjectModal ? (
-        <CreateProjectModal
-          showCreateProjectModal={showCreateProjectModal}
-          setShowCreateProjectModal={setShowCreateProjectModal}
-        />
+        <ModalContainer
+          showModal={showCreateProjectModal}
+          setShowModal={setShowCreateProjectModal}
+        >
+          <CreateProjectModal
+            showCreateProjectModal={showCreateProjectModal}
+            setShowCreateProjectModal={setShowCreateProjectModal}
+          />
+        </ModalContainer>
       ) : null}
+    </div>
+  );
+};
+
+interface ProjectProps {
+  project: ProjectType;
+  key: number;
+}
+
+const Project: React.FC<ProjectProps> = ({ project }) => {
+  return (
+    <div className='project-wrapper bordered-container'>
+      {/* <div className="project-options"></div> */}
+
+      <div className='project-header'>
+        <div className='header3 project-title'>{project.projectTitle}</div>
+
+        <div className='toggle-project-options'>
+          <ExpandMoreRounded />
+        </div>
+      </div>
+      {/* <div>{project.projectDescription}</div> */}
     </div>
   );
 };

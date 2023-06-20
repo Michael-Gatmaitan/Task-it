@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./hooks";
-import { getActiveUser, updateAccounts } from "../slices/userSlice";
+import {
+  getActiveUser,
+  getUserLoggedIn,
+  updateAccounts,
+} from "../slices/userSlice";
 
 /* For every update of ActiveUser and DeviceAccounts 
   we should also update the localStorage */
@@ -9,7 +13,7 @@ export const useLocalStorageUpdater = () => {
   const dispatch = useAppDispatch();
 
   const activeUser = useAppSelector(getActiveUser);
-
+  const isLoggedIn = useAppSelector(getUserLoggedIn);
   const { userID } = activeUser;
 
   useEffect(() => {
@@ -17,10 +21,13 @@ export const useLocalStorageUpdater = () => {
   }, [userID]);
 
   useEffect(() => {
+    // If user is logged out, we dont need to update the
+    // states of the account
+    if (!isLoggedIn) return;
     localStorage.setItem("activeUser", JSON.stringify(activeUser));
 
     console.log("Data updated.");
 
     dispatch(updateAccounts());
-  }, [activeUser, dispatch]);
+  }, [activeUser, dispatch, isLoggedIn]);
 };
