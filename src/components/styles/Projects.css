@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 12px;
 }
 .projects .page-header .create-new-project {
   display: flex;
@@ -10,28 +11,64 @@
 .projects .page-header .create-new-project .button-text {
   display: none;
 }
+@media (min-width: 1024px) {
+  .projects .page-header {
+    margin-bottom: 18px;
+  }
+}
 .projects .projects-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, calc((100% - 12px) / 2));
+  grid-auto-rows: 300px;
   gap: 12px;
 }
-.projects .projects-container .project-header {
-  display: flex;
-  justify-content: space-between;
+.projects .projects-container .project-wrapper {
+  position: relative;
 }
-.projects .projects-container .project-header .project-title {
+.projects .projects-container .project-wrapper .project-options {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(207, 208, 235, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 16px;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.projects .projects-container .project-wrapper .project-header {
+  width: 100%;
+}
+.projects .projects-container .project-wrapper .project-header .project-title {
   max-width: 80%;
   background-color: #f00;
+  word-wrap: break-word;
 }
-.projects .projects-container .project-header .toggle-project-options {
-  padding: 5px;
+.projects .projects-container .project-wrapper .toggle-project-options {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
   border-radius: 4px;
   background-color: #f0f0f2;
 }
+.projects .projects-container .project-wrapper .toggle-project-options:hover {
+  color: #5b87f8;
+}
 @media (min-width: 1024px) {
   .projects .projects-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, calc((100% - 36px) / 3));
     gap: 18px;
+  }
+  .projects .projects-container .project-wrapper .toggle-project-options {
+    top: 18px;
+    right: 18px;
+    width: 32px;
+    height: 32px;
   }
 }
 .projects .create-project-modal {
@@ -46,14 +83,19 @@
 .projects .create-project-modal .modal-header {
   margin-bottom: 12px;
 }
-.projects .create-project-modal form {
+.projects .create-project-modal #create-project-form {
   display: grid;
   gap: 8px;
 }
-.projects .create-project-modal form .input-container .MuiTextField-root {
+.projects .create-project-modal #create-project-form .MuiTextField-root {
   width: 100%;
 }
-.projects .create-project-modal form .modal-buttons {
+.projects .create-project-modal #create-project-form #create-tag-form {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: auto auto;
+}
+.projects .create-project-modal #create-project-form .modal-buttons {
   display: grid;
   grid-template-columns: auto auto;
   gap: 10px;

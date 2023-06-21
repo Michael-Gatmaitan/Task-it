@@ -24,14 +24,8 @@ export const useImageLinkChecker = (url: string) => {
     const image = new Image();
     image.src = url;
 
-    image.addEventListener("load", () => {
-      console.log("Link success.");
-      setIsLinkValid(true);
-    });
-    image.addEventListener("error", () => {
-      console.log("Link error.");
-      setIsLinkValid(false);
-    });
+    image.addEventListener("load", () => setIsLinkValid(true));
+    image.addEventListener("error", () => setIsLinkValid(false));
   }, [url]);
 
   return isLinkValid;

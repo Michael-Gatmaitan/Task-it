@@ -114,7 +114,7 @@ const CreateAccount: React.FC = () => {
               variant='outlined'
               label={
                 imageLinkValue.length >= 5 && !isImageLinkValid
-                  ? "Link is not valid"
+                  ? "Invalid link"
                   : "Profile image link"
               }
               required

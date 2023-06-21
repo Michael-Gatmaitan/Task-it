@@ -31,6 +31,25 @@ const projectReducers = {
       state.activeUser.projects.splice(indexOfProjectToDelete, 1);
     }
   },
+
+  // addTag(state: AppState, action: PA<string[]>) {
+
+  // }
+
+  // Prepare for EDIT project
+  /* 
+    * Features for EDIT PROJECT *
+
+    * addTag, deleteTag, editTag?
+    * rename project, edit project description
+  */
+  // addTags(state: AppState, action: PA<string[]>) {
+  //   console.log("Tag to add: ", action.payload);
+
+  //   // We will use array of tags for any quantity e.g 1, 2 ... n tags
+
+  //   state.
+  // }
 };
 
 export default projectReducers;

@@ -26,6 +26,7 @@ export interface Project {
   dueDate?: string;
   id: number;
   done?: boolean;
+  tags?: string[];
   cards?: Card[];
 }
 

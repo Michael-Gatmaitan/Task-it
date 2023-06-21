@@ -11,7 +11,7 @@ import {
 import "./styles/ProfileRibbon.css";
 import { Box, Button, TextField } from "@mui/material";
 import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
-import { useIsUsernameExist } from "../app/formValidation";
+import { useImageLinkChecker, useIsUsernameExist } from "../app/formValidation";
 
 interface ProfileRibbonProps {
   platform: "desktop" | "mobile";
@@ -60,6 +60,7 @@ const ProfileRibbon: React.FC<ProfileRibbonProps> = ({ platform }) => {
         toggleEditProfile={toggleEditProfile}
         setToggleEditProfile={setToggleEditProfile}
         username={username}
+        profileImageLink={profileImageLink}
       />
     </div>
   ) : null;
@@ -69,10 +70,16 @@ interface EditProfileModalProps {
   toggleEditProfile: boolean;
   setToggleEditProfile: React.Dispatch<React.SetStateAction<boolean>>;
   username: string;
+  profileImageLink: string;
 }
 
 const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
-  const { toggleEditProfile, setToggleEditProfile, username } = props;
+  const {
+    toggleEditProfile,
+    setToggleEditProfile,
+    username,
+    profileImageLink,
+  } = props;
 
   const dispatch = useAppDispatch();
 
@@ -89,8 +96,10 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     setPreviewImage(false);
 
     // Set all state value to empty.
-    setEditUsernameValue("");
-    setEditImageLinkValue("");
+    if (editUsernameValue !== username) setEditUsernameValue(username);
+
+    if (editImageLinkValue !== profileImageLink)
+      setEditImageLinkValue(profileImageLink);
   };
 
   const [editUsernameValue, setEditUsernameValue] = useState<string>("");
@@ -115,6 +124,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
       usernameVal.trim() === "" ||
         usernameVal.trim() === username ||
         usernameExist ||
+        !isImageLinkValid ||
         (imgVal.trim() === "" && selectedImage === "")
     );
 
@@ -143,6 +153,17 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
     setDefaultValueOfStates();
   };
+
+  useEffect(() => {
+    if (!toggleEditProfile) setDefaultValueOfStates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toggleEditProfile]);
+
+  const isImageLinkValid = useImageLinkChecker(editImageLinkValue);
+
+  useEffect(() => {
+    console.log(isImageLinkValid);
+  }, [isImageLinkValid]);
 
   return (
     <div
@@ -175,6 +196,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
             value={editUsernameValue}
             error={editUsernameValue === username || usernameExist}
             onChange={(e) => setEditUsernameValue(e.target.value)}
+            defaultValue={username}
           />
 
           <Box
@@ -192,13 +214,17 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           >
             <TextField
               label={
-                selectedImage !== "" ? "Custom profile" : "Edit image link"
+                selectedImage !== ""
+                  ? "Custom profile"
+                  : !isImageLinkValid
+                  ? "Invalid link"
+                  : "Edit image link"
               }
               variant='outlined'
               value={selectedImage !== "" ? selectedImage : editImageLinkValue}
               disabled={selectedImage !== ""}
               onChange={(e) => setEditImageLinkValue(e.target.value)}
-              // defaultValue={profileImageLink}
+              defaultValue={profileImageLink}
             />
 
             <Button
@@ -239,7 +265,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           <Button
             variant='contained'
             color='error'
-            onClick={() => setDefaultValueOfStates()}
+            onClick={() => setToggleEditProfile(false)}
           >
             Close
           </Button>

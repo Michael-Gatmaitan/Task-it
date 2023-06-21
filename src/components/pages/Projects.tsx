@@ -87,16 +87,25 @@ interface ProjectProps {
 }
 
 const Project: React.FC<ProjectProps> = ({ project }) => {
+  const [toggleOptions, setToggleOptions] = useState<boolean>(false);
+
   return (
     <div className='project-wrapper bordered-container'>
-      {/* <div className="project-options"></div> */}
+      {toggleOptions ? <div className='project-options'>Content</div> : null}
+
+      <div
+        className='toggle-project-options'
+        onClick={() => setToggleOptions(!toggleOptions)}
+      >
+        {toggleOptions ? (
+          <ExpandLessRounded fontSize='large' />
+        ) : (
+          <ExpandMoreRounded fontSize='large' />
+        )}
+      </div>
 
       <div className='project-header'>
         <div className='header3 project-title'>{project.projectTitle}</div>
-
-        <div className='toggle-project-options'>
-          <ExpandMoreRounded />
-        </div>
       </div>
       {/* <div>{project.projectDescription}</div> */}
     </div>
