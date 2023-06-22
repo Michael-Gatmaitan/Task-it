@@ -28,13 +28,34 @@
 .projects .projects-container .project-wrapper .project-options {
   width: 100%;
   height: 100%;
-  background-color: rgba(207, 208, 235, 0.7);
+  background-color: rgba(221, 221, 221, 0.5);
   position: absolute;
   top: 0;
   left: 0;
   border-radius: 16px;
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(7.5px);
+          backdrop-filter: blur(7.5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.projects .projects-container .project-wrapper .project-options .options-container {
+  display: grid;
+  place-items: center;
+  gap: 4px;
+}
+.projects .projects-container .project-wrapper .project-options .options-container .MuiButton-text {
+  color: #121212;
+}
+.projects .projects-container .project-wrapper .project-options .options-container .delete-project {
+  background-color: #fcfdff;
+  color: #ff3333;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.projects .projects-container .project-wrapper .project-options .options-container .delete-project:hover {
+  background-color: #ff3333;
+  color: #fff;
 }
 .projects .projects-container .project-wrapper .project-header {
   width: 100%;

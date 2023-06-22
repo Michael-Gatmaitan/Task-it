@@ -46,7 +46,9 @@ const App: React.FC = () => {
           element={
             loggedIn ? <Projects /> : <Navigate replace to={"/get-started"} />
           }
-        />
+        >
+          <Route path='custompath' element={<h1>Custom path!!!</h1>} />
+        </Route>
 
         <Route path='about' element={<About />} />
 

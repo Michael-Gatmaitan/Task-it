@@ -29,6 +29,8 @@ const projectReducers = {
     if (indexOfProjectToDelete !== -1) {
       // Perfom deletion of item
       state.activeUser.projects.splice(indexOfProjectToDelete, 1);
+    } else {
+      console.error("Project to delete cannot find");
     }
   },
 

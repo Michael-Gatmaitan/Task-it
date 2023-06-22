@@ -90,8 +90,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     */
 
     console.log("Closing all states");
-
-    setToggleEditProfile(false);
+    
     setDisablePreviewImage(false);
     setPreviewImage(false);
 
@@ -151,7 +150,10 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
       })
     );
 
-    setDefaultValueOfStates();
+    // since we used useEffect in toggleEditProfile that triggers
+    // setDeafaultValueOfSTates(), we will directly closing it using
+    // it's setState
+    setToggleEditProfile(false);
   };
 
   useEffect(() => {
@@ -193,7 +195,6 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
                 : "Enter new name"
             }
             variant='outlined'
-            value={editUsernameValue}
             error={editUsernameValue === username || usernameExist}
             onChange={(e) => setEditUsernameValue(e.target.value)}
             defaultValue={username}
@@ -221,10 +222,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
                   : "Edit image link"
               }
               variant='outlined'
-              value={selectedImage !== "" ? selectedImage : editImageLinkValue}
               disabled={selectedImage !== ""}
               onChange={(e) => setEditImageLinkValue(e.target.value)}
-              defaultValue={profileImageLink}
+              defaultValue={
+                selectedImage !== "" ? selectedImage : profileImageLink
+              }
             />
 
             <Button

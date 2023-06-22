@@ -167,7 +167,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
 
           <Button
             variant='outlined'
-            onClick={() => setShowCreateProjectModal(false)}
+            onClick={() => setShowCreateProjectModal(!showCreateProjectModal)}
           >
             Cancel
           </Button>

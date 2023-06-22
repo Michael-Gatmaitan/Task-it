@@ -4,6 +4,8 @@ import { deleteProject, logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";
 import type { Project as ProjectType } from "../../app/types";
 
+import { Outlet } from "react-router-dom";
+
 // Modal
 import CreateProjectModal from "./modals/CreateProjectModal";
 
@@ -32,9 +34,11 @@ const Projects: React.FC = () => {
   return (
     <div className='projects page'>
       <div className='page-header'>
-        <div className='page-title header2'>
+        {/* <div className='page-title header2'>
           Projects {projects.length && " 0"}
-        </div>
+        </div> */}
+
+        <div className='page-title header2'>Di pa tapos, wag kang bidabida</div>
 
         <Button
           variant='outlined'
@@ -77,6 +81,8 @@ const Projects: React.FC = () => {
           />
         </ModalContainer>
       ) : null}
+
+      <Outlet />
     </div>
   );
 };
@@ -87,11 +93,33 @@ interface ProjectProps {
 }
 
 const Project: React.FC<ProjectProps> = ({ project }) => {
+  const dispatch = useAppDispatch();
   const [toggleOptions, setToggleOptions] = useState<boolean>(false);
 
   return (
     <div className='project-wrapper bordered-container'>
-      {toggleOptions ? <div className='project-options'>Content</div> : null}
+      {toggleOptions ? (
+        <div className='project-options'>
+          <div className='options-container'>
+            <Button variant='text' onClick={() => console.log("")}>
+              Open
+            </Button>
+            <Button variant='text' onClick={() => console.log("")}>
+              Edit
+            </Button>
+            <Button variant='text' onClick={() => console.log("")}>
+              Move to "Done"
+            </Button>
+            <Button
+              variant='text'
+              className='delete-project'
+              onClick={() => dispatch(deleteProject(project))}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      ) : null}
 
       <div
         className='toggle-project-options'
