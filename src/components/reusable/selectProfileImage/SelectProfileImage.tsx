@@ -1,5 +1,14 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
+import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
+
 import "./selectProfileImage.css";
+
+import ProfileImage1 from "../../../profile-images/profile_image_1.png";
+import ProfileImage2 from "../../../profile-images/profile_image_2.png";
+import ProfileImage3 from "../../../profile-images/profile_image_3.png";
+import ProfileImage4 from "../../../profile-images/profile_image_4.png";
+import ProfileImage5 from "../../../profile-images/profile_image_5.png";
+import ProfileImage6 from "../../../profile-images/profile_image_6.png";
 
 /*
   This component is only used in forms that has
@@ -19,17 +28,18 @@ interface SelectProfileImageProps {
 const SelectProfileImage: React.FC<SelectProfileImageProps> = (props) => {
   const { setSelectedImage, imageLinkValue } = props;
 
+  const [showImages, setShowImages] = useState<boolean>(false);
   /* Use 'useMemo' hook to prevent unnecesarry rerender
       or reloading of a variable for every re-render */
   const uid = useMemo(() => Math.floor(Math.random() * Date.now()), []);
 
   const profile_images: string[] = [
-    "./profile-images/profile_image_1.png",
-    "./profile-images/profile_image_2.png",
-    "./profile-images/profile_image_3.png",
-    "./profile-images/profile_image_4.png",
-    "./profile-images/profile_image_5.png",
-    "./profile-images/profile_image_6.png",
+    ProfileImage1,
+    ProfileImage2,
+    ProfileImage3,
+    ProfileImage4,
+    ProfileImage5,
+    ProfileImage6,
   ];
 
   const activateTile = (profile_image: string) => {
@@ -56,25 +66,37 @@ const SelectProfileImage: React.FC<SelectProfileImageProps> = (props) => {
   };
 
   return (
-    <div
-      className='select-profile-images'
-      style={{
-        opacity: imageLinkValue.trim() !== "" ? 0.6 : 1,
-        pointerEvents: imageLinkValue.trim() !== "" ? "none" : "auto",
-      }}
-    >
-      <div className='header3'>Select profile image</div>
-      <div className='profile-images'>
-        {profile_images.map((profile_image, i) => (
-          <div
-            className={`profile-image-${uid} profile-image-root`}
-            onClick={() => activateTile(profile_image)}
-            key={i}
-          >
-            <img src={profile_image} />
-          </div>
-        ))}
+    <div className='select-profile-images'>
+      <div className='toggle-container'>
+        <div className='header3'>Select profile image</div>
+
+        <div
+          className='toggle-show-images'
+          onClick={() => setShowImages(!showImages)}
+        >
+          {showImages ? <ExpandLessRounded /> : <ExpandMoreRounded />}
+        </div>
       </div>
+
+      {showImages ? (
+        <div
+          className='profile-images'
+          style={{
+            opacity: imageLinkValue.trim() !== "" ? 0.6 : 1,
+            pointerEvents: imageLinkValue.trim() !== "" ? "none" : "auto",
+          }}
+        >
+          {profile_images.map((profile_image, i) => (
+            <div
+              className={`profile-image-${uid} profile-image-root`}
+              onClick={() => activateTile(profile_image)}
+              key={i}
+            >
+              <img src={profile_image} loading='lazy' />
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };

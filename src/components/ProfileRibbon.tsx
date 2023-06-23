@@ -90,7 +90,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     */
 
     console.log("Closing all states");
-    
+
     setDisablePreviewImage(false);
     setPreviewImage(false);
 
@@ -224,6 +224,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
               variant='outlined'
               disabled={selectedImage !== ""}
               onChange={(e) => setEditImageLinkValue(e.target.value)}
+              error={!isImageLinkValid}
               defaultValue={
                 selectedImage !== "" ? selectedImage : profileImageLink
               }
@@ -231,7 +232,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
             <Button
               variant='contained'
-              disabled={disablePreviewImage}
+              disabled={disablePreviewImage || !isImageLinkValid}
               onClick={() => setPreviewImage(true)}
             >
               Preview image
@@ -241,7 +242,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
         {previewImage && editImageLinkValue !== "" ? (
           <div className='image-preview'>
-            <img src={editImageLinkValue} loading='lazy' />
+            {isImageLinkValid ? (
+              <img src={editImageLinkValue} loading='lazy' />
+            ) : (
+              <div>Image link is not valid</div>
+            )}
           </div>
         ) : null}
 

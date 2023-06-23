@@ -7,6 +7,7 @@ import { getDeviceAccounts, setActiveUser } from "../../slices/userSlice";
 
 // MUI
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const DetectedAccounts: React.FC = () => {
   const users: User[] = useAppSelector(getDeviceAccounts);
@@ -43,9 +44,14 @@ const DisplayAccount: React.FC<{ user: User }> = (props) => {
       >
         Select account
       </button> */}
-      <Button variant='contained' onClick={() => dispatch(setActiveUser(user))}>
-        Select account
-      </Button>
+      <Link to={`/u/${user.userID}/projects`}>
+        <Button
+          variant='contained'
+          onClick={() => dispatch(setActiveUser(user))}
+        >
+          Select account
+        </Button>
+      </Link>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SelectProfileImage from "../reusable/selectProfileImage/SelectProfileImage";
 
 // MUI Components
-import { Button, TextField, Box } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 import { User } from "../../app/types";
 

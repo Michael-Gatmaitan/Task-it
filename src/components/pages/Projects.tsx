@@ -4,7 +4,7 @@ import { deleteProject, logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";
 import type { Project as ProjectType } from "../../app/types";
 
-import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Modal
 import CreateProjectModal from "./modals/CreateProjectModal";
@@ -34,11 +34,9 @@ const Projects: React.FC = () => {
   return (
     <div className='projects page'>
       <div className='page-header'>
-        {/* <div className='page-title header2'>
-          Projects {projects.length && " 0"}
-        </div> */}
-
-        <div className='page-title header2'>Di pa tapos, wag kang bidabida</div>
+        <div className='page-title header2'>
+          Projects {projects.length ? projects.length : " 0"}
+        </div>
 
         <Button
           variant='outlined'
@@ -81,8 +79,6 @@ const Projects: React.FC = () => {
           />
         </ModalContainer>
       ) : null}
-
-      <Outlet />
     </div>
   );
 };
@@ -101,9 +97,11 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
       {toggleOptions ? (
         <div className='project-options'>
           <div className='options-container'>
-            <Button variant='text' onClick={() => console.log("")}>
-              Open
-            </Button>
+            <Link to={`${project.id}`}>
+              <Button variant='text' onClick={() => console.log("")}>
+                Open
+              </Button>
+            </Link>
             <Button variant='text' onClick={() => console.log("")}>
               Edit
             </Button>
@@ -113,7 +111,10 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
             <Button
               variant='text'
               className='delete-project'
-              onClick={() => dispatch(deleteProject(project))}
+              onClick={() => {
+                dispatch(deleteProject(project));
+                setToggleOptions(!toggleOptions);
+              }}
             >
               Delete
             </Button>
@@ -132,8 +133,15 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
         )}
       </div>
 
-      <div className='project-header'>
-        <div className='header3 project-title'>{project.projectTitle}</div>
+      {/* Project main contents */}
+      <div className='project-contents'>
+        <div className='project-header'>
+          <div className='header3 project-title'>{project.projectTitle}</div>
+        </div>
+
+        <div className='tags-container'></div>
+
+        <div className='project-progress'></div>
       </div>
       {/* <div>{project.projectDescription}</div> */}
     </div>

@@ -2,6 +2,10 @@
   display: grid;
   gap: 8px;
 }
+.select-profile-images .toggle-container {
+  display: flex;
+  justify-content: space-between;
+}
 .select-profile-images .profile-images {
   display: grid;
   gap: 8px;

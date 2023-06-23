@@ -24,6 +24,7 @@ import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
 // MUI StyledEngineProvider
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
+import ProjectSelected from "./components/pages/projects/ProjectSelected";
 
 const App: React.FC = () => {
   useLocalStorageUpdater();
@@ -37,18 +38,20 @@ const App: React.FC = () => {
         <Route index path='/' element={<Home />} />
         <Route
           path='get-started'
-          element={
-            loggedIn ? <Navigate replace to={"/projects"} /> : <GetStarted />
-          }
+          element={loggedIn ? <Navigate replace to={"/"} /> : <GetStarted />}
         />
         <Route
-          path='projects'
+          path='u/:userID/projects'
           element={
             loggedIn ? <Projects /> : <Navigate replace to={"/get-started"} />
           }
-        >
-          <Route path='custompath' element={<h1>Custom path!!!</h1>} />
-        </Route>
+        />
+
+        {/* Dynamic routing for projects */}
+        <Route
+          path='u/:userID/projects/:projectID'
+          element={<ProjectSelected />}
+        />
 
         <Route path='about' element={<About />} />
 

@@ -29,6 +29,7 @@
     grid-auto-rows: 300px;
     gap: $gap;
 
+    // Main project container
     .project-wrapper {
       position: relative;
 
@@ -65,13 +66,29 @@
         }
       }
 
-      .project-header {
+      .project-contents {
         width: 100%;
+        height: 100%;
+        background-color: #0f0;
+        display: grid;
+        grid-template-rows: 150px auto auto;
 
-        .project-title {
-          max-width: 80%;
-          background-color: #f00;
-          word-wrap: break-word;
+        .project-header {
+          width: 100%;
+
+          .project-title {
+            max-width: 80%;
+            background-color: #f00;
+            word-wrap: break-word;
+          }
+        }
+
+        .tags-container {
+          background-color: #ff0;
+        }
+
+        .project-progress {
+          background-color: #000;
         }
       }
 
