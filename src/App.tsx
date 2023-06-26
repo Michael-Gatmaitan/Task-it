@@ -19,50 +19,61 @@ import Contact from "./components/pages/Contact";
 import Settings from "./components/pages/Settings";
 import GetStarted from "./components/pages/GetStarted";
 import { useAppSelector } from "./app/hooks";
-import { getUserLoggedIn } from "./slices/userSlice";
+import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
 import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
 // MUI StyledEngineProvider
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
-import ProjectSelected from "./components/pages/projects/ProjectSelected";
+import Project from "./components/pages/projects/Project";
 
 const App: React.FC = () => {
   useLocalStorageUpdater();
 
   const loggedIn = useAppSelector(getUserLoggedIn);
+  const { userID } = useAppSelector(getActiveUser);
+
+  /* Making a shot hand function to return where to
+      direct deppends on { loggedIn } state. */
+  const GetStartedPage = loggedIn ? (
+    <Navigate replace to={`/${userID}/projects`} />
+  ) : (
+    <GetStarted />
+  );
+
+  const SettingsPage = loggedIn ? (
+    <Settings />
+  ) : (
+    <Navigate replace to={"/get-started"} />
+  );
+
+  const ProjectsPage = loggedIn ? (
+    <Projects />
+  ) : (
+    <Navigate replace to={"/get-started"} />
+  );
+
+  const ProjectPage = loggedIn ? (
+    <Project />
+  ) : (
+    <Navigate replace to='/get-started' />
+  );
 
   // Routes
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />}>
         <Route index path='/' element={<Home />} />
-        <Route
-          path='get-started'
-          element={loggedIn ? <Navigate replace to={"/"} /> : <GetStarted />}
-        />
-        <Route
-          path='u/:userID/projects'
-          element={
-            loggedIn ? <Projects /> : <Navigate replace to={"/get-started"} />
-          }
-        />
+        <Route path='get-started' element={GetStartedPage} />
+        <Route path='about' element={<About />} />
+        <Route path='contact' element={<Contact />} />
+        <Route path='settings' element={SettingsPage} />
 
         {/* Dynamic routing for projects */}
-        <Route
-          path='u/:userID/projects/:projectID'
-          element={<ProjectSelected />}
-        />
+        {/* <Route path=':userID' element={<div>{username}</div>} /> */}
+        <Route path=':userID/projects' element={ProjectsPage} />
+        <Route path=':userID/projects/:projectID' element={ProjectPage} />
 
-        <Route path='about' element={<About />} />
-
-        <Route path='contact' element={<Contact />} />
-
-        <Route
-          path='settings'
-          element={
-            loggedIn ? <Settings /> : <Navigate replace to={"/get-started"} />
-          }
-        />
+        {/* Dynamic routes for boards */}
 
         <Route path='*' element={<Page404 />} />
       </Route>

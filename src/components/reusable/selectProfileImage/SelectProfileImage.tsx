@@ -67,13 +67,13 @@ const SelectProfileImage: React.FC<SelectProfileImageProps> = (props) => {
 
   return (
     <div className='select-profile-images'>
-      <div className='toggle-container'>
+      <div
+        className='toggle-container'
+        onClick={() => setShowImages(!showImages)}
+      >
         <div className='header3'>Select profile image</div>
 
-        <div
-          className='toggle-show-images'
-          onClick={() => setShowImages(!showImages)}
-        >
+        <div className='toggle-show-images'>
           {showImages ? <ExpandLessRounded /> : <ExpandMoreRounded />}
         </div>
       </div>

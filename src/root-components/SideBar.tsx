@@ -6,10 +6,6 @@ import type { NavButtons } from "../app/types";
 import ProfileRibbon from "../components/ProfileRibbon";
 
 // Reducers and getters, top: Reducers, bottom: Getters
-import { useAppSelector } from "../app/hooks";
-import { getUserLoggedIn } from "../slices/userSlice";
-
-import LogoutButton from "../components/reusable-buttons/LogoutButton";
 
 interface SideBarProps {
   navBarButtons: NavButtons;
@@ -19,8 +15,6 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
   const { navBarButtons, toggleSidebar, setToggleSidebar } = props;
-
-  const isLoggedIn = useAppSelector(getUserLoggedIn);
 
   return (
     <div className={`sidebar ${!toggleSidebar ? "hide-sidebar" : ""}`}>
@@ -38,10 +32,6 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
             {button.text}
           </NavLink>
         ))}
-
-        {isLoggedIn ? (
-          <LogoutButton setToggleSidebar={setToggleSidebar} />
-        ) : null}
       </div>
     </div>
   );

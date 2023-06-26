@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useDeferredValue } from "react";
 import SelectProfileImage from "./reusable/selectProfileImage/SelectProfileImage";
 
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -10,7 +10,11 @@ import {
 
 import "./styles/ProfileRibbon.css";
 import { Box, Button, TextField } from "@mui/material";
-import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
+import {
+  ExpandMoreRounded,
+  ExpandLessRounded,
+  CloseRounded,
+} from "@mui/icons-material";
 import { useImageLinkChecker, useIsUsernameExist } from "../app/formValidation";
 
 interface ProfileRibbonProps {
@@ -95,14 +99,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     setPreviewImage(false);
 
     // Set all state value to empty.
-    if (editUsernameValue !== username) setEditUsernameValue(username);
+    if (deferredEditUsernameValue !== username) setEditUsernameValue(username);
 
-    if (editImageLinkValue !== profileImageLink)
+    if (deferredEditImageLinkValue !== profileImageLink)
       setEditImageLinkValue(profileImageLink);
   };
 
+  // Deferred value for editUsernameValue state.
   const [editUsernameValue, setEditUsernameValue] = useState<string>("");
+  const deferredEditUsernameValue = useDeferredValue(editUsernameValue);
+
+  // Deferred value for editImageLinkValue state.
   const [editImageLinkValue, setEditImageLinkValue] = useState<string>("");
+  const deferredEditImageLinkValue = useDeferredValue(editImageLinkValue);
 
   const [previewImage, setPreviewImage] = useState<boolean>(false);
   const [disablePreviewImage, setDisablePreviewImage] =
@@ -113,11 +122,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const [userInputError, setUserInputError] = useState<boolean>(true);
 
   // custom hook that validates exists username.
-  const usernameExist = useIsUsernameExist(editUsernameValue);
+  const usernameExist = useIsUsernameExist(deferredEditUsernameValue);
 
   useEffect(() => {
-    const usernameVal = editUsernameValue.trim();
-    const imgVal = editImageLinkValue.trim();
+    const usernameVal = deferredEditUsernameValue.trim();
+    const imgVal = deferredEditImageLinkValue.trim();
 
     setUserInputError(
       usernameVal.trim() === "" ||
@@ -130,8 +139,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     setDisablePreviewImage(imgVal === "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    editUsernameValue,
-    editImageLinkValue,
+    deferredEditUsernameValue,
+    deferredEditImageLinkValue,
     username,
     selectedImage,
     usernameExist,
@@ -144,9 +153,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
     dispatch(
       editProfileInformation({
-        username: editUsernameValue,
+        username: deferredEditUsernameValue,
         profileImageLink:
-          selectedImage !== "" ? selectedImage : editImageLinkValue,
+          selectedImage !== "" ? selectedImage : deferredEditImageLinkValue,
       })
     );
 
@@ -161,7 +170,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggleEditProfile]);
 
-  const isImageLinkValid = useImageLinkChecker(editImageLinkValue);
+  const isImageLinkValid = useImageLinkChecker(deferredEditImageLinkValue);
 
   useEffect(() => {
     console.log(isImageLinkValid);
@@ -188,14 +197,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
         >
           <TextField
             label={
-              editUsernameValue === username
+              deferredEditUsernameValue === username
                 ? "Same username detected"
                 : usernameExist
                 ? "Username already exist"
                 : "Enter new name"
             }
             variant='outlined'
-            error={editUsernameValue === username || usernameExist}
+            error={deferredEditUsernameValue === username || usernameExist}
             onChange={(e) => setEditUsernameValue(e.target.value)}
             defaultValue={username}
           />
@@ -240,10 +249,18 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           </Box>
         </Box>
 
-        {previewImage && editImageLinkValue !== "" ? (
+        {previewImage && deferredEditImageLinkValue !== "" ? (
           <div className='image-preview'>
             {isImageLinkValid ? (
-              <img src={editImageLinkValue} loading='lazy' />
+              <div className='image-previewer'>
+                <div
+                  className='close-image-previewer'
+                  onClick={() => setPreviewImage(false)}
+                >
+                  <CloseRounded />
+                </div>
+                <img src={deferredEditImageLinkValue} loading='lazy' />
+              </div>
             ) : (
               <div>Image link is not valid</div>
             )}
@@ -252,7 +269,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
         {/* Fix error: DOM handling */}
         <SelectProfileImage
-          imageLinkValue={editImageLinkValue}
+          imageLinkValue={deferredEditImageLinkValue}
           setSelectedImage={setSelectedImage}
         />
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useDeferredValue } from "react";
 import SelectProfileImage from "../reusable/selectProfileImage/SelectProfileImage";
 
 // MUI Components
@@ -36,8 +36,9 @@ const CreateAccount: React.FC = () => {
     e.preventDefault();
 
     const newUser: User = {
-      username: usernameValue,
-      profileImageLink: imageLinkValue === "" ? selectedImage : imageLinkValue,
+      username: deferredUsernameValue,
+      profileImageLink:
+        deferredImageLinkValue === "" ? selectedImage : deferredImageLinkValue,
       projects: [],
       userID: users.length === 0 ? 0 : users[users.length - 1].userID + 1,
     };
@@ -58,21 +59,29 @@ const CreateAccount: React.FC = () => {
   const [usernameValue, setUsernameValue] = useState<string>("");
   const [imageLinkValue, setImageLinkValue] = useState<string>("");
 
+  const deferredUsernameValue = useDeferredValue(usernameValue);
+  const deferredImageLinkValue = useDeferredValue(imageLinkValue);
+
   // Selecting custom profile image states
   const [selectedImage, setSelectedImage] = useState<string>("");
 
   const userInputError = useAppSelector(getUserInputError);
 
-  const usernameExist = useIsUsernameExist(usernameValue);
+  const usernameExist = useIsUsernameExist(deferredUsernameValue);
 
   useEffect(() => {
     // Disable 'create acount' button if 1 or both of input is empty.
     setInvalidInput(
-      usernameValue.trim() === "" ||
+      deferredUsernameValue.trim() === "" ||
         usernameExist ||
-        (imageLinkValue.trim() === "" && selectedImage === "")
+        (deferredImageLinkValue.trim() === "" && selectedImage === "")
     );
-  }, [usernameValue, imageLinkValue, selectedImage, usernameExist]);
+  }, [
+    deferredUsernameValue,
+    deferredImageLinkValue,
+    selectedImage,
+    usernameExist,
+  ]);
 
   useEffect(() => {
     // This variable changes its value on /* userReducers.ts */
@@ -87,7 +96,7 @@ const CreateAccount: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInputError]);
 
-  const isImageLinkValid = useImageLinkChecker(imageLinkValue);
+  const isImageLinkValid = useImageLinkChecker(deferredImageLinkValue);
 
   return (
     <div className='create-account'>
@@ -104,7 +113,7 @@ const CreateAccount: React.FC = () => {
             label={usernameExist ? "Username already exist" : "Enter new name"}
             error={usernameExist}
             required
-            value={usernameValue}
+            defaultValue={deferredUsernameValue}
             id='create-account-username'
             onChange={(e) => setUsernameValue(e.target.value)}
           />
@@ -113,20 +122,22 @@ const CreateAccount: React.FC = () => {
             <TextField
               variant='outlined'
               label={
-                imageLinkValue.length >= 5 && !isImageLinkValid
+                deferredImageLinkValue.length <= 5 || !isImageLinkValid
                   ? "Invalid link"
                   : "Profile image link"
               }
               required
-              error={imageLinkValue.length >= 5 && !isImageLinkValid}
-              value={selectedImage !== "" ? selectedImage : imageLinkValue}
+              error={deferredImageLinkValue.length <= 5 || !isImageLinkValid}
+              defaultValue={
+                selectedImage !== "" ? selectedImage : deferredImageLinkValue
+              }
               disabled={selectedImage !== ""}
               onChange={(e) => setImageLinkValue(e.target.value)}
             />
 
             {isImageLinkValid ? (
               <div className='display-image profile-image'>
-                <img src={imageLinkValue} alt='profile-image' />
+                <img src={deferredImageLinkValue} alt='profile-image' />
               </div>
             ) : null}
           </div>

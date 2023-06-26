@@ -44,7 +44,7 @@ const DisplayAccount: React.FC<{ user: User }> = (props) => {
       >
         Select account
       </button> */}
-      <Link to={`/u/${user.userID}/projects`}>
+      <Link to={`/${user.userID}/projects`}>
         <Button
           variant='contained'
           onClick={() => dispatch(setActiveUser(user))}

@@ -1,34 +1,35 @@
-.projects .page-header {
+.projects .projects-page-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
 }
-.projects .page-header .create-new-project {
+.projects .projects-page-nav .create-new-project {
   display: flex;
   gap: 4px;
 }
-.projects .page-header .create-new-project .button-text {
+.projects .projects-page-nav .create-new-project .button-text {
   display: none;
 }
 @media (min-width: 1024px) {
-  .projects .page-header {
+  .projects .projects-page-nav {
     margin-bottom: 18px;
   }
 }
 .projects .projects-container {
   display: grid;
   grid-template-columns: repeat(2, calc((100% - 12px) / 2));
-  grid-auto-rows: 300px;
+  grid-auto-rows: 250px;
   gap: 12px;
 }
-.projects .projects-container .project-wrapper {
+.projects .projects-container .project-card {
   position: relative;
+  overflow: hidden;
 }
-.projects .projects-container .project-wrapper .project-options {
+.projects .projects-container .project-card .project-options {
   width: 100%;
   height: 100%;
-  background-color: rgba(221, 221, 221, 0.5);
+  background-color: rgba(238, 238, 238, 0.5);
   position: absolute;
   top: 0;
   left: 0;
@@ -39,46 +40,87 @@
   align-items: center;
   justify-content: center;
 }
-.projects .projects-container .project-wrapper .project-options .options-container {
+.projects .projects-container .project-card .project-options .options-container {
   display: grid;
   place-items: center;
   gap: 4px;
 }
-.projects .projects-container .project-wrapper .project-options .options-container .MuiButton-text {
+.projects .projects-container .project-card .project-options .options-container .MuiButton-text {
   color: #121212;
 }
-.projects .projects-container .project-wrapper .project-options .options-container .delete-project {
+.projects .projects-container .project-card .project-options .options-container .MuiButton-text:hover {
+  background-color: #5b87f8;
+  color: #fff;
+}
+.projects .projects-container .project-card .project-options .options-container .delete-project {
   background-color: #fcfdff;
   color: #ff3333;
   width: -moz-fit-content;
   width: fit-content;
 }
-.projects .projects-container .project-wrapper .project-options .options-container .delete-project:hover {
+.projects .projects-container .project-card .project-options .options-container .delete-project:hover {
   background-color: #ff3333;
   color: #fff;
 }
-.projects .projects-container .project-wrapper .project-contents {
+.projects .projects-container .project-card .project-contents {
   width: 100%;
   height: 100%;
-  background-color: #0f0;
   display: grid;
-  grid-template-rows: 150px auto auto;
+  grid-template-columns: 100%;
+  grid-template-rows: 0.6fr 0.4fr auto;
 }
-.projects .projects-container .project-wrapper .project-contents .project-header {
+.projects .projects-container .project-card .project-contents .project-header {
   width: 100%;
+  overflow-y: scroll;
 }
-.projects .projects-container .project-wrapper .project-contents .project-header .project-title {
+.projects .projects-container .project-card .project-contents .project-header::-webkit-scrollbar {
+  display: none;
+}
+.projects .projects-container .project-card .project-contents .project-header .project-title {
   max-width: 80%;
-  background-color: #f00;
   word-wrap: break-word;
 }
-.projects .projects-container .project-wrapper .project-contents .tags-container {
-  background-color: #ff0;
+.projects .projects-container .project-card .project-contents .project-tags {
+  overflow-y: scroll;
 }
-.projects .projects-container .project-wrapper .project-contents .project-progress {
-  background-color: #000;
+.projects .projects-container .project-card .project-contents .project-tags::-webkit-scrollbar {
+  display: none;
 }
-.projects .projects-container .project-wrapper .toggle-project-options {
+.projects .projects-container .project-card .project-contents .project-tags .tags-container {
+  padding: 4px 0;
+}
+.projects .projects-container .project-card .project-contents .project-tags .tags-container .MuiChip-root {
+  margin: 4px 4px 0 0;
+  word-wrap: break-word;
+}
+.projects .projects-container .project-card .project-contents .project-progress {
+  border-top: 2px solid #f0f0f2;
+  padding-top: 12px;
+  display: grid;
+  align-items: center;
+  gap: 4px;
+  grid-template-columns: auto 1fr;
+  font-size: 12px;
+}
+.projects .projects-container .project-card .project-contents .project-progress .progress-info {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 4px;
+}
+.projects .projects-container .project-card .project-contents .project-progress .progress-info .progress-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #0f1975;
+}
+.projects .projects-container .project-card .project-contents .project-progress .progress-info .progress-bar .progress-hand {
+  height: 4px;
+  width: 20%;
+  border-radius: 4px;
+  background-color: #5b87f8;
+}
+.projects .projects-container .project-card .toggle-project-options {
   width: 24px;
   height: 24px;
   display: flex;
@@ -90,62 +132,22 @@
   border-radius: 4px;
   background-color: #f0f0f2;
 }
-.projects .projects-container .project-wrapper .toggle-project-options:hover {
+.projects .projects-container .project-card .toggle-project-options:hover {
   color: #5b87f8;
 }
 @media (min-width: 1024px) {
   .projects .projects-container {
     grid-template-columns: repeat(3, calc((100% - 36px) / 3));
+    grid-auto-rows: 300px;
     gap: 18px;
   }
-  .projects .projects-container .project-wrapper .toggle-project-options {
+  .projects .projects-container .project-card .toggle-project-options {
     top: 18px;
     right: 18px;
     width: 32px;
     height: 32px;
   }
-}
-.projects .create-project-modal {
-  width: 80%;
-  background-color: #5b87f8;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 102;
-}
-.projects .create-project-modal .modal-header {
-  margin-bottom: 12px;
-}
-.projects .create-project-modal #create-project-form {
-  display: grid;
-  gap: 8px;
-}
-.projects .create-project-modal #create-project-form .MuiTextField-root {
-  width: 100%;
-}
-.projects .create-project-modal #create-project-form #create-tag-form {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: auto auto;
-}
-.projects .create-project-modal #create-project-form .modal-buttons {
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 10px;
-  margin-top: 30px;
-}
-@media (min-width: 1024px) {
-  .projects .page-header .create-new-project .button-text {
-    display: block;
-  }
-  .projects .create-project-modal {
-    width: 400px;
-  }
-  .projects .create-project-modal form .input-container .label {
-    margin-bottom: 4px;
-  }
-  .projects .create-project-modal form .modal-buttons {
-    margin-top: 40px;
+  .projects .projects-container .project-card .project-contents .project-progress {
+    padding-top: 18px;
   }
 }/*# sourceMappingURL=Projects.css.map */

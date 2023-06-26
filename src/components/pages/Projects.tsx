@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { deleteProject, logoutUser } from "../../slices/userSlice";
+import { logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";
 import type { Project as ProjectType } from "../../app/types";
 
-import { Link } from "react-router-dom";
+import "../styles/Projects.css";
 
 // Modal
 import CreateProjectModal from "./modals/CreateProjectModal";
 
-import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
-
-import "../styles/Projects.css";
-
 // MUI components
 import { Button } from "@mui/material";
 import { AddCircleRounded } from "@mui/icons-material";
-import ModalContainer from "../ModalContainer";
+import ProjectCard from "./projects/ProjectCard";
+import EditProjectModal from "./modals/EditProjectModal";
 
 const Projects: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,14 +24,22 @@ const Projects: React.FC = () => {
   const [showCreateProjectModal, setShowCreateProjectModal] =
     useState<boolean>(false);
 
-  const showModal = () => {
-    setShowCreateProjectModal(true);
-  };
+  const [showEditProjectModal, setShowEditProjectModal] =
+    useState<boolean>(false);
+  const [projectToEdit, setProjectToEdit] = useState<ProjectType | undefined>();
+
+  const showModal = () => setShowCreateProjectModal(true);
+
+  useEffect(() => {
+    if (projectToEdit !== undefined) {
+      setShowEditProjectModal(true);
+    }
+  }, [projectToEdit]);
 
   return (
     <div className='projects page'>
-      <div className='page-header'>
-        <div className='page-title header2'>
+      <div className='projects-page-nav'>
+        <div className='projects-page-title header2'>
           Projects {projects.length ? projects.length : " 0"}
         </div>
 
@@ -48,19 +53,17 @@ const Projects: React.FC = () => {
         </Button>
       </div>
 
-      {/* <Button
-        variant='contained'
-        onClick={() => dispatch(deleteProject(project))}
-      >
-        Delete project
-      </Button> */}
-
       <div className='projects-container'>
         {projects !== undefined
-          ? projects.map((project, i) => <Project project={project} key={i} />)
+          ? projects.map((project, i) => (
+              <ProjectCard
+                project={project}
+                setProjectToEdit={setProjectToEdit}
+                key={i}
+              />
+            ))
           : null}
       </div>
-
       <Button
         variant='outlined'
         color='error'
@@ -68,82 +71,21 @@ const Projects: React.FC = () => {
       >
         Log out
       </Button>
+
       {showCreateProjectModal ? (
-        <ModalContainer
-          showModal={showCreateProjectModal}
-          setShowModal={setShowCreateProjectModal}
-        >
-          <CreateProjectModal
-            showCreateProjectModal={showCreateProjectModal}
-            setShowCreateProjectModal={setShowCreateProjectModal}
-          />
-        </ModalContainer>
-      ) : null}
-    </div>
-  );
-};
-
-interface ProjectProps {
-  project: ProjectType;
-  key: number;
-}
-
-const Project: React.FC<ProjectProps> = ({ project }) => {
-  const dispatch = useAppDispatch();
-  const [toggleOptions, setToggleOptions] = useState<boolean>(false);
-
-  return (
-    <div className='project-wrapper bordered-container'>
-      {toggleOptions ? (
-        <div className='project-options'>
-          <div className='options-container'>
-            <Link to={`${project.id}`}>
-              <Button variant='text' onClick={() => console.log("")}>
-                Open
-              </Button>
-            </Link>
-            <Button variant='text' onClick={() => console.log("")}>
-              Edit
-            </Button>
-            <Button variant='text' onClick={() => console.log("")}>
-              Move to "Done"
-            </Button>
-            <Button
-              variant='text'
-              className='delete-project'
-              onClick={() => {
-                dispatch(deleteProject(project));
-                setToggleOptions(!toggleOptions);
-              }}
-            >
-              Delete
-            </Button>
-          </div>
-        </div>
+        <CreateProjectModal
+          showCreateProjectModal={showCreateProjectModal}
+          setShowCreateProjectModal={setShowCreateProjectModal}
+        />
       ) : null}
 
-      <div
-        className='toggle-project-options'
-        onClick={() => setToggleOptions(!toggleOptions)}
-      >
-        {toggleOptions ? (
-          <ExpandLessRounded fontSize='large' />
-        ) : (
-          <ExpandMoreRounded fontSize='large' />
-        )}
-      </div>
-
-      {/* Project main contents */}
-      <div className='project-contents'>
-        <div className='project-header'>
-          <div className='header3 project-title'>{project.projectTitle}</div>
-        </div>
-
-        <div className='tags-container'></div>
-
-        <div className='project-progress'></div>
-      </div>
-      {/* <div>{project.projectDescription}</div> */}
+      {showEditProjectModal ? (
+        <EditProjectModal
+          setProjectToEdit={setProjectToEdit}
+          setShowEditProjectModal={setShowEditProjectModal}
+          projectToEdit={projectToEdit}
+        />
+      ) : null}
     </div>
   );
 };

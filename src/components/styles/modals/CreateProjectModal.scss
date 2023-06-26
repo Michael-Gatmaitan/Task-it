@@ -1,0 +1,62 @@
+@import "../mixins";
+
+.create-project-modal,
+.edit-project-modal {
+  width: calc(100% * 0.8);
+  // height: 400px
+  background-color: $primary;
+  z-index: $idx_mainModal;
+
+  .modal-header {
+    margin-bottom: 12px;
+  }
+
+  form {
+    display: grid;
+    gap: 8px;
+
+    // .MuiTextField-root {
+    //   width: 100%;
+    // }
+
+    .create-tag-form {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: auto auto;
+    }
+
+    .modal-buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 10px;
+      margin-top: 30px;
+    }
+  }
+}
+
+@include desktop {
+  .projects-page-nav {
+    .create-new-project {
+      .button-text {
+        display: block;
+      }
+    }
+  }
+
+  .create-project-modal,
+  .edit-project-modal {
+    width: 400px;
+
+    form {
+      .input-container {
+        .label {
+          margin-bottom: 4px;
+        }
+      }
+
+      .modal-buttons {
+        margin-top: 40px;
+      }
+    }
+  }
+}

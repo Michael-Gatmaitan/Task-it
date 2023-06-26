@@ -12,7 +12,7 @@ const initialState: AppState = {
 
   accounts: JSON.parse(localStorage.getItem("users") || "[]"),
   userInputError: false,
-  loggedIn: false,
+  loggedIn: JSON.parse(localStorage.getItem("loggedIn") || "false"),
 };
 
 const userSlice = createSlice({

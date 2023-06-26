@@ -12,7 +12,7 @@ import "./components/styles/Sidebar.css";
 // Types
 import type { NavButtons } from "./app/types";
 import { useAppSelector } from "./app/hooks";
-import { getUserLoggedIn } from "./slices/userSlice";
+import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
 
 // MUI Icons
 import {
@@ -29,6 +29,7 @@ const Root: React.FC = () => {
   // States
 
   const loggedIn = useAppSelector(getUserLoggedIn);
+  const activeUser = useAppSelector(getActiveUser);
 
   const navBarButtons: NavButtons = {
     centerButtons: loggedIn
@@ -40,7 +41,7 @@ const Root: React.FC = () => {
           },
           {
             text: "Projects",
-            path: "projects",
+            path: `${activeUser.userID}/projects`,
             Icon: ProjectsIcon,
           },
           {

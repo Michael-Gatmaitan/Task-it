@@ -1,7 +1,7 @@
 @import "./mixins";
 
 .projects {
-  .page-header {
+  .projects-page-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,17 +26,18 @@
     $gap: 12px;
     display: grid;
     grid-template-columns: repeat(2, calc((100% - $gap) / 2));
-    grid-auto-rows: 300px;
+    grid-auto-rows: 250px;
     gap: $gap;
 
     // Main project container
-    .project-wrapper {
+    .project-card {
       position: relative;
+      overflow: hidden;
 
       .project-options {
         width: 100%;
         height: 100%;
-        background-color: rgba(#ddd, 0.5);
+        background-color: rgba(#eee, 0.5);
         position: absolute;
         top: 0;
         left: 0;
@@ -51,6 +52,11 @@
 
           .MuiButton-text {
             color: #121212;
+
+            &:hover {
+              background-color: $primary;
+              color: #fff;
+            }
           }
 
           .delete-project {
@@ -69,26 +75,71 @@
       .project-contents {
         width: 100%;
         height: 100%;
-        background-color: #0f0;
         display: grid;
-        grid-template-rows: 150px auto auto;
+        grid-template-columns: 100%;
+        grid-template-rows: 0.6fr 0.4fr auto;
 
         .project-header {
           width: 100%;
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
 
           .project-title {
             max-width: 80%;
-            background-color: #f00;
             word-wrap: break-word;
           }
         }
 
-        .tags-container {
-          background-color: #ff0;
+        .project-tags {
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          .tags-container {
+            padding: 4px 0;
+
+            .MuiChip-root {
+              margin: 4px 4px 0 0;
+              word-wrap: break-word;
+            }
+          }
         }
 
         .project-progress {
-          background-color: #000;
+          border-top: 2px solid $inputBG;
+          padding-top: 12px;
+          display: grid;
+          align-items: center;
+          gap: 4px;
+          grid-template-columns: auto 1fr;
+          font-size: 12px;
+
+          .progress-info {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            gap: 4px;
+
+            .progress-bar {
+              width: 100%;
+              height: 4px;
+              border-radius: 4px;
+              background-color: $darker;
+
+              .progress-hand {
+                height: 4px;
+                // initial width
+                width: 20%;
+                border-radius: 4px;
+                background-color: $primary;
+              }
+            }
+          }
         }
       }
 
@@ -111,77 +162,24 @@
     @include desktop {
       $gap: 18px;
       grid-template-columns: repeat(3, calc((100% - $gap * 2) / 3));
+      grid-auto-rows: 300px;
       gap: $gap;
 
-      .project-wrapper {
+      .project-card {
         .toggle-project-options {
           top: 18px;
           right: 18px;
           width: 32px;
           height: 32px;
         }
-      }
-    }
-  }
 
-  .create-project-modal {
-    width: calc(100% * 0.8);
-    // height: 400px;
-    background-color: $primary;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: $idx_mainModal;
+        // .project-options {
+        // }
 
-    .modal-header {
-      margin-bottom: 12px;
-    }
-
-    #create-project-form {
-      display: grid;
-      gap: 8px;
-
-      .MuiTextField-root {
-        width: 100%;
-      }
-
-      #create-tag-form {
-        display: grid;
-        gap: 8px;
-        grid-template-columns: auto auto;
-      }
-
-      .modal-buttons {
-        display: grid;
-        grid-template-columns: auto auto;
-        gap: 10px;
-        margin-top: 30px;
-      }
-    }
-  }
-
-  @include desktop {
-    .page-header {
-      .create-new-project {
-        .button-text {
-          display: block;
-        }
-      }
-    }
-
-    .create-project-modal {
-      width: 400px;
-
-      form {
-        .input-container {
-          .label {
-            margin-bottom: 4px;
+        .project-contents {
+          .project-progress {
+            padding-top: 18px;
           }
-        }
-
-        .modal-buttons {
-          margin-top: 40px;
         }
       }
     }

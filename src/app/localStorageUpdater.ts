@@ -20,14 +20,21 @@ export const useLocalStorageUpdater = () => {
     console.log("only ID changed, means changing user occured");
   }, [userID]);
 
+  // Whenever the properties of dependencies has change,
+  // we will update the localstorage
   useEffect(() => {
     // If user is logged out, we dont need to update the
     // states of the account
     if (!isLoggedIn) return;
+
     localStorage.setItem("activeUser", JSON.stringify(activeUser));
 
     console.log("Data updated.");
 
     dispatch(updateAccounts());
   }, [activeUser, dispatch, isLoggedIn]);
+
+  useEffect(() => {
+    localStorage.setItem("loggedIn", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 };

@@ -1,0 +1,23 @@
+.project .project-nav {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.project .project-nav .header2 {
+  overflow: hidden;
+  background-color: #f00 !important;
+}
+.project .project-nav .date-created {
+  justify-self: end;
+}
+.project .boards-container {
+  display: grid;
+  gap: 18px;
+  overflow-x: scroll;
+  background-color: #f00;
+}
+.project .boards-container .board {
+  height: 400px;
+  width: 400px;
+}/*# sourceMappingURL=Project.css.map */

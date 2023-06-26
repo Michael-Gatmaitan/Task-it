@@ -64,10 +64,27 @@
       .image-preview {
         width: 100%;
         margin-bottom: 1.5rem;
-        @include flexCenter;
 
-        img {
-          width: 50%;
+        .image-previewer {
+          width: 100%;
+          @include flexCenter;
+          position: relative;
+
+          .close-image-previewer {
+            width: 32px;
+            height: 32px;
+            padding: 4px;
+            border-radius: 8px;
+            background-color: #eee;
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
+
+          img {
+            border-radius: 8px;
+            width: 50%;
+          }
         }
       }
     }

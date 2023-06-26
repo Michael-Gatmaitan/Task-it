@@ -1,0 +1,31 @@
+@import "../mixins";
+
+.project {
+  .project-nav {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: 8px;
+
+    .header2 {
+      overflow: hidden;
+      background-color: #f00 !important;
+    }
+
+    .date-created {
+      justify-self: end;
+    }
+  }
+
+  .boards-container {
+    display: grid;
+    gap: 18px;
+    overflow-x: scroll;
+    background-color: #f00;
+
+    .board {
+      height: 400px;
+      width: 400px;
+    }
+  }
+}

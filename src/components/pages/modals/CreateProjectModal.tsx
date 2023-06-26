@@ -3,6 +3,7 @@ import { addProject } from "../../../slices/userSlice";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { RootState } from "../../../app/store";
 import type { Project } from "../../../app/types";
+import "../../styles/modals/CreateProjectModal.css";
 
 // MUI
 import { Button, TextField, Chip } from "@mui/material";
@@ -24,13 +25,10 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
   // Rework the states
   const [projectTitle, setProjectTitle] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
-
-  const [newTagValue, setNewTagValue] = useState<string>("");
-  const [tags, setTags] = useState<string[]>([]);
-
   const [dueDate, setDueDate] = useState<string>("");
 
-  const [titleExistErr, setTitleExistErr] = useState<boolean>(false);
+  const [tags, setTags] = useState<string[]>([]);
+  const [newTagValue, setNewTagValue] = useState<string>("");
 
   const handleSubmitAddProject = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,18 +37,6 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
       return;
     }
 
-    const isProjectTitleExists = projects.find(
-      (proj) => projectTitle === proj.projectTitle
-    );
-
-    if (isProjectTitleExists) {
-      console.log("Project name already exist.");
-      setTitleExistErr(true);
-      return;
-    }
-
-    setTitleExistErr(false);
-
     console.log("New project is now creating.");
 
     const newProjectToAdd: Project = {
@@ -58,9 +44,11 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
       projectDescription:
         projectDescription === "" ? "No description." : projectDescription,
       dateCreated: new Date().toString(),
-      // This should be able to create a date using Date object
       dueDate: dueDate,
       tags: tags,
+      boards: [],
+      favorite: false,
+      done: false,
       id: projects.length === 0 ? 0 : projects[projects.length - 1].id + 1,
     };
 
@@ -86,93 +74,88 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
     console.log("Submit tag...");
   };
 
-  useEffect(() => {
-    if (titleExistErr) {
-      setTimeout(() => setTitleExistErr(false), 2000);
-    }
-  }, [titleExistErr]);
-
-  useEffect(() => {
-    console.log(tags);
-  }, [tags]);
-
   return (
     <div
-      className='create-project-modal bordered-container'
-      onClick={propagationStopper}
+      className='modal-container-background'
+      onClick={() => setShowCreateProjectModal(false)}
     >
-      <div className='modal-header header2'>Create Project</div>
-
-      <form
-        id='create-project-form'
-        name='create-project-form'
-        onSubmit={handleSubmitAddProject}
+      <div
+        className='create-project-modal bordered-container'
+        onClick={propagationStopper}
       >
-        <TextField
-          variant='outlined'
-          label='Project name'
-          onChange={(e) => setProjectTitle(e.target.value)}
-        />
+        <div className='modal-header header2'>Create Project</div>
 
-        {titleExistErr ? "Project title exists." : null}
-
-        <TextField
-          variant='outlined'
-          label='Description (Optional)'
-          onChange={(e) => setProjectDescription(e.target.value)}
-        />
-
-        <div className='create-tag-form' id='create-tag-form'>
+        <form
+          className='modal-form'
+          id='create-project-form'
+          name='create-project-form'
+          onSubmit={handleSubmitAddProject}
+        >
           <TextField
             variant='outlined'
-            label='Add tag'
-            value={newTagValue}
-            onChange={(
-              e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-            ) => setNewTagValue(e.target.value)}
+            label='Project name'
+            onChange={(e) => setProjectTitle(e.target.value)}
           />
-          <Button
-            variant='contained'
-            disabled={newTagValue === ""}
-            onClick={handleSubmitTag}
-          >
-            Add tag
-          </Button>
-        </div>
 
-        <div className='tags-container'>
-          {tags.map((tag, i) => (
-            <Chip
-              label={tag}
-              onDelete={() => {
-                console.log("delete");
-              }}
-              key={i}
-            />
-          ))}
-        </div>
-
-        <div className='label'>Due date</div>
-        <input
-          type='date'
-          className='text-box'
-          placeholder='Due date'
-          onChange={(e) => setDueDate(e.target.value)}
-        />
-
-        <div className='modal-buttons'>
-          <Button type='submit' variant='contained' disabled={submitDisabled}>
-            Create
-          </Button>
-
-          <Button
+          <TextField
             variant='outlined'
-            onClick={() => setShowCreateProjectModal(!showCreateProjectModal)}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
+            label='Description (Optional)'
+            onChange={(e) => setProjectDescription(e.target.value)}
+          />
+
+          <div className='create-tag-form' id='create-tag-form'>
+            <TextField
+              variant='outlined'
+              label='Add tag'
+              value={newTagValue}
+              onChange={(
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => setNewTagValue(e.target.value)}
+            />
+            <Button
+              variant='contained'
+              disabled={newTagValue === ""}
+              onClick={handleSubmitTag}
+            >
+              Add tag
+            </Button>
+          </div>
+
+          <div className='tags-container'>
+            {tags.map((tag, i) => (
+              <Chip
+                label={tag}
+                color='primary'
+                key={i}
+                onDelete={() => {
+                  setTags(tags.filter((_, tag_idx) => tag_idx !== i));
+                }}
+              />
+            ))}
+          </div>
+
+          <div className='label'>Due date</div>
+          <input
+            type='date'
+            className='text-box'
+            placeholder='Due date'
+            onChange={(e) => setDueDate(e.target.value)}
+          />
+
+          <div className='modal-buttons'>
+            <Button type='submit' variant='contained' disabled={submitDisabled}>
+              Create
+            </Button>
+
+            <Button
+              variant='outlined'
+              onClick={() => setShowCreateProjectModal(!showCreateProjectModal)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

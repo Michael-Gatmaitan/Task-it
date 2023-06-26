@@ -21,11 +21,15 @@ export const useImageLinkChecker = (url: string) => {
   const [isLinkValid, setIsLinkValid] = useState<boolean>(false);
 
   useEffect(() => {
+    if (url === "") return;
+
     const image = new Image();
     image.src = url;
 
     image.addEventListener("load", () => setIsLinkValid(true));
     image.addEventListener("error", () => setIsLinkValid(false));
+
+    console.log("Image checker");
   }, [url]);
 
   return isLinkValid;

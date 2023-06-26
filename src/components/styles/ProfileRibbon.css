@@ -55,11 +55,26 @@
 .profile-ribbon .edit-profile form .image-preview {
   width: 100%;
   margin-bottom: 1.5rem;
+}
+.profile-ribbon .edit-profile form .image-preview .image-previewer {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
-.profile-ribbon .edit-profile form .image-preview img {
+.profile-ribbon .edit-profile form .image-preview .image-previewer .close-image-previewer {
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  border-radius: 8px;
+  background-color: #eee;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.profile-ribbon .edit-profile form .image-preview .image-previewer img {
+  border-radius: 8px;
   width: 50%;
 }
 @media (min-width: 1024px) {

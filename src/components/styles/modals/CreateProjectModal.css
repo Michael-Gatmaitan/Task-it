@@ -1,0 +1,46 @@
+.create-project-modal,
+.edit-project-modal {
+  width: 80%;
+  background-color: #5b87f8;
+  z-index: 102;
+}
+.create-project-modal .modal-header,
+.edit-project-modal .modal-header {
+  margin-bottom: 12px;
+}
+.create-project-modal form,
+.edit-project-modal form {
+  display: grid;
+  gap: 8px;
+}
+.create-project-modal form .create-tag-form,
+.edit-project-modal form .create-tag-form {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: auto auto;
+}
+.create-project-modal form .modal-buttons,
+.edit-project-modal form .modal-buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+@media (min-width: 1024px) {
+  .projects-page-nav .create-new-project .button-text {
+    display: block;
+  }
+  .create-project-modal,
+  .edit-project-modal {
+    width: 400px;
+  }
+  .create-project-modal form .input-container .label,
+  .edit-project-modal form .input-container .label {
+    margin-bottom: 4px;
+  }
+  .create-project-modal form .modal-buttons,
+  .edit-project-modal form .modal-buttons {
+    margin-top: 40px;
+  }
+}/*# sourceMappingURL=CreateProjectModal.css.map */
