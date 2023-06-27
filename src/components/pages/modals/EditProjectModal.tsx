@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 // import { editProject } from "../../../slices/userSlice";
 // import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { Button, TextField, Chip } from "@mui/material";
@@ -35,7 +35,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = (
 
   const [newTagValue, setNewTagValue] = useState<string>("");
 
-  const [{ projectTitle, projectDescription, tags, dueDate }, setInitialState] =
+  const [{ tags, dueDate }, setInitialState] =
     useState<EditableProjectValues>(initialState);
 
   // const [combinedTags];
