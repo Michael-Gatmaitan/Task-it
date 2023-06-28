@@ -20,12 +20,31 @@
   .boards-container {
     display: grid;
     gap: 18px;
+    // gridTemplateColumns: `repeat(${[0].length + 1}, auto)` on Project.tsx file
+    grid-auto-columns: auto;
     overflow-x: scroll;
     background-color: #f00;
 
     .board {
-      height: 400px;
-      width: 400px;
+      height: auto;
+      width: 300px;
+    }
+
+    .add-board {
+      width: max-content;
+      // height: min-content;
+    }
+  }
+
+  @include desktop {
+    .boards-container {
+      .board {
+        width: 350px;
+      }
+
+      .add-board {
+        width: 100%;
+      }
     }
   }
 }

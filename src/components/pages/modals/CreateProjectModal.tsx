@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { addProject } from "../../../slices/userSlice";
+import {
+  addProject,
+  // editProject,
+  // getActiveUser,
+} from "../../../slices/userSlice";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { RootState } from "../../../app/store";
 import type { Project } from "../../../app/types";
@@ -11,7 +15,6 @@ import { Button, TextField, Chip } from "@mui/material";
 /** CREATE PROJECT MODAL */
 
 interface CreateProjectModalProps {
-  showCreateProjectModal: boolean;
   setShowCreateProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -20,15 +23,24 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
     (state: RootState) => state.userReducer.activeUser.projects
   );
   const dispatch = useAppDispatch();
-  const { showCreateProjectModal, setShowCreateProjectModal } = props;
+  const { setShowCreateProjectModal } = props;
 
   // Rework the states
   const [projectTitle, setProjectTitle] = useState<string>("");
+
   const [projectDescription, setProjectDescription] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
 
   const [tags, setTags] = useState<string[]>([]);
   const [newTagValue, setNewTagValue] = useState<string>("");
+
+  const [isTitleExists, setIsTitleExists] = useState(true);
+
+  useEffect(() => {
+    setIsTitleExists(
+      projects.findIndex((pr) => pr.projectTitle === projectTitle) !== -1
+    );
+  }, [projects, projectTitle]);
 
   const handleSubmitAddProject = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,8 +71,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    setSubmitDisabled(projectTitle.trim() === "");
-  }, [projectTitle]);
+    setSubmitDisabled(projectTitle.trim() === "" || isTitleExists);
+  }, [projectTitle, isTitleExists]);
 
   const propagationStopper = (e: React.MouseEvent<HTMLDivElement>) =>
     e.stopPropagation();
@@ -93,7 +105,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
         >
           <TextField
             variant='outlined'
-            label='Project name'
+            label={isTitleExists ? "Title already exists" : "Project name"}
+            error={isTitleExists}
             onChange={(e) => setProjectTitle(e.target.value)}
           />
 
@@ -149,7 +162,9 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
 
             <Button
               variant='outlined'
-              onClick={() => setShowCreateProjectModal(!showCreateProjectModal)}
+              onClick={() =>
+                setShowCreateProjectModal((prevState) => !prevState)
+              }
             >
               Cancel
             </Button>

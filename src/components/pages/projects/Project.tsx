@@ -35,15 +35,15 @@ const Project: React.FC = () => {
         )
       : undefined;
 
-  const [time, setTime] = useState<string>("");
-
   useEffect(() => {
-    if (curProject !== undefined) {
+    if (curProject !== undefined)
       setTime(dayjs(curProject.dateCreated).fromNow());
-    }
   }, [curProject]);
 
-  return curProject ? (
+  const [time, setTime] = useState<string>("");
+  const [showAddBoard, setShowAddBoard] = useState<boolean>(false);
+
+  return curProject !== undefined ? (
     <div className='project page'>
       <div className='project-nav'>
         <ArrowBackIosNewRounded
@@ -57,16 +57,22 @@ const Project: React.FC = () => {
       <div
         className='boards-container'
         style={{
-          gridTemplateColumns: `repeat(${7 + 1}, auto)`,
+          gridTemplateColumns: `repeat(${curProject.boards.length + 1}, auto)`,
         }}
       >
-        {[0, 0, 0, 0, 0, 0, 0].map((board, i) => (
+        {curProject.boards.map((board, i) => (
           <div className='board bordered-container' key={i}>
-            board {board}
+            board {board.boardTitle}
           </div>
         ))}
 
-        <Button variant='contained'>Add Board</Button>
+        <Button
+          variant='contained'
+          className='add-board'
+          onClick={() => setShowAddBoard((prevState) => !prevState)}
+        >
+          Add Board {showAddBoard ? "true" : "false"}
+        </Button>
       </div>
     </div>
   ) : null;

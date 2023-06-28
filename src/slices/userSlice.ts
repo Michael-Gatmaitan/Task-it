@@ -41,6 +41,7 @@ export const {
 
   // Project reducers
   addProject,
+  editProject,
   deleteProject,
 } = userSlice.actions;
 

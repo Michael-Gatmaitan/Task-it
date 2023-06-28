@@ -20,16 +20,21 @@ export const useIsUsernameExist = (username: string): boolean => {
 export const useImageLinkChecker = (url: string) => {
   const [isLinkValid, setIsLinkValid] = useState<boolean>(false);
 
+  const isImgUrl = (url: string) => {
+    const img = new Image();
+    img.src = url;
+
+    return new Promise((resolve) => {
+      img.onerror = () => resolve(false);
+      img.onload = () => resolve(true);
+    });
+  };
+
   useEffect(() => {
     if (url === "") return;
 
-    const image = new Image();
-    image.src = url;
-
-    image.addEventListener("load", () => setIsLinkValid(true));
-    image.addEventListener("error", () => setIsLinkValid(false));
-
-    console.log("Image checker");
+    // type safetiness bruh
+    isImgUrl(url).then((e) => (typeof e === "boolean" ? setIsLinkValid(e) : e));
   }, [url]);
 
   return isLinkValid;

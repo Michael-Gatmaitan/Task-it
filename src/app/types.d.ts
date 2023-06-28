@@ -21,6 +21,7 @@ interface Card {
 interface Board {
   boardTitle: string;
   cards: Card[];
+  boardID: number;
 }
 
 export interface Project {
@@ -62,33 +63,40 @@ interface NavButtons {
   centerButtons: NavButton[];
 }
 
+export interface EditableProjectValues {
+  projectTitle: string;
+  projectDescription: string;
+  tags: string[];
+  dueDate: string;
+}
+
 // structure
-const pr: Project[] = [
-  {
-    projectTitle: "UI design",
-    projectDescription: "User Interface of the App",
-    dateCreated: "6-26-23",
-    dueDate: "7-26-23",
-    id: 0,
-    tags: ["A/B testing", "Modern"],
-    favorite: false,
-    done: false,
-    boards: [
-      {
-        boardTitle: "On going",
-        cards: [
-          {
-            cardTitle: "Design phase",
-            cardTag: ["Wireframes", "Mockups"],
-            todo: [
-              {
-                title: "Sketch of homepage",
-                checked: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
+// const pr: Project[] = [
+//   {
+//     projectTitle: "UI design",
+//     projectDescription: "User Interface of the App",
+//     dateCreated: "6-26-23",
+//     dueDate: "7-26-23",
+//     id: 0,
+//     tags: ["A/B testing", "Modern"],
+//     favorite: false,
+//     done: false,
+//     boards: [
+//       {
+//         boardTitle: "On going",
+//         cards: [
+//           {
+//             cardTitle: "Design phase",
+//             cardTag: ["Wireframes", "Mockups"],
+//             todo: [
+//               {
+//                 title: "Sketch of homepage",
+//                 checked: false,
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ];

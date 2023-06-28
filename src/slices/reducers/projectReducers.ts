@@ -1,5 +1,10 @@
 import { PayloadAction as PA, current } from "@reduxjs/toolkit";
-import type { Project, AppState } from "../../app/types";
+import type { Project, AppState, EditableProjectValues } from "../../app/types";
+
+interface EditProjectPayload {
+  editedProject: EditableProjectValues;
+  editedProjectID: number;
+}
 
 const projectReducers = {
   addProject(state: AppState, action: PA<Project>) {
@@ -19,6 +24,32 @@ const projectReducers = {
     state.accounts[indexOfUserInDB] = state.activeUser;
   },
 
+  editProject(state: AppState, action: PA<EditProjectPayload>) {
+    /**
+     * action: { payload: editedProject}
+     */
+    const { editedProject, editedProjectID } = action.payload;
+
+    console.log(action.payload);
+
+    const userProjects: Project[] = state.activeUser.projects;
+
+    const indexOfEditedProject = state.activeUser.projects.findIndex(
+      (project) => project.id === editedProjectID
+    );
+
+    console.log("Before", state.activeUser.projects[indexOfEditedProject]);
+
+    state.activeUser.projects[indexOfEditedProject] = {
+      ...userProjects[indexOfEditedProject],
+      ...editedProject,
+    };
+
+    console.log(editedProject);
+
+    console.log("After", state.activeUser.projects[indexOfEditedProject]);
+  },
+
   deleteProject(state: AppState, action: PA<Project>) {
     console.log("Project to delete: ", action.payload);
 
@@ -26,17 +57,14 @@ const projectReducers = {
       (e) => e.projectTitle === action.payload.projectTitle
     );
 
-    if (indexOfProjectToDelete !== -1) {
+    if (indexOfProjectToDelete === -1) {
       // Perfom deletion of item
-      state.activeUser.projects.splice(indexOfProjectToDelete, 1);
-    } else {
       console.error("Project to delete cannot find");
+      return;
     }
+
+    state.activeUser.projects.splice(indexOfProjectToDelete, 1);
   },
-
-  // addTag(state: AppState, action: PA<string[]>) {
-
-  // }
 
   // Prepare for EDIT project
   /* 

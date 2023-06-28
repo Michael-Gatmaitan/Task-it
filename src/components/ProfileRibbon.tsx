@@ -173,7 +173,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const isImageLinkValid = useImageLinkChecker(deferredEditImageLinkValue);
 
   useEffect(() => {
-    console.log(isImageLinkValid);
+    console.log(
+      `Profile image link validation ${isImageLinkValid ? "passed" : "failed"}`
+    );
   }, [isImageLinkValid]);
 
   return (

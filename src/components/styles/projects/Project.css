@@ -14,10 +14,23 @@
 .project .boards-container {
   display: grid;
   gap: 18px;
+  grid-auto-columns: auto;
   overflow-x: scroll;
   background-color: #f00;
 }
 .project .boards-container .board {
-  height: 400px;
-  width: 400px;
+  height: auto;
+  width: 300px;
+}
+.project .boards-container .add-board {
+  width: -moz-max-content;
+  width: max-content;
+}
+@media (min-width: 1024px) {
+  .project .boards-container .board {
+    width: 350px;
+  }
+  .project .boards-container .add-board {
+    width: 100%;
+  }
 }/*# sourceMappingURL=Project.css.map */

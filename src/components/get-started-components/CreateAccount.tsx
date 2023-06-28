@@ -69,11 +69,18 @@ const CreateAccount: React.FC = () => {
 
   const usernameExist = useIsUsernameExist(deferredUsernameValue);
 
+  const isImageLinkValid = useImageLinkChecker(deferredImageLinkValue);
+
+  useEffect(() => {
+    console.log(usernameExist);
+  }, [usernameExist]);
+
   useEffect(() => {
     // Disable 'create acount' button if 1 or both of input is empty.
     setInvalidInput(
       deferredUsernameValue.trim() === "" ||
         usernameExist ||
+        !isImageLinkValid ||
         (deferredImageLinkValue.trim() === "" && selectedImage === "")
     );
   }, [
@@ -81,6 +88,7 @@ const CreateAccount: React.FC = () => {
     deferredImageLinkValue,
     selectedImage,
     usernameExist,
+    isImageLinkValid,
   ]);
 
   useEffect(() => {
@@ -95,8 +103,6 @@ const CreateAccount: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInputError]);
-
-  const isImageLinkValid = useImageLinkChecker(deferredImageLinkValue);
 
   return (
     <div className='create-account'>

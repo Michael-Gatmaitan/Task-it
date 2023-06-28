@@ -13,13 +13,14 @@ interface ProjectProps {
   setProjectToEdit: React.Dispatch<
     React.SetStateAction<ProjectType | undefined>
   >;
+  setShowEditProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProjectCard: React.FC<ProjectProps> = (props: ProjectProps) => {
   const dispatch = useAppDispatch();
   const [toggleOptions, setToggleOptions] = useState<boolean>(false);
 
-  const { project, setProjectToEdit } = props;
+  const { project, setProjectToEdit, setShowEditProjectModal } = props;
 
   return (
     <div className='project-card bordered-container'>
@@ -31,7 +32,13 @@ const ProjectCard: React.FC<ProjectProps> = (props: ProjectProps) => {
                 Open
               </Button>
             </Link>
-            <Button variant='text' onClick={() => setProjectToEdit(project)}>
+            <Button
+              variant='text'
+              onClick={() => {
+                setProjectToEdit(project);
+                setShowEditProjectModal(true);
+              }}
+            >
               Edit
             </Button>
             <Button variant='text' onClick={() => console.log("Move to done")}>

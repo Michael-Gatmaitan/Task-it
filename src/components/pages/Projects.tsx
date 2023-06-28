@@ -30,11 +30,11 @@ const Projects: React.FC = () => {
 
   const showModal = () => setShowCreateProjectModal(true);
 
-  useEffect(() => {
-    if (projectToEdit !== undefined) {
-      setShowEditProjectModal(true);
-    }
-  }, [projectToEdit]);
+  // useEffect(() => {
+  //   if (projectToEdit !== undefined) {
+  //     setShowEditProjectModal((prevState) => !prevState);
+  //   }
+  // }, [projectToEdit]);
 
   return (
     <div className='projects page'>
@@ -59,6 +59,7 @@ const Projects: React.FC = () => {
               <ProjectCard
                 project={project}
                 setProjectToEdit={setProjectToEdit}
+                setShowEditProjectModal={setShowEditProjectModal}
                 key={i}
               />
             ))
@@ -74,7 +75,6 @@ const Projects: React.FC = () => {
 
       {showCreateProjectModal ? (
         <CreateProjectModal
-          showCreateProjectModal={showCreateProjectModal}
           setShowCreateProjectModal={setShowCreateProjectModal}
         />
       ) : null}
@@ -82,8 +82,8 @@ const Projects: React.FC = () => {
       {showEditProjectModal ? (
         <EditProjectModal
           setProjectToEdit={setProjectToEdit}
-          setShowEditProjectModal={setShowEditProjectModal}
           projectToEdit={projectToEdit}
+          setShowEditProjectModal={setShowEditProjectModal}
         />
       ) : null}
     </div>
