@@ -18,7 +18,7 @@ interface Card {
   todos: Todo[];
 }
 
-interface Board {
+export interface Board {
   boardTitle: string;
   cards: Card[];
   boardID: number;
@@ -30,7 +30,7 @@ export interface Project {
   favorite: boolean;
   dateCreated: string;
   dueDate?: string;
-  id: number;
+  projectID: number;
   done: boolean;
   boards: Board[];
   tags: string[];

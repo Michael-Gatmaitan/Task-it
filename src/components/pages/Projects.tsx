@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";

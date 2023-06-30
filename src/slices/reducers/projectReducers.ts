@@ -6,6 +6,11 @@ interface EditProjectPayload {
   editedProjectID: number;
 }
 
+interface AddBoardPayload {
+  boardTitle: string;
+  projectID: number;
+}
+
 const projectReducers = {
   addProject(state: AppState, action: PA<Project>) {
     if (state.activeUser.projects === undefined) {
@@ -35,7 +40,7 @@ const projectReducers = {
     const userProjects: Project[] = state.activeUser.projects;
 
     const indexOfEditedProject = state.activeUser.projects.findIndex(
-      (project) => project.id === editedProjectID
+      (project) => project.projectID === editedProjectID
     );
 
     console.log("Before", state.activeUser.projects[indexOfEditedProject]);
@@ -54,7 +59,7 @@ const projectReducers = {
     console.log("Project to delete: ", action.payload);
 
     const indexOfProjectToDelete = state.activeUser.projects.findIndex(
-      (e) => e.projectTitle === action.payload.projectTitle
+      (e) => e.projectID === action.payload.projectID
     );
 
     if (indexOfProjectToDelete === -1) {
@@ -64,6 +69,86 @@ const projectReducers = {
     }
 
     state.activeUser.projects.splice(indexOfProjectToDelete, 1);
+  },
+
+  addBoard(state: AppState, action: PA<AddBoardPayload>) {
+    const { boardTitle, projectID: paramsProjectID } = action.payload;
+
+    const projectIndex = state.activeUser.projects.findIndex(
+      (project) => project.projectID === paramsProjectID
+    );
+
+    if (projectIndex === -1) {
+      console.log("Project to add the board cant find");
+      return;
+    }
+
+    const projectBoards = state.activeUser.projects[projectIndex].boards;
+
+    const boardID: number =
+      projectBoards.length === 0
+        ? 0
+        : projectBoards[projectBoards.length - 1].boardID + 1;
+
+    state.activeUser.projects[projectIndex].boards.push({
+      boardTitle: boardTitle.trim(),
+      boardID: boardID,
+      cards: [],
+    });
+
+    console.log(state.activeUser.projects[projectIndex].boards);
+  },
+
+  editBoardTitleOnBlur(
+    state: AppState,
+    action: PA<{
+      currentTitle: string;
+      newBoardTitle: string;
+      projectID: number;
+      boardID: number;
+    }>
+  ) {
+    const { currentTitle, newBoardTitle, projectID, boardID } = action.payload;
+
+    if (projectID === -1) {
+      console.log("project cant find");
+      return;
+    }
+
+    const { projects } = state.activeUser;
+
+    const projectIdx = projects.findIndex((prj) => prj.projectID === projectID);
+
+    const boardIdx = projects[projectIdx].boards.findIndex(
+      (board) => board.boardID === boardID
+    );
+
+    if (newBoardTitle.trim() === currentTitle) {
+      console.log("Same title");
+      return;
+    }
+
+    // If title is NOT empty or else
+    if (newBoardTitle.trim() !== "") {
+      state.activeUser.projects[projectIdx].boards[boardIdx].boardTitle =
+        newBoardTitle.trim();
+
+      console.log("Title overwrited");
+    } else {
+      state.activeUser.projects[projectIdx].boards[boardIdx].boardTitle =
+        currentTitle;
+
+      const boardTitleInputEl = document.getElementById(
+        `board-title-input-pID${projectID}-bID${boardID}`
+      ) as HTMLInputElement;
+
+      boardTitleInputEl.value = currentTitle;
+
+      console.log(
+        "Board title is leave empty, title previous title retrieving.",
+        boardTitleInputEl
+      );
+    }
   },
 
   // Prepare for EDIT project

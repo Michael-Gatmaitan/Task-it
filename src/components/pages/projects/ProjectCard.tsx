@@ -7,6 +7,7 @@ import { useAppDispatch } from "../../../app/hooks";
 
 import { Button, Chip } from "@mui/material";
 import { TaskAltRounded } from "@mui/icons-material";
+import "../../styles/projects/ProjectCard.css";
 
 interface ProjectProps {
   project: ProjectType;
@@ -27,7 +28,7 @@ const ProjectCard: React.FC<ProjectProps> = (props: ProjectProps) => {
       {toggleOptions ? (
         <div className='project-options'>
           <div className='options-container'>
-            <Link to={`${project.id}`}>
+            <Link to={`${project.projectID}`}>
               <Button variant='text' onClick={() => console.log("")}>
                 Open
               </Button>

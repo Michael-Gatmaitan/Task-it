@@ -31,7 +31,10 @@ export const useImageLinkChecker = (url: string) => {
   };
 
   useEffect(() => {
-    if (url === "") return;
+    if (url === "") {
+      setIsLinkValid(false);
+      return;
+    }
 
     // type safetiness bruh
     isImgUrl(url).then((e) => (typeof e === "boolean" ? setIsLinkValid(e) : e));

@@ -47,10 +47,14 @@ const EditProjectModal: React.FC<EditProjectModalProps> = (
     dispatch(
       editProject({
         editedProject: editedProject,
-        editedProjectID: projectToEdit.id,
+        editedProjectID: projectToEdit.projectID,
       })
     );
   };
+
+  useEffect(() => {
+    if (projectToEdit !== undefined) console.log(projectToEdit.tags);
+  }, [projectToEdit]);
 
   const propagationStopper = (e: React.MouseEvent<HTMLDivElement>) =>
     e.stopPropagation();
@@ -69,26 +73,26 @@ const EditProjectModal: React.FC<EditProjectModalProps> = (
   const [combinedTags, setCombinedTags] = useState<string[]>([]);
 
   useEffect(() => {
-    if (projectToEdit !== undefined) {
-      const { tags: projectToEditTags } = projectToEdit;
-      setCombinedTags([...projectToEditTags, ...tags]);
-    }
+    if (projectToEdit === undefined) return;
+
+    const projectToEditTags = projectToEdit.tags;
+
+    setCombinedTags([...projectToEditTags, ...tags]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Combine tags on tags updates
-  useEffect(() => {
-    setCombinedTags((prevTags) => [...prevTags, ...tags]);
-  }, [projectToEdit, tags]);
 
   // Adding tags
   const handleSubmitTag = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    setInitialState((prevState) => ({
-      ...prevState,
-      tags: [newTagValue.trim()],
-    }));
+    setInitialState((prevState) => {
+      return {
+        ...prevState,
+        tags: [...tags, newTagValue.trim()],
+      };
+    });
+
+    setCombinedTags((prevTags) => [...prevTags, newTagValue.trim()]);
 
     setNewTagValue("");
   };

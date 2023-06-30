@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -31,6 +31,15 @@ const App: React.FC = () => {
 
   const loggedIn = useAppSelector(getUserLoggedIn);
   const { userID } = useAppSelector(getActiveUser);
+
+  const users = useAppSelector((state) => state.userReducer.accounts);
+
+  useEffect(() => {
+    fetch("https://taskit-2023-default-rtdb.firebaseio.com/users.json", {
+      method: "PUT",
+      body: JSON.stringify(users),
+    });
+  }, [users]);
 
   /* Making a shot hand function to return where to
       direct deppends on { loggedIn } state. */
@@ -72,6 +81,12 @@ const App: React.FC = () => {
         {/* <Route path=':userID' element={<div>{username}</div>} /> */}
         <Route path=':userID/projects' element={ProjectsPage} />
         <Route path=':userID/projects/:projectID' element={ProjectPage} />
+
+        {/* There will be boards/:boardID path, instead, boards/:boardID/cards/:cardID */}
+        {/* <Route
+          path=':userID/projects/:projectID/boards'
+          element={ProjectPage}
+        /> */}
 
         {/* Dynamic routes for boards */}
 

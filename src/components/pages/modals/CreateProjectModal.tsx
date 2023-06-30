@@ -61,7 +61,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
       boards: [],
       favorite: false,
       done: false,
-      id: projects.length === 0 ? 0 : projects[projects.length - 1].id + 1,
+      projectID:
+        projects.length === 0 ? 0 : projects[projects.length - 1].projectID + 1,
     };
 
     dispatch(addProject(newProjectToAdd));

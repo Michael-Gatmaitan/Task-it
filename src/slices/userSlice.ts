@@ -43,6 +43,10 @@ export const {
   addProject,
   editProject,
   deleteProject,
+
+  // Board reducers
+  addBoard,
+  editBoardTitleOnBlur,
 } = userSlice.actions;
 
 // getters

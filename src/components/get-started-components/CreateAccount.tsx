@@ -79,9 +79,7 @@ const CreateAccount: React.FC = () => {
     // Disable 'create acount' button if 1 or both of input is empty.
     setInvalidInput(
       deferredUsernameValue.trim() === "" ||
-        usernameExist ||
-        !isImageLinkValid ||
-        (deferredImageLinkValue.trim() === "" && selectedImage === "")
+        (usernameExist && (!isImageLinkValid || selectedImage === ""))
     );
   }, [
     deferredUsernameValue,
@@ -133,10 +131,11 @@ const CreateAccount: React.FC = () => {
                   : "Profile image link"
               }
               required
-              error={deferredImageLinkValue.length <= 5 || !isImageLinkValid}
-              defaultValue={
-                selectedImage !== "" ? selectedImage : deferredImageLinkValue
+              error={
+                (deferredImageLinkValue.length <= 5 || !isImageLinkValid) &&
+                selectedImage === ""
               }
+              defaultValue={deferredImageLinkValue}
               disabled={selectedImage !== ""}
               onChange={(e) => setImageLinkValue(e.target.value)}
             />

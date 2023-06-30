@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
 
 import "./selectProfileImage.css";
@@ -41,6 +41,13 @@ const SelectProfileImage: React.FC<SelectProfileImageProps> = (props) => {
     ProfileImage5,
     ProfileImage6,
   ];
+
+  useEffect(() => {
+    if (showImages === false) {
+      setSelectedImage("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showImages]);
 
   const activateTile = (profile_image: string) => {
     const profile_image_els: Array<Element> = [
