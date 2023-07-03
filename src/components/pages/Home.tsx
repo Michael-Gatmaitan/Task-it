@@ -74,7 +74,7 @@ const Home: React.FC = () => {
             <div className='card-presenter bordered-container'></div>
 
             <div className='card-info'>
-              <div className='card-title header2'>{card.cardTitle}</div>
+              <div className='home-card-title header2'>{card.cardTitle}</div>
 
               <div className='card-description body-text'>
                 {card.cardDescription}

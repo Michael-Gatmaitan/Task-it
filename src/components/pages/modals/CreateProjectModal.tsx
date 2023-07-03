@@ -6,7 +6,7 @@ import {
 } from "../../../slices/userSlice";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { RootState } from "../../../app/store";
-import type { Project } from "../../../app/types";
+import type { Project } from "../../../types/types";
 import "../../styles/modals/CreateProjectModal.css";
 
 // MUI
@@ -105,6 +105,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
           onSubmit={handleSubmitAddProject}
         >
           <TextField
+            autoFocus
             variant='outlined'
             label={isTitleExists ? "Title already exists" : "Project name"}
             error={isTitleExists}

@@ -1,19 +1,22 @@
-import React, { useEffect, useState, useDeferredValue } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { addBoard, getActiveUser } from "../../../slices/userSlice";
-import { Project as ProjectType } from "../../../app/types";
+import React, { useEffect, useState, Suspense, useMemo } from "react";
+import { useNavigate, useParams, Outlet } from "react-router-dom";
+import { useAppSelector } from "../../../app/hooks";
+import { getActiveUser } from "../../../slices/userSlice";
+import { Project as ProjectType } from "../../../types/types";
 
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
-import { Button, TextField } from "@mui/material";
-
-import Board from "./boards/Board";
+import { Button, Skeleton } from "@mui/material";
 
 // dayjs
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import "../../styles/projects/Project.css";
+import CustomStyledSkeleton from "../../CustomStyledSkeleton";
+
+// Code splitting
+const BoardMaker = React.lazy(() => import("./BoardMaker"));
+const Board = React.lazy(() => import("./boards/Board"));
 
 // This is a Project page
 
@@ -30,12 +33,15 @@ const Project: React.FC = () => {
 
   const activeUser = useAppSelector(getActiveUser);
 
-  const currentProject: ProjectType | undefined =
-    projectID !== undefined
-      ? activeUser.projects.find(
-          (project) => project.projectID === parseInt(projectID)
-        )
-      : undefined;
+  const currentProject: ProjectType | undefined = useMemo(
+    () =>
+      projectID !== undefined
+        ? activeUser.projects.find(
+            (project) => project.projectID === parseInt(projectID)
+          )
+        : undefined,
+    [activeUser.projects, projectID]
+  );
 
   useEffect(() => {
     if (currentProject !== undefined)
@@ -48,14 +54,18 @@ const Project: React.FC = () => {
   return currentProject !== undefined ? (
     <div className='project page'>
       <div className='project-nav'>
-        <ArrowBackIosNewRounded
-          onClick={() => navigate(`/${activeUser.userID}/projects`)}
-        />
+        <div className='bordered-container arrow-back-nav'>
+          <ArrowBackIosNewRounded
+            onClick={() => navigate(`/${activeUser.userID}/projects`)}
+            fontSize='small'
+          />
+        </div>
+
         <div className='header2'>
           {currentProject.projectTitle || "Loading"}
         </div>
 
-        <div className='date-created header3'>{time}</div>
+        <div className='date-created card-title'>{time}</div>
       </div>
 
       <div
@@ -67,17 +77,31 @@ const Project: React.FC = () => {
         }}
       >
         {/* If there no board and board-maker is off, show this */}
-        {currentProject.boards.length === 0 && !showBoardMaker ? (
-          <div>There</div>
-        ) : (
-          currentProject.boards.map((board, i) => (
-            <Board board={board} key={i} />
-          ))
-        )}
+        {currentProject.boards.length !== 0
+          ? currentProject.boards.map((board, i) => (
+              <Suspense
+                key={i}
+                fallback={<CustomStyledSkeleton componentName='board-card' />}
+              >
+                <Board board={board} />
+              </Suspense>
+            ))
+          : null}
 
         {/* This shows up if user wants to create board */}
         {showBoardMaker ? (
-          <BoardMaker setShowBoardMaker={setShowBoardMaker} />
+          <Suspense
+            fallback={
+              <Skeleton
+                className='skeleton-board'
+                variant='rounded'
+                width={200}
+                height={180}
+              />
+            }
+          >
+            <BoardMaker setShowBoardMaker={setShowBoardMaker} />
+          </Suspense>
         ) : (
           <Button
             variant='contained'
@@ -98,74 +122,10 @@ const Project: React.FC = () => {
           </Button>
         )}
       </div>
+
+      <Outlet />
     </div>
   ) : null;
-};
-
-interface BoardMakerProps {
-  setShowBoardMaker: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const BoardMaker: React.FC<BoardMakerProps> = (props: BoardMakerProps) => {
-  const dispatch = useAppDispatch();
-  const { setShowBoardMaker } = props;
-
-  const location = useLocation();
-  const params = useParams();
-
-  const [boardTitle, setBoardTitle] = useState<string>("");
-  const deferredBoardTitle = useDeferredValue(boardTitle);
-
-  const handleSubmitAddBoard = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const projectID =
-      params.projectID === undefined ? -1 : parseInt(params.projectID);
-
-    console.log(
-      "Creating board with arguments of:",
-      deferredBoardTitle,
-      params.projectID
-    );
-    dispatch(
-      addBoard({
-        boardTitle: deferredBoardTitle,
-        projectID: projectID,
-      })
-    );
-  };
-
-  useEffect(() => {
-    console.log(location, params);
-  }, [location, params]);
-
-  useEffect(() => console.log(deferredBoardTitle), [deferredBoardTitle]);
-
-  return (
-    <div className='board-maker bordered-container'>
-      <form id='board-maker' onSubmit={handleSubmitAddBoard}>
-        <TextField
-          label='Board title'
-          variant='outlined'
-          value={boardTitle}
-          onChange={(e) => setBoardTitle(e.target.value)}
-        />
-
-        <div className='board-maker-buttons'>
-          <Button
-            disabled={deferredBoardTitle.trim() === ""}
-            type='submit'
-            variant='contained'
-          >
-            Create
-          </Button>
-          <Button variant='outlined' onClick={() => setShowBoardMaker(false)}>
-            Cancel
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
 };
 
 export default Project;

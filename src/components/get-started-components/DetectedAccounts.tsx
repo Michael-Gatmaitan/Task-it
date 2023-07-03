@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { User } from "../../app/types";
+import { User } from "../../types/types";
 
 // Redux reducers and states
 import { getDeviceAccounts, setActiveUser } from "../../slices/userSlice";

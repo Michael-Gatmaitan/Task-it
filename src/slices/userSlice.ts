@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
-import type { AppState } from "../app/types";
+import type { AppState } from "../types/types";
 
 // Combining reducers
 import projectReducers from "./reducers/projectReducers";
@@ -47,6 +47,12 @@ export const {
   // Board reducers
   addBoard,
   editBoardTitleOnBlur,
+
+  // Card
+  addCard,
+
+  // Todo
+  handleTodo,
 } = userSlice.actions;
 
 // getters

@@ -184,6 +184,18 @@
   }
 }
 
+.card-title {
+  font-family: "Inter", sans-serif;
+  color: #121212;
+  font-size: 14px;
+  font-weight: 600;
+}
+@media (min-width: 1024px) {
+  .card-title {
+    font-size: 16px !important;
+  }
+}
+
 .header-text-description {
   font-family: "Inter", sans-serif;
   color: rgba(18, 18, 18, 0.8);
@@ -240,21 +252,23 @@ input[type=submit]:disabled {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-  border-radius: 10px;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #5b87f8;
-  border-radius: 20px;
-  border: solid 4px #f1f1f1;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb :hover {
   background-color: #5985f8;
 }
 
 ::-webkit-scrollbar {
-  width: 16px;
+  width: 10px;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
 }
 
 .profile-image {

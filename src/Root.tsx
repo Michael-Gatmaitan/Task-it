@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 // Components
@@ -10,7 +10,7 @@ import "./components/styles/Nav.css";
 import "./components/styles/Sidebar.css";
 
 // Types
-import type { NavButtons } from "./app/types";
+import type { NavButtons } from "./types/types";
 import { useAppSelector } from "./app/hooks";
 import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
 
@@ -23,7 +23,8 @@ import {
   InfoRounded as AboutIcon,
   PlayCircleFilledWhiteRounded as GetStartedIcon,
 } from "@mui/icons-material";
-import Footer from "./components/Footer";
+
+const Footer = lazy(() => import("./components/Footer"));
 
 const Root: React.FC = () => {
   // States
@@ -100,9 +101,13 @@ const Root: React.FC = () => {
         setToggleSidebar={setToggleSidebar}
       />
 
-      <Outlet />
+      <Suspense fallback={<div className='loading-fallback'>LOADING!!!</div>}>
+        <Outlet />
+      </Suspense>
 
-      <Footer />
+      <Suspense fallback={<div>Loading footer</div>}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

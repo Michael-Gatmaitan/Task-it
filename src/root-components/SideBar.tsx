@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-import type { NavButtons } from "../app/types";
+import type { NavButtons } from "../types/types";
 import ProfileRibbon from "../components/ProfileRibbon";
 
 // Reducers and getters, top: Reducers, bottom: Getters

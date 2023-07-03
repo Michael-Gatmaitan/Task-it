@@ -1,0 +1,27 @@
+.card {
+  padding: 8px;
+  display: grid;
+  background-color: #f6f6fa !important;
+  border-radius: 4px;
+  border-width: 1px;
+  gap: 4px;
+}
+.card .card-title {
+  width: 100%;
+  overflow: hidden;
+}
+.card .card-infos {
+  display: flex;
+  justify-content: space-between;
+}
+.card .card-infos .card-todo-count {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+@media (min-width: 1024px) {
+  .card {
+    padding: 12px;
+    gap: 4px;
+  }
+}/*# sourceMappingURL=Card.css.map */

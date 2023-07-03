@@ -10,12 +10,14 @@ export interface AppState {
 interface Todo {
   title: string;
   checked: boolean;
+  todoID: number;
 }
 
 interface Card {
   cardTitle: string;
-  cardTag: string[];
+  cardTags: string[];
   todos: Todo[];
+  cardID: number;
 }
 
 export interface Board {
@@ -63,12 +65,37 @@ interface NavButtons {
   centerButtons: NavButton[];
 }
 
-export interface EditableProjectValues {
-  projectTitle: string;
-  projectDescription: string;
-  tags: string[];
-  dueDate: string;
+export type EditableProjectValues = Pick<
+  Project,
+  "projectTitle" | "projectDescription" | "tags" | "dueDate"
+>;
+
+// Reducer types and generics for payload
+export interface EditProjectPayload {
+  editedProject: EditableProjectValues;
+  editedProjectID: number;
 }
+
+export interface AddBoardPayload {
+  boardTitle: string;
+  projectID: number;
+}
+
+export interface HandleTodoProps {
+  todo: Todo;
+  projectID: number;
+  boardID: number;
+  cardID: number;
+  mode: "add" | "edit" | "delete";
+}
+
+type ReactRouterParamsType = {
+  projectID: string;
+  cardID: string;
+  boardID: string;
+};
+
+export type EditTodoProps = Required<AddTodoProps>;
 
 // structure
 // const pr: Project[] = [

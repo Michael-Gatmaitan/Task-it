@@ -4,7 +4,7 @@ import SelectProfileImage from "../reusable/selectProfileImage/SelectProfileImag
 // MUI Components
 import { Button, TextField } from "@mui/material";
 
-import { User } from "../../app/types";
+import { User } from "../../types/types";
 
 // Hooks
 import { useAppDispatch, useAppSelector } from "../../app/hooks";

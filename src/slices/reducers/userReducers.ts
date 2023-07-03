@@ -1,5 +1,5 @@
 import { PayloadAction as PA } from "@reduxjs/toolkit";
-import type { User, AppState } from "../../app/types";
+import type { User, AppState } from "../../types/types";
 
 interface EditProfilePayload {
   username: string;

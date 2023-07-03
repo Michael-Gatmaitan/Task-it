@@ -1,0 +1,89 @@
+@import "../../../mixins";
+
+.selected-card-modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#000, 0.2);
+  z-index: $idx_mainModal;
+
+  .selected-card-modal {
+    width: 100%;
+    height: 100%;
+    background-color: $white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .selected-card-nav {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+
+      .close-card-modal {
+        width: 24px;
+        height: 24px;
+        @include flexCenter;
+        border-radius: 4px;
+        background-color: $inputBG;
+
+        &:hover {
+          color: $error;
+        }
+      }
+    }
+
+    .card-tags {
+      display: grid;
+      gap: 4px;
+    }
+
+    form.add-card-tag {
+      display: grid;
+      gap: 8px;
+
+      .MuiTextField-root {
+        width: 100%;
+      }
+    }
+
+    .todo-list-form {
+      display: grid;
+      gap: 8px;
+
+      .todo-list-container {
+        display: grid;
+        gap: 4px;
+
+        .todo {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+      }
+    }
+
+    @include desktop {
+      .selected-card-modal {
+        .selected-card-nav {
+          .close-card-modal {
+            width: 32px;
+            height: 32px;
+          }
+        }
+      }
+    }
+  }
+}

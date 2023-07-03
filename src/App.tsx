@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -9,22 +9,37 @@ import {
 
 // Root element
 import Root from "./Root";
-
-// Componenets | Pages
-import Home from "./components/pages/Home";
-import About from "./components/pages/About";
-import Page404 from "./components/pages/404";
-import Projects from "./components/pages/Projects";
-import Contact from "./components/pages/Contact";
-import Settings from "./components/pages/Settings";
-import GetStarted from "./components/pages/GetStarted";
 import { useAppSelector } from "./app/hooks";
 import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
 import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
 // MUI StyledEngineProvider
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
-import Project from "./components/pages/projects/Project";
+
+// Components | Pages
+const Home = lazy(() => import("./components/pages/Home"));
+const About = lazy(() => import("./components/pages/About"));
+const Page404 = lazy(() => import("./components/pages/404"));
+const Contact = lazy(() => import("./components/pages/Contact"));
+const Settings = lazy(() => import("./components/pages/Settings"));
+const GetStarted = lazy(() => import("./components/pages/GetStarted"));
+const Projects = lazy(() => import("./components/pages/Projects"));
+// v
+const Project = lazy(() => import("./components/pages/projects/Project"));
+const SelectedCardModal = lazy(
+  () => import("./components/pages/projects/boards/cards/SelectedCardModal")
+);
+/*
+
+  --- Home /
+    - About /about
+    - Contact /contact
+    - Settings /settings
+    - Projects /projects
+      - Project /projects/:projectID
+        * Displays boards * - Boards
+      - CardPage as Modal /projects/:projectID/boards/:boardID/cards/:cardID
+*/
 
 const App: React.FC = () => {
   useLocalStorageUpdater();
@@ -78,9 +93,17 @@ const App: React.FC = () => {
         <Route path='settings' element={SettingsPage} />
 
         {/* Dynamic routing for projects */}
-        {/* <Route path=':userID' element={<div>{username}</div>} /> */}
+
         <Route path=':userID/projects' element={ProjectsPage} />
-        <Route path=':userID/projects/:projectID' element={ProjectPage} />
+
+        {/* Direct into project's boards -> cards */}
+        <Route path=':userID/projects/:projectID' element={ProjectPage}>
+          {/* Direct into board's card */}
+          <Route
+            path='boards/:boardID/cards/:cardID'
+            element={<SelectedCardModal />}
+          />
+        </Route>
 
         {/* There will be boards/:boardID path, instead, boards/:boardID/cards/:cardID */}
         {/* <Route

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { editProject } from "../../../slices/userSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import { Button, TextField, Chip } from "@mui/material";
-import type { Project, EditableProjectValues } from "../../../app/types";
+import type { Project, EditableProjectValues } from "../../../types/types";
 // import "../../styles/modals/CreateProjectModal.css";
 
 interface EditProjectModalProps {
@@ -121,6 +121,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = (
             onSubmit={handleSubmitEditProject}
           >
             <TextField
+              autoFocus
               variant='outlined'
               label='Edit project name'
               defaultValue={projectToEdit.projectTitle}

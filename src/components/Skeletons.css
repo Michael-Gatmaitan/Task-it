@@ -1,0 +1,35 @@
+.custom-skeleton {
+  width: 100%;
+  height: 100%;
+}
+
+.skeleton-project-card {
+  width: 100%;
+  height: 250px;
+}
+@media (min-width: 1024px) {
+  .skeleton-project-card {
+    height: 300px;
+  }
+}
+
+.skeleton-board-card {
+  width: 200px;
+  height: -moz-min-content;
+  height: min-content;
+}
+@media (min-width: 1024px) {
+  .skeleton-board-card {
+    width: 280px;
+  }
+}
+
+.skeleton-card {
+  width: 57px;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .skeleton-card {
+    width: 65px;
+  }
+}/*# sourceMappingURL=Skeletons.css.map */

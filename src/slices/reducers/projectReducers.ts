@@ -1,15 +1,13 @@
 import { PayloadAction as PA, current } from "@reduxjs/toolkit";
-import type { Project, AppState, EditableProjectValues } from "../../app/types";
-
-interface EditProjectPayload {
-  editedProject: EditableProjectValues;
-  editedProjectID: number;
-}
-
-interface AddBoardPayload {
-  boardTitle: string;
-  projectID: number;
-}
+import type {
+  Project,
+  AppState,
+  Card,
+  EditProjectPayload,
+  AddBoardPayload,
+  HandleTodoProps,
+  // EditTodoProps
+} from "../../types/types";
 
 const projectReducers = {
   addProject(state: AppState, action: PA<Project>) {
@@ -151,19 +149,108 @@ const projectReducers = {
     }
   },
 
-  // Prepare for EDIT project
-  /* 
-    * Features for EDIT PROJECT *
+  // Card reducers
+  addCard(
+    state: AppState,
+    action: PA<{
+      projectID: number;
+      boardID: number;
+      newCard: Card;
+    }>
+  ) {
+    const { projectID, boardID, newCard } = action.payload;
 
-    * addTag, deleteTag, editTag?
-    * rename project, edit project description
-  */
-  // addTags(state: AppState, action: PA<string[]>) {
-  //   console.log("Tag to add: ", action.payload);
+    if (projectID === -1) {
+      console.error("Add card: projectID has value of ", projectID);
+      return;
+    }
+    const { projects } = state.activeUser;
+    const projectIdx = projects.findIndex((prj) => prj.projectID === projectID);
+    const boardIdx = projects[projectIdx].boards.findIndex(
+      (brd) => brd.boardID === boardID
+    );
+    // Change the cardID value
+    const cardOfBoards = projects[projectIdx].boards[boardIdx].cards;
+    newCard.cardID =
+      cardOfBoards.length === 0
+        ? 0
+        : cardOfBoards[cardOfBoards.length - 1].cardID + 1;
+    // Setting card values from payload
+    const newCardToAdd: Card = {
+      cardTitle: newCard.cardTitle,
+      cardTags: newCard.cardTags,
+      cardID: newCard.cardID,
+      todos: newCard.todos,
+    };
+    state.activeUser.projects[projectIdx].boards[boardIdx].cards.push(
+      newCardToAdd
+    );
+  },
+  // Todo reducers
+  handleTodo(state: AppState, action: PA<HandleTodoProps>) {
+    const { todo, boardID, cardID, projectID, mode } = action.payload;
+    const { projects } = state.activeUser;
+    const project = projects.findIndex((p) => p.projectID === projectID);
+    const board = projects[project].boards.findIndex(
+      (b) => b.boardID === boardID
+    );
+    const card = projects[project].boards[board].cards.findIndex(
+      (c) => c.cardID === cardID
+    );
 
-  //   // We will use array of tags for any quantity e.g 1, 2 ... n tags
+    const addTodo = () => {
+      const { todos } =
+        state.activeUser.projects[project].boards[board].cards[card];
+      state.activeUser.projects[project].boards[board].cards[card].todos.push({
+        ...todo,
+        todoID: todos.length === 0 ? 0 : todos[todos.length - 1].todoID + 1,
+      });
+      console.log("Todo added");
+    };
 
-  //   state.
+    const editTodo = () => {
+      // Assume that todo.todoID is not Number.MAX_INT
+      const todoIndex = state.activeUser.projects[project].boards[board].cards[
+        card
+      ].todos.findIndex((t) => t.todoID === todo.todoID);
+
+      state.activeUser.projects[project].boards[board].cards[card].todos[
+        todoIndex
+      ] = todo;
+
+      console.log("Todo edited with: ", todo);
+    };
+
+    const deleteTodo = () => {
+      const todos =
+        state.activeUser.projects[project].boards[board].cards[card].todos;
+
+      state.activeUser.projects[project].boards[board].cards[card].todos =
+        todos.filter((t) => t.todoID !== todo.todoID);
+    };
+
+    // Mode: 'add' | 'edit' | 'delete'
+    switch (mode) {
+      case "add": {
+        addTodo();
+        break;
+      }
+      case "edit": {
+        editTodo();
+        break;
+      }
+      case "delete": {
+        deleteTodo();
+        break;
+      }
+      default: {
+        console.error("mode is not valid");
+      }
+    }
+  },
+
+  // editTodo(state: AppState, action: PA<EditTodoProps>) {
+  //   const {  } = action.payload;
   // }
 };
 

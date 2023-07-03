@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";
-import type { Project as ProjectType } from "../../app/types";
+
+// types
+import type { Project as ProjectType } from "../../types/types";
 
 import "../styles/Projects.css";
 
@@ -12,8 +14,10 @@ import CreateProjectModal from "./modals/CreateProjectModal";
 // MUI components
 import { Button } from "@mui/material";
 import { AddCircleRounded } from "@mui/icons-material";
-import ProjectCard from "./projects/ProjectCard";
 import EditProjectModal from "./modals/EditProjectModal";
+import CustomStyledSkeleton from "../CustomStyledSkeleton";
+
+const ProjectCard = React.lazy(() => import("./projects/ProjectCard"));
 
 const Projects: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -56,12 +60,16 @@ const Projects: React.FC = () => {
       <div className='projects-container'>
         {projects !== undefined
           ? projects.map((project, i) => (
-              <ProjectCard
-                project={project}
-                setProjectToEdit={setProjectToEdit}
-                setShowEditProjectModal={setShowEditProjectModal}
+              <Suspense
+                fallback={<CustomStyledSkeleton componentName='project-card' />}
                 key={i}
-              />
+              >
+                <ProjectCard
+                  project={project}
+                  setProjectToEdit={setProjectToEdit}
+                  setShowEditProjectModal={setShowEditProjectModal}
+                />
+              </Suspense>
             ))
           : null}
       </div>

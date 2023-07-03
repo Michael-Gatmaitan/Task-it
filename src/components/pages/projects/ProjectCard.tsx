@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteProject } from "../../../slices/userSlice";
 import { ExpandMoreRounded, ExpandLessRounded } from "@mui/icons-material";
-import type { Project as ProjectType } from "../../../app/types";
+import type { Project as ProjectType } from "../../../types/types";
 import { useAppDispatch } from "../../../app/hooks";
 
 import { Button, Chip } from "@mui/material";

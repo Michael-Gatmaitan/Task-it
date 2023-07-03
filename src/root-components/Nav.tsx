@@ -14,7 +14,7 @@ import { Button } from "@mui/material";
 import { getUserLoggedIn } from "../slices/userSlice";
 import { useAppSelector } from "../app/hooks";
 
-import type { NavButtons } from "../app/types";
+import type { NavButtons } from "../types/types";
 
 interface NavProps {
   navBarButtons: NavButtons;

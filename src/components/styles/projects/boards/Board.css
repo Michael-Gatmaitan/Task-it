@@ -1,0 +1,74 @@
+.board {
+  width: 200px;
+  height: -moz-min-content;
+  height: min-content;
+  display: grid;
+  grid-template-columns: 100%;
+}
+.board .board-nav {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 25px;
+  gap: 8px;
+  align-items: center;
+}
+.board .board-nav .board-title-container {
+  width: auto;
+}
+.board .board-nav .board-title-container .editable-board-title {
+  width: 100%;
+  cursor: pointer;
+  margin: 0;
+  padding: 4px;
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+}
+.board .board-nav .board-title-container .editable-board-title:focus {
+  box-shadow: inset 0 0 0 2px #5b87f8;
+}
+.board .board-nav .board-options {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: #f0f0f2;
+}
+.board .board-nav .board-options svg {
+  width: 20px;
+}
+.board .cards-container {
+  margin: 8px 0 30px 0;
+  display: grid;
+  gap: 8px;
+}
+.board .cards-container a {
+  text-decoration: none;
+  color: #121212;
+}
+.board .add-card-button {
+  width: 100%;
+}
+.board .card-maker #card-maker-form {
+  display: grid;
+  gap: 8px;
+}
+.board .card-maker #card-maker-form .card-maker-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  justify-content: stretch;
+}
+@media (min-width: 1024px) {
+  .board {
+    width: 280px;
+  }
+  .board .cards-container {
+    gap: 12px;
+  }
+  .board .card-maker {
+    gap: 12px;
+  }
+}/*# sourceMappingURL=Board.css.map */
