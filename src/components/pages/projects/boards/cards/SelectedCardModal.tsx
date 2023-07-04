@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useDeferredValue, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "../../../../../app/hooks";
 import { useParams, useNavigate } from "react-router-dom";
 import { TextField, Chip, Button } from "@mui/material";
@@ -29,7 +29,7 @@ const SelectedCardModal: React.FC = () => {
             ?.boards.find((brd) => brd.boardID === parseInt(boardID))
             ?.cards.find((crd) => crd.cardID === parseInt(cardID))
         : undefined,
-    [projectID, boardID, cardID, activeUser.projects]
+    [projectID, boardID, cardID, activeUser]
   );
 
   // Tags state
@@ -38,10 +38,10 @@ const SelectedCardModal: React.FC = () => {
   const [initialTodo, setInitialTodo] = useState<Todo>({
     title: "",
     checked: false,
-    todoID: Number.MAX_VALUE,
+    todoID: 0,
   });
 
-  const handleAddTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (
@@ -61,6 +61,10 @@ const SelectedCardModal: React.FC = () => {
 
       setInitialTodo((prevState) => ({ ...prevState, title: "" }));
     }
+  };
+
+  const handleAddCardTag = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   return selectedCard !== undefined && projectID !== undefined ? (
@@ -101,7 +105,7 @@ const SelectedCardModal: React.FC = () => {
         </div>
 
         {/* Submit : addCardTag */}
-        <form className='add-card-tag'>
+        <form className='add-card-tag' onSubmit={handleAddCardTag}>
           <div className='header3'>Add Card Tag</div>
 
           <TextField
@@ -119,7 +123,7 @@ const SelectedCardModal: React.FC = () => {
           </Button>
         </form>
 
-        <form className='todo-list-form'>
+        <form className='todo-list-form' onSubmit={handleAddTodo}>
           <div className='header3'>Todo list</div>
 
           <div className='todo-list-container'>
@@ -136,9 +140,9 @@ const SelectedCardModal: React.FC = () => {
             }
           />
           <Button
+            type='submit'
             variant='contained'
             disabled={initialTodo.title.trim() === ""}
-            onClick={handleAddTodo}
           >
             Add
           </Button>
@@ -152,45 +156,51 @@ const SelectedCardModal: React.FC = () => {
 
 const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
   const dispatch = useAppDispatch();
-  // const { projectID, boardID, cardID } = useParams();
-  const { projectID, boardID, cardID } = useParams<ReactRouterParamsType>();
+  const params = useParams<ReactRouterParamsType>();
+  const { projectID, boardID, cardID } = params;
 
   const [todoState, setTodoState] = useState<Todo>(todo);
 
-  const onTodoStateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    console.log(`Changing todo state in ${projectID}/${boardID}/${cardID}`);
     // We need to edit todo data if checkbox value is changed
     if (name === "checked") {
       setTodoState((prevState) => ({
         ...prevState,
         checked: !prevState.checked,
       }));
-      todoTitleInputBlur();
-      return;
+    } else if (name === "title") {
+      // valid title change
+      setTodoState((prevState) => ({ ...prevState, [name]: value }));
     }
-
-    setTodoState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const todoTitleInputBlur = () => {
+  // This fires when user leaves foccus on editing the todo's title
+  // or checking and unchecking of check box.
+  const onReadyEditTodo = () => {
     if (
       projectID !== undefined &&
       boardID !== undefined &&
       cardID !== undefined
     ) {
+      // Check if title leaved is empty
+      // reset the title to previous value
+      // but do not update on redux store
       if (todoState.title.trim() === "") {
-        // If user blur but leaves empty input edit, set the
-        // todoState.title to its original val which is todo.title
         setTodoState((prevState) => ({
           ...prevState,
           title: todo.title,
         }));
+
+        console.warn("Empty title detected.");
         return;
       }
 
-      //
-      if (todoState.title === todo.title) return;
+      // If nothing in state changed, do nothing or dont fire reducer editTodo
+      if (todoState.title === todo.title && todoState.checked === todo.checked)
+        return;
 
       const editTodoArgs: HandleTodoProps = {
         todo: todoState,
@@ -200,7 +210,33 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
 
         mode: "edit",
       };
+
+      console.log("Dispatch runned");
       dispatch(handleTodo(editTodoArgs));
+      return;
+    }
+
+    console.log("Editing not occured");
+  };
+
+  const onReadyDeleteTodo = () => {
+    if (
+      projectID !== undefined &&
+      boardID !== undefined &&
+      cardID !== undefined
+    ) {
+      // Perfoem todo deletion
+      console.log("Delete");
+      dispatch(
+        handleTodo({
+          todo: todoState,
+          projectID: parseInt(projectID),
+          boardID: parseInt(boardID),
+          cardID: parseInt(cardID),
+
+          mode: "delete",
+        })
+      );
     }
   };
 
@@ -210,16 +246,22 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
         type='checkbox'
         name='checked'
         checked={todoState.checked}
-        onChange={onTodoStateChange}
+        onChange={onInputChanges}
+        onBlur={onReadyEditTodo}
       />
+
       <input
-        type='box'
+        type='text'
         name='title'
         value={todoState.title}
         className='todo-title body-text'
-        onBlur={todoTitleInputBlur}
-        onChange={onTodoStateChange}
+        onBlur={onReadyEditTodo}
+        onChange={onInputChanges}
       />
+
+      <div className='delete-todo' onClick={onReadyDeleteTodo}>
+        <CloseRounded fontSize='small' />
+      </div>
     </div>
   );
 };

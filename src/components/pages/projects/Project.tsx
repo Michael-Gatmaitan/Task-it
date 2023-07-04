@@ -31,32 +31,32 @@ const Project: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const activeUser = useAppSelector(getActiveUser);
+  const { projects: userProjects, userID } = useAppSelector(getActiveUser);
 
   const currentProject: ProjectType | undefined = useMemo(
     () =>
       projectID !== undefined
-        ? activeUser.projects.find(
-            (project) => project.projectID === parseInt(projectID)
+        ? userProjects.find(
+            (project: ProjectType) => project.projectID === parseInt(projectID)
           )
         : undefined,
-    [activeUser.projects, projectID]
+    [userProjects, projectID]
   );
+
+  const [time, setTime] = useState<string>("");
+  const [showBoardMaker, setShowBoardMaker] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentProject !== undefined)
       setTime(dayjs(currentProject.dateCreated).fromNow());
   }, [currentProject]);
 
-  const [time, setTime] = useState<string>("");
-  const [showBoardMaker, setShowBoardMaker] = useState<boolean>(false);
-
   return currentProject !== undefined ? (
     <div className='project page'>
       <div className='project-nav'>
         <div className='bordered-container arrow-back-nav'>
           <ArrowBackIosNewRounded
-            onClick={() => navigate(`/${activeUser.userID}/projects`)}
+            onClick={() => navigate(`/${userID}/projects`)}
             fontSize='small'
           />
         </div>

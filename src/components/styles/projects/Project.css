@@ -29,7 +29,8 @@
   max-height: 100vh;
   padding-bottom: 12px;
   grid-auto-columns: auto;
-  overflow-x: scroll;
+  max-height: calc(100vh - 155px);
+  overflow: scroll;
 }
 .project .boards-container .board-maker {
   height: -moz-min-content;
@@ -51,9 +52,15 @@
   gap: 12px;
 }
 .project .boards-container .add-board {
-  width: calc(100vw - 36px);
+  width: 200px;
+  margin-right: 12px;
   height: -moz-min-content;
   height: min-content;
+}
+@media (min-width: 700px) {
+  .project .boards-container {
+    max-height: calc(100vh - 174px);
+  }
 }
 @media (min-width: 1024px) {
   .project .project-nav {
@@ -63,6 +70,9 @@
   .project .project-nav .arrow-back-nav {
     width: 46px;
     height: 46px;
+  }
+  .project .boards-container {
+    max-height: calc(100vh - 194px);
   }
   .project .boards-container .board-maker {
     width: 280px;

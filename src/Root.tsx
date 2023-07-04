@@ -88,7 +88,7 @@ const Root: React.FC = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   return (
-    <div className='root'>
+    <>
       <Nav
         navBarButtons={navBarButtons}
         toggleSidebar={toggleSidebar}
@@ -108,7 +108,7 @@ const Root: React.FC = () => {
       <Suspense fallback={<div>Loading footer</div>}>
         <Footer />
       </Suspense>
-    </div>
+    </>
   );
 };
 

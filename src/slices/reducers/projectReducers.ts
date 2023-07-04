@@ -33,32 +33,31 @@ const projectReducers = {
      */
     const { editedProject, editedProjectID } = action.payload;
 
-    console.log(action.payload);
-
     const userProjects: Project[] = state.activeUser.projects;
 
     const indexOfEditedProject = state.activeUser.projects.findIndex(
       (project) => project.projectID === editedProjectID
     );
 
-    console.log("Before", state.activeUser.projects[indexOfEditedProject]);
-
     state.activeUser.projects[indexOfEditedProject] = {
       ...userProjects[indexOfEditedProject],
       ...editedProject,
     };
 
-    console.log(editedProject);
-
-    console.log("After", state.activeUser.projects[indexOfEditedProject]);
+    console.log(
+      "Project edited to",
+      state.activeUser.projects[indexOfEditedProject]
+    );
   },
 
   deleteProject(state: AppState, action: PA<Project>) {
     console.log("Project to delete: ", action.payload);
 
     const indexOfProjectToDelete = state.activeUser.projects.findIndex(
-      (e) => e.projectID === action.payload.projectID
+      (pr) => pr.projectID === action.payload.projectID
     );
+
+    console.log("Project deleted");
 
     if (indexOfProjectToDelete === -1) {
       // Perfom deletion of item
@@ -70,10 +69,10 @@ const projectReducers = {
   },
 
   addBoard(state: AppState, action: PA<AddBoardPayload>) {
-    const { boardTitle, projectID: paramsProjectID } = action.payload;
+    const { boardTitle, projectID } = action.payload;
 
     const projectIndex = state.activeUser.projects.findIndex(
-      (project) => project.projectID === paramsProjectID
+      (project) => project.projectID === projectID
     );
 
     if (projectIndex === -1) {
@@ -96,6 +95,8 @@ const projectReducers = {
 
     console.log(state.activeUser.projects[projectIndex].boards);
   },
+
+  // Delete board
 
   editBoardTitleOnBlur(
     state: AppState,
@@ -198,16 +199,24 @@ const projectReducers = {
       (c) => c.cardID === cardID
     );
 
+    // mode: 'add'
     const addTodo = () => {
-      const { todos } =
-        state.activeUser.projects[project].boards[board].cards[card];
+      const todos =
+        state.activeUser.projects[project].boards[board].cards[card].todos;
+
+      console.log("Todos", current(todos));
+
+      const newTodoID =
+        todos.length === 0 ? 0 : todos[todos.length - 1].todoID + 1;
+      console.log(newTodoID);
       state.activeUser.projects[project].boards[board].cards[card].todos.push({
         ...todo,
-        todoID: todos.length === 0 ? 0 : todos[todos.length - 1].todoID + 1,
+        todoID: newTodoID,
       });
-      console.log("Todo added");
+      // console.log("Todo added", { ...todo, todoID: newTodoID });
     };
 
+    // mode: 'edit'
     const editTodo = () => {
       // Assume that todo.todoID is not Number.MAX_INT
       const todoIndex = state.activeUser.projects[project].boards[board].cards[
@@ -221,12 +230,28 @@ const projectReducers = {
       console.log("Todo edited with: ", todo);
     };
 
+    // mode: 'delete'
     const deleteTodo = () => {
-      const todos =
-        state.activeUser.projects[project].boards[board].cards[card].todos;
+      // const todos =
+      //   state.activeUser.projects[project].boards[board].cards[card].todos;
 
-      state.activeUser.projects[project].boards[board].cards[card].todos =
-        todos.filter((t) => t.todoID !== todo.todoID);
+      const indexOfTodoToDelete = state.activeUser.projects[project].boards[
+        board
+      ].cards[card].todos.findIndex((t) => t.todoID === todo.todoID);
+
+      console.log(todo.todoID, indexOfTodoToDelete);
+
+      if (indexOfTodoToDelete === -1) {
+        console.log("Cannot find todo to delete.");
+        return;
+      }
+
+      console.log(todo.todoID, indexOfTodoToDelete);
+
+      state.activeUser.projects[project].boards[board].cards[card].todos.splice(
+        indexOfTodoToDelete,
+        1
+      );
     };
 
     // Mode: 'add' | 'edit' | 'delete'

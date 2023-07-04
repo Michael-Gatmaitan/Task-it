@@ -6,7 +6,7 @@
 }
 
 .MuiButton-root {
-  padding: 8px 20px;
+  padding: 7px 14px;
   text-transform: capitalize;
   font-size: 14px;
   border-radius: 6px;
@@ -14,7 +14,7 @@
   box-shadow: none;
 
   @include desktop {
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-size: 16px;
     border-radius: 8px;
   }

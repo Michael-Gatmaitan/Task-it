@@ -61,16 +61,36 @@
 
     .todo-list-form {
       display: grid;
-      gap: 8px;
+      gap: 12px;
 
       .todo-list-container {
         display: grid;
         gap: 4px;
 
         .todo {
-          display: flex;
+          display: grid;
+          grid-template-columns: auto 1fr auto;
           align-items: center;
           gap: 4px;
+          padding: 4px;
+          border-radius: 4px;
+          background-color: $inputBG;
+
+          input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+          }
+
+          input[type="text"] {
+            border-radius: 2px;
+            padding: 1.5px;
+            border: none;
+            outline: none;
+          }
+
+          .delete-todo {
+            @include flexCenter;
+          }
         }
       }
     }

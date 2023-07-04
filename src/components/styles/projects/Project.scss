@@ -35,7 +35,8 @@
     max-height: 100vh;
     padding-bottom: 12px;
     grid-auto-columns: auto;
-    overflow-x: scroll;
+    max-height: calc(100vh - 155px);
+    overflow: scroll;
 
     .board-maker {
       height: min-content;
@@ -60,9 +61,16 @@
     }
 
     .add-board {
-      // width: max-content;
-      width: calc(100vw - (18px * 2));
+      // width: calc(100vw - (18px * 2));
+      width: 200px;
+      margin-right: 12px;
       height: min-content;
+    }
+  }
+
+  @include tablet {
+    .boards-container {
+      max-height: calc(100vh - 174px);
     }
   }
 
@@ -78,6 +86,8 @@
     }
 
     .boards-container {
+      max-height: calc(100vh - 194px);
+
       .board-maker {
         width: 280px;
         gap: 18px;
