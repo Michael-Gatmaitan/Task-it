@@ -1,0 +1,10 @@
+@import "../../../mixins";
+
+form.add-card-tag {
+  display: grid;
+  gap: 8px;
+
+  .MuiTextField-root {
+    width: 100%;
+  }
+}

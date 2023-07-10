@@ -1,0 +1,25 @@
+@import "../../../mixins";
+
+.todo-list-form {
+  display: grid;
+  gap: 12px;
+
+  .todo-list-container {
+    display: grid;
+    gap: 4px;
+  }
+
+  .create-todo-container {
+    display: grid;
+    grid-template-columns: 300px min-content;
+    gap: 8px;
+
+    input[type="text"] {
+      border: none;
+      outline: none;
+      font-size: 16px;
+      font-family: $inter;
+      border-bottom: solid 2px $border;
+    }
+  }
+}

@@ -19,8 +19,8 @@ const Card: React.FC<CardProps> = ({ card }) => {
         </div>
 
         <div className='card-tags'>
-          {card.cardTags.map((tags) => (
-            <div>Tag {tags}</div>
+          {card.cardTags.map((cardTag) => (
+            <div key={cardTag.cardTagID}>Tag {cardTag.cardTagTitle}</div>
           ))}
         </div>
       </div>

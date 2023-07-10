@@ -1,0 +1,7 @@
+form.add-card-tag {
+  display: grid;
+  gap: 8px;
+}
+form.add-card-tag .MuiTextField-root {
+  width: 100%;
+}/*# sourceMappingURL=AddCardTagForm.css.map */

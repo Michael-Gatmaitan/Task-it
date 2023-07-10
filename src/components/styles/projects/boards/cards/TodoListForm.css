@@ -1,0 +1,20 @@
+.todo-list-form {
+  display: grid;
+  gap: 12px;
+}
+.todo-list-form .todo-list-container {
+  display: grid;
+  gap: 4px;
+}
+.todo-list-form .create-todo-container {
+  display: grid;
+  grid-template-columns: 300px min-content;
+  gap: 8px;
+}
+.todo-list-form .create-todo-container input[type=text] {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  border-bottom: solid 2px #cfd0eb;
+}/*# sourceMappingURL=TodoListForm.css.map */

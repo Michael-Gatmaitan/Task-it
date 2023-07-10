@@ -6,6 +6,8 @@ import type {
   EditProjectPayload,
   AddBoardPayload,
   HandleTodoProps,
+  CardTagPayloadProps,
+  CardTag,
   // EditTodoProps
 } from "../../types/types";
 
@@ -187,6 +189,58 @@ const projectReducers = {
       newCardToAdd
     );
   },
+
+  handleCardTag(state: AppState, action: PA<CardTagPayloadProps>) {
+    const { projectID, boardID, cardID } = action.payload.idPaths;
+
+    if (
+      projectID !== undefined &&
+      boardID !== undefined &&
+      cardID !== undefined
+    ) {
+      const { projects } = state.activeUser;
+      const projectIDX = projects.findIndex(
+        (p) => p.projectID === parseInt(projectID)
+      );
+      const boardIDX = projects[projectIDX].boards.findIndex(
+        (b) => b.boardID === parseInt(boardID)
+      );
+      const cardIDX = projects[projectIDX].boards[boardIDX].cards.findIndex(
+        (c) => c.cardID === parseInt(cardID)
+      );
+
+      const cardTags =
+        projects[projectIDX].boards[boardIDX].cards[cardIDX].cardTags;
+
+      // const projectIdx = state.activeUser.projects.findIndex(p => p.projectID === parseInt(projectID));
+      // const boardIdx =
+
+      switch (action.payload.type) {
+        case "add": {
+          const newCardTag: CardTag = {
+            cardTagTitle: action.payload.cardTagTitle,
+            cardTagID:
+              cardTags.length === 0
+                ? 0
+                : cardTags[cardTags.length - 1].cardTagID + 1,
+          };
+
+          state.activeUser.projects[projectIDX].boards[boardIDX].cards[
+            cardIDX
+          ].cardTags[cardTags.length] = newCardTag;
+
+          console.log("Add card");
+
+          break;
+        }
+        case "delete": {
+          console.log(action.payload.cardTagID);
+          break;
+        }
+      }
+    }
+  },
+
   // Todo reducers
   handleTodo(state: AppState, action: PA<HandleTodoProps>) {
     const { todo, boardID, cardID, projectID, mode } = action.payload;
@@ -201,19 +255,9 @@ const projectReducers = {
 
     // mode: 'add'
     const addTodo = () => {
-      const todos =
-        state.activeUser.projects[project].boards[board].cards[card].todos;
-
-      console.log("Todos", current(todos));
-
-      const newTodoID =
-        todos.length === 0 ? 0 : todos[todos.length - 1].todoID + 1;
-      console.log(newTodoID);
-      state.activeUser.projects[project].boards[board].cards[card].todos.push({
-        ...todo,
-        todoID: newTodoID,
-      });
-      // console.log("Todo added", { ...todo, todoID: newTodoID });
+      state.activeUser.projects[project].boards[board].cards[card].todos.push(
+        todo
+      );
     };
 
     // mode: 'edit'
@@ -232,9 +276,6 @@ const projectReducers = {
 
     // mode: 'delete'
     const deleteTodo = () => {
-      // const todos =
-      //   state.activeUser.projects[project].boards[board].cards[card].todos;
-
       const indexOfTodoToDelete = state.activeUser.projects[project].boards[
         board
       ].cards[card].todos.findIndex((t) => t.todoID === todo.todoID);
@@ -246,12 +287,12 @@ const projectReducers = {
         return;
       }
 
-      console.log(todo.todoID, indexOfTodoToDelete);
-
       state.activeUser.projects[project].boards[board].cards[card].todos.splice(
         indexOfTodoToDelete,
         1
       );
+
+      console.log("From delete todo reducers:", todo.todoID);
     };
 
     // Mode: 'add' | 'edit' | 'delete'

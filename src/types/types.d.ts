@@ -1,3 +1,8 @@
+interface CardTag {
+  cardTagTitle: string;
+  cardTagID: number;
+}
+
 export interface AppState {
   activeUser: User;
   accounts: User[];
@@ -5,7 +10,6 @@ export interface AppState {
   userInputError: boolean;
   loggedIn: boolean;
 }
-
 /**** USER Types *****/
 interface Todo {
   title: string;
@@ -15,7 +19,7 @@ interface Todo {
 
 interface Card {
   cardTitle: string;
-  cardTags: string[];
+  cardTags: CardTag[];
   todos: Todo[];
   cardID: number;
 }
@@ -89,13 +93,26 @@ export interface HandleTodoProps {
   mode: "add" | "edit" | "delete";
 }
 
-type ReactRouterParamsType = {
-  projectID: string;
-  cardID: string;
-  boardID: string;
+export type ReactRouterParamsType = {
+  projectID?: string;
+  cardID?: string;
+  boardID?: string;
 };
 
 export type EditTodoProps = Required<AddTodoProps>;
+
+export type CardTagPayloadProps = {
+  idPaths: ReactRouterParamsType;
+} & (AddCardTag | DeleteCardTag);
+
+type AddCardTag = {
+  type: "add";
+  cardTagTitle: string;
+};
+type DeleteCardTag = {
+  cardTagID: number;
+  type: "delete";
+};
 
 // structure
 // const pr: Project[] = [

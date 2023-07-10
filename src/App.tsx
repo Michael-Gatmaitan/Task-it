@@ -1,4 +1,4 @@
-import React, { useEffect, lazy } from "react";
+import React, { lazy } from "react";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -42,22 +42,23 @@ const SelectedCardModal = lazy(
 */
 
 const App: React.FC = () => {
+  // Custom hooks we need if some data is changed;.
   useLocalStorageUpdater();
 
   const loggedIn = useAppSelector(getUserLoggedIn);
   const { userID } = useAppSelector(getActiveUser);
+  // const users = useAppSelector((state) => state.userReducer.accounts);
 
-  const users = useAppSelector((state) => state.userReducer.accounts);
+  // firebase realtime database
+  // useEffect(() => {
+  //   fetch("https://taskit-2023-default-rtdb.firebaseio.com/users.json", {
+  //     method: "PUT",
+  //     body: JSON.stringify(users),
+  //   });
+  // }, [users]);
 
-  useEffect(() => {
-    fetch("https://taskit-2023-default-rtdb.firebaseio.com/users.json", {
-      method: "PUT",
-      body: JSON.stringify(users),
-    });
-  }, [users]);
-
-  /* Making a shot hand function to return where to
-      direct deppends on { loggedIn } state. */
+  /* Making a short hand function to return where to
+      direct depends on { loggedIn } state. */
   const GetStartedPage = loggedIn ? (
     <Navigate replace to={`/${userID}/projects`} />
   ) : (

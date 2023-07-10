@@ -3,7 +3,6 @@ import { RootState } from "../app/store";
 
 import type { AppState } from "../types/types";
 
-// Combining reducers
 import projectReducers from "./reducers/projectReducers";
 import userReducers from "./reducers/userReducers";
 
@@ -25,6 +24,8 @@ const userSlice = createSlice({
 
     // Project reducers
     ...projectReducers,
+
+    // Selected fields file reducer
   },
 });
 
@@ -51,7 +52,10 @@ export const {
   // Card
   addCard,
 
-  // Todo
+  // Card's tag
+  handleCardTag,
+
+  // Card's Todo
   handleTodo,
 } = userSlice.actions;
 

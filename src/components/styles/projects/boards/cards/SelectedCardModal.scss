@@ -50,58 +50,14 @@
       gap: 4px;
     }
 
-    form.add-card-tag {
-      display: grid;
-      gap: 8px;
-
-      .MuiTextField-root {
-        width: 100%;
-      }
-    }
-
-    .todo-list-form {
-      display: grid;
-      gap: 12px;
-
-      .todo-list-container {
-        display: grid;
-        gap: 4px;
-
-        .todo {
-          display: grid;
-          grid-template-columns: auto 1fr auto;
-          align-items: center;
-          gap: 4px;
-          padding: 4px;
-          border-radius: 4px;
-          background-color: $inputBG;
-
-          input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-          }
-
-          input[type="text"] {
-            border-radius: 2px;
-            padding: 1.5px;
-            border: none;
-            outline: none;
-          }
-
-          .delete-todo {
-            @include flexCenter;
-          }
-        }
-      }
+    @include tablet {
     }
 
     @include desktop {
-      .selected-card-modal {
-        .selected-card-nav {
-          .close-card-modal {
-            width: 32px;
-            height: 32px;
-          }
+      .selected-card-nav {
+        .close-card-modal {
+          width: 32px;
+          height: 32px;
         }
       }
     }
