@@ -34,17 +34,14 @@ const Projects: React.FC = () => {
 
   const showModal = () => setShowCreateProjectModal(true);
 
-  // useEffect(() => {
-  //   if (projectToEdit !== undefined) {
-  //     setShowEditProjectModal((prevState) => !prevState);
-  //   }
-  // }, [projectToEdit]);
-
   return (
     <div className='projects page'>
       <div className='projects-page-nav'>
         <div className='projects-page-title header2'>
-          Projects {projects.length ? projects.length : " 0"}
+          Projects{" "}
+          {projects.length ? (
+            <span className='projects-length'>{projects.length}</span>
+          ) : null}
         </div>
 
         <Button
@@ -61,7 +58,7 @@ const Projects: React.FC = () => {
         {projects !== undefined
           ? projects.map((project, i) => (
               <Suspense
-                fallback={<CustomStyledSkeleton componentName='project-card' />}
+                fallback={<CustomStyledSkeleton componentName='project' />}
                 key={i}
               >
                 <ProjectCard

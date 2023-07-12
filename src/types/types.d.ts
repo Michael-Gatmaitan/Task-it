@@ -103,15 +103,15 @@ export type EditTodoProps = Required<AddTodoProps>;
 
 export type CardTagPayloadProps = {
   idPaths: ReactRouterParamsType;
-} & (AddCardTag | DeleteCardTag);
+} & (DeleteCardTag | AddCardTag);
 
 type AddCardTag = {
   type: "add";
   cardTagTitle: string;
 };
 type DeleteCardTag = {
-  cardTagID: number;
   type: "delete";
+  cardTagID: number;
 };
 
 // structure

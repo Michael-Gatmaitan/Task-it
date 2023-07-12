@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useAppSelector } from "../../../../../app/hooks";
+import { useAppSelector } from "../../../../../../app/hooks";
 import { useParams, useNavigate } from "react-router-dom";
-import "../../../../styles/projects/boards/cards/SelectedCardModal.css";
+import "../../../../../styles/projects/boards/cards/SelectedCardModal.css";
 
-import type { Card } from "../../../../../types/types";
-import { getActiveUser } from "../../../../../slices/userSlice";
-import { CloseRounded } from "@mui/icons-material";
+import type { Card } from "../../../../../../types/types";
+import { getActiveUser } from "../../../../../../slices/userSlice";
 
 // Components
+import SelectedCardNav from "./SelectedCardNav";
 import TodoListForm from "./TodoListForm";
 import AddCardTagForm from "./AddCardTagForm";
+
+import DeleteModal from "../../../../modals/DeleteModal";
 
 const SelectedCardModal: React.FC = () => {
   const navigate = useNavigate();
@@ -38,7 +40,13 @@ const SelectedCardModal: React.FC = () => {
     console.log("Selected card:", initialSelectedCard);
   }, [activeUser, boardID, cardID, projectID, setSelectedCard]);
 
-  // Tags state
+  // delete modal purposes
+  const componentNameToDelete = "card";
+  const handleDeleteCard = () => {
+    console.log("card deleted");
+  };
+
+  const [showDeleteModal, setShowDeleteModal] = useState(true);
 
   return selectedCard !== undefined && projectID !== undefined ? (
     <div
@@ -47,19 +55,19 @@ const SelectedCardModal: React.FC = () => {
         navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`)
       }
     >
-      <div className='selected-card-modal' onClick={(e) => e.stopPropagation()}>
-        <div className='selected-card-nav'>
-          <div className='header2'>{selectedCard.cardTitle}</div>
+      <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        componentNameToDelete={componentNameToDelete}
+        onDeleteFunction={handleDeleteCard}
+      />
 
-          <div
-            className='close-card-modal'
-            onClick={() =>
-              navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`)
-            }
-          >
-            <CloseRounded fontSize='small' />
-          </div>
-        </div>
+      <div className='selected-card-modal' onClick={(e) => e.stopPropagation()}>
+        <SelectedCardNav
+          cardTitle={selectedCard.cardTitle}
+          activeUserID={activeUser.userID}
+          projectID={projectID}
+        />
 
         <div className='card-description body-text'>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
@@ -77,9 +85,7 @@ const SelectedCardModal: React.FC = () => {
         <TodoListForm todos={selectedCard.todos} />
       </div>
     </div>
-  ) : (
-    <div>undefined selectedCard</div>
-  );
+  ) : null;
 };
 
 export default SelectedCardModal;

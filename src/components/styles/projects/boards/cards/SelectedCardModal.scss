@@ -8,6 +8,7 @@
   height: 100%;
   background-color: rgba(#000, 0.2);
   z-index: $idx_mainModal;
+  overflow: none;
 
   .selected-card-modal {
     width: 100%;
@@ -32,25 +33,62 @@
       align-items: center;
       justify-content: space-between;
 
-      .close-card-modal {
-        width: 24px;
-        height: 24px;
-        @include flexCenter;
-        border-radius: 4px;
-        background-color: $inputBG;
+      .selected-card-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
 
-        &:hover {
-          color: $error;
+        .edit-card-title {
+          width: 32px;
+          height: 32px;
+          @include flexCenter;
+          border-radius: 4px;
+          background-color: $inputBG;
+          transition: 0.1s ease-in;
+
+          &:hover {
+            background-color: $primary;
+            color: #fff;
+          }
+        }
+      }
+
+      .card-modal-actions {
+        display: flex;
+        gap: 8px;
+
+        .close-card-modal,
+        .delete-card-modal {
+          width: 32px;
+          height: 32px;
+          @include flexCenter;
+          border-radius: 4px;
+          background-color: $inputBG;
+          transition: 0.1s ease-in;
+
+          &:hover {
+            color: #fff;
+            background-color: $error;
+          }
+        }
+
+        @include desktop {
+          gap: 12px;
         }
       }
     }
 
-    .card-tags {
-      display: grid;
-      gap: 4px;
-    }
-
     @include tablet {
+      width: 80%;
+      height: 80%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 16px;
+
+      &::-webkit-scrollbar {
+        display: block;
+      }
     }
 
     @include desktop {

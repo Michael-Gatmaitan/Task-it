@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../app/hooks";
 import { TextField, Button, Chip } from "@mui//material";
 
 // Style
-import "../../../../styles/projects/boards/cards/AddCardTagForm.css";
-import { CardTag, ReactRouterParamsType } from "../../../../../types/types";
-import { handleCardTag } from "../../../../../slices/userSlice";
+import "../.././../../../styles/projects/boards/cards/AddCardTagForm.css";
+import { CardTag, ReactRouterParamsType } from "../../../../../../types/types";
+import { handleCardTag } from "../../../../../../slices/userSlice";
 
 interface AddCardTagFormProps {
   params: ReactRouterParamsType;
@@ -60,6 +60,7 @@ const AddCardTagForm: React.FC<AddCardTagFormProps> = (
         {cardTags.map((cardTag) => (
           <Chip
             label={cardTag.cardTagTitle}
+            color='primary'
             onDelete={() => handleDeleteCardTag(cardTag.cardTagID)}
             key={cardTag.cardTagID}
           />
@@ -71,8 +72,11 @@ const AddCardTagForm: React.FC<AddCardTagFormProps> = (
 
         <TextField
           variant='outlined'
-          label='Add card tag'
+          label='Add card tag (Max of 30 characters)'
           value={newCardTag}
+          inputProps={{
+            maxLength: 30,
+          }}
           onChange={(e) => setNewCardTag(e.target.value)}
         />
 

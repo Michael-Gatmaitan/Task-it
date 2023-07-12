@@ -6,6 +6,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 102;
+  overflow: none;
 }
 .selected-card-modal-bg .selected-card-modal {
   width: 100%;
@@ -29,21 +30,62 @@
   align-items: center;
   justify-content: space-between;
 }
-.selected-card-modal-bg .selected-card-modal .selected-card-nav .close-card-modal {
-  width: 24px;
-  height: 24px;
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .selected-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .selected-card-header .edit-card-title {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
   background-color: #f0f0f2;
+  transition: 0.1s ease-in;
 }
-.selected-card-modal-bg .selected-card-modal .selected-card-nav .close-card-modal:hover {
-  color: #ff3333;
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .selected-card-header .edit-card-title:hover {
+  background-color: #5b87f8;
+  color: #fff;
 }
-.selected-card-modal-bg .selected-card-modal .card-tags {
-  display: grid;
-  gap: 4px;
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .card-modal-actions {
+  display: flex;
+  gap: 8px;
+}
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .card-modal-actions .close-card-modal,
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .card-modal-actions .delete-card-modal {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: #f0f0f2;
+  transition: 0.1s ease-in;
+}
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .card-modal-actions .close-card-modal:hover,
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .card-modal-actions .delete-card-modal:hover {
+  color: #fff;
+  background-color: #ff3333;
+}
+@media (min-width: 1024px) {
+  .selected-card-modal-bg .selected-card-modal .selected-card-nav .card-modal-actions {
+    gap: 12px;
+  }
+}
+@media (min-width: 700px) {
+  .selected-card-modal-bg .selected-card-modal {
+    width: 80%;
+    height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+  }
+  .selected-card-modal-bg .selected-card-modal::-webkit-scrollbar {
+    display: block;
+  }
 }
 @media (min-width: 1024px) {
   .selected-card-modal-bg .selected-card-modal .selected-card-nav .close-card-modal {

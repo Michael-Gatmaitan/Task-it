@@ -1,5 +1,11 @@
 @import "../../../mixins";
 
+.card-tags {
+  .MuiChip-root {
+    margin: 4px 4px 0 0;
+  }
+}
+
 form.add-card-tag {
   display: grid;
   gap: 8px;

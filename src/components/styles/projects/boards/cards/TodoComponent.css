@@ -16,7 +16,12 @@
 .todo input[type=text] {
   border-radius: 2px;
   padding: 1.5px;
+  min-width: 100px;
   border: none;
+  font-family: "Inter", sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 16px;
+  font-weight: 500;
   word-wrap: break-word;
   word-break: break-all;
   outline: none;

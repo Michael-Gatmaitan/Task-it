@@ -234,7 +234,17 @@ const projectReducers = {
           break;
         }
         case "delete": {
-          console.log(action.payload.cardTagID);
+          const idxOfCardTagToDelete = state.activeUser.projects[
+            projectIDX
+          ].boards[boardIDX].cards[cardIDX].cardTags.findIndex((ct) => {
+            return action.payload.type === "delete"
+              ? ct.cardTagID === action.payload.cardTagID
+              : -1;
+          });
+
+          state.activeUser.projects[projectIDX].boards[boardIDX].cards[
+            cardIDX
+          ].cardTags.splice(idxOfCardTagToDelete, 1);
           break;
         }
       }

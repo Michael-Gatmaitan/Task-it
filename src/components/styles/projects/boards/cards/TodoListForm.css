@@ -17,4 +17,8 @@
   font-size: 16px;
   font-family: "Inter", sans-serif;
   border-bottom: solid 2px #cfd0eb;
+  background-color: transparent;
+}
+.todo-list-form .create-todo-container input[type=text]:focus {
+  background-color: #fff;
 }/*# sourceMappingURL=TodoListForm.css.map */

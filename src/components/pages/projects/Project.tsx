@@ -5,7 +5,7 @@ import { getActiveUser } from "../../../slices/userSlice";
 import { Project as ProjectType } from "../../../types/types";
 
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
-import { Button, Skeleton } from "@mui/material";
+import { Button } from "@mui/material";
 
 // dayjs
 import dayjs from "dayjs";
@@ -81,7 +81,7 @@ const Project: React.FC = () => {
           ? currentProject.boards.map((board, i) => (
               <Suspense
                 key={i}
-                fallback={<CustomStyledSkeleton componentName='board-card' />}
+                fallback={<CustomStyledSkeleton componentName='board' />}
               >
                 <Board board={board} />
               </Suspense>
@@ -91,14 +91,7 @@ const Project: React.FC = () => {
         {/* This shows up if user wants to create board */}
         {showBoardMaker ? (
           <Suspense
-            fallback={
-              <Skeleton
-                className='skeleton-board'
-                variant='rounded'
-                width={200}
-                height={180}
-              />
-            }
+            fallback={<CustomStyledSkeleton componentName='board-maker' />}
           >
             <BoardMaker setShowBoardMaker={setShowBoardMaker} />
           </Suspense>
@@ -109,13 +102,15 @@ const Project: React.FC = () => {
             onClick={() => {
               setShowBoardMaker((prev) => !prev);
 
-              setTimeout(() => {
+              const timeout = setTimeout(() => {
                 const boardsContainer = document.getElementsByClassName(
                   "boards-container"
                 )[0] as HTMLDivElement;
 
                 boardsContainer.scrollLeft = boardsContainer.scrollWidth;
               }, 50);
+
+              return () => clearTimeout(timeout);
             }}
           >
             Add Board

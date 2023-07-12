@@ -20,6 +20,11 @@
       font-size: 16px;
       font-family: $inter;
       border-bottom: solid 2px $border;
+      background-color: transparent;
+
+      &:focus {
+        background-color: #fff;
+      }
     }
   }
 }

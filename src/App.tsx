@@ -27,7 +27,10 @@ const Projects = lazy(() => import("./components/pages/Projects"));
 // v
 const Project = lazy(() => import("./components/pages/projects/Project"));
 const SelectedCardModal = lazy(
-  () => import("./components/pages/projects/boards/cards/SelectedCardModal")
+  () =>
+    import(
+      "./components/pages/projects/boards/cards/card-modal/SelectedCardModal"
+    )
 );
 /*
 

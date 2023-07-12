@@ -1,16 +1,19 @@
 import React, { useRef, useEffect, memo } from "react";
-import { useAppDispatch } from "../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../app/hooks";
 import { useParams } from "react-router";
-import { handleTodo } from "../../../../../slices/userSlice";
+import { handleTodo } from "../../../../../../slices/userSlice";
 
 //  Types
-import type { Todo, ReactRouterParamsType } from "../../../../../types/types";
+import type {
+  Todo,
+  ReactRouterParamsType,
+} from "../../../../../../types/types";
 
 // Mui
 import { CloseRounded } from "@mui/icons-material";
 
 // Style
-import "../../../../styles/projects/boards/cards/TodoComponent.css";
+import "../../../../../styles/projects/boards/cards/TodoComponent.css";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
@@ -124,8 +127,9 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
           width: `${title.length}ch`,
         }}
         onChange={(e) => {
-          e.target.style.width = `${e.target.value.length}ch`;
+          e.target.style.width = `calc(${e.target.value.length}ch * 0.8)`;
         }}
+        placeholder='Add todo (Max of 50 character)'
         maxLength={50}
         // onChange={onEditTodo}
         onBlur={onEditTodo}

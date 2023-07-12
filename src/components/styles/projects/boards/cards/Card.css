@@ -11,17 +11,46 @@
   overflow: hidden;
 }
 .card .card-infos {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: min-content auto;
+  grid-template-rows: auto;
 }
 .card .card-infos .card-todo-count {
   display: flex;
   align-items: center;
   gap: 2px;
 }
+.card .card-infos .card-todo-count .label {
+  white-space: nowrap;
+}
+.card .card-infos .card-tags {
+  display: flex;
+  gap: 2px;
+  overflow-x: scroll;
+}
+.card .card-infos .card-tags::-webkit-scrollbar {
+  display: none;
+}
+.card .card-infos .card-tags .card-tag {
+  padding: 6px;
+  width: -moz-min-content;
+  width: min-content;
+  border-radius: 4px;
+  white-space: nowrap;
+  background-color: #5b87f8;
+  color: #fff;
+  font-family: "Nunito sans", sans-serif;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
 @media (min-width: 1024px) {
   .card {
     padding: 12px;
     gap: 4px;
+  }
+  .card .card-infos .card-tags::-webkit-scrollbar {
+    display: block;
   }
 }/*# sourceMappingURL=Card.css.map */

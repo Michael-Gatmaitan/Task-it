@@ -5,7 +5,14 @@ import "./Skeletons.css";
 // The custom skeletons aree responsive bc of it's own css styles
 
 interface SkeletonComponentName {
-  componentName: "nav" | "sidebar" | "project-card" | "board-card" | "card";
+  componentName:
+    | "nav"
+    | "sidebar"
+    | "project"
+    | "board"
+    | "card"
+    | "board-maker"
+    | "card-maker";
 }
 
 const CustomStyledSkeleton: React.FC<SkeletonComponentName> = (props) => {
