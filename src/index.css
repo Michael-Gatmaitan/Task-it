@@ -296,6 +296,9 @@ input[type=submit]:disabled {
   align-items: center;
   justify-content: center;
 }
+.modal-container-background .modal {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
 .modal-container-background::-webkit-scrollbar {
   display: none;
 }

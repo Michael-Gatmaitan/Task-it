@@ -6,12 +6,13 @@ interface SelectedCardNavProps {
   cardTitle: string;
   activeUserID: number;
   projectID: string;
+  setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SelectedCardNav: React.FC<SelectedCardNavProps> = (
   props: SelectedCardNavProps
 ) => {
-  const { cardTitle, activeUserID, projectID } = props;
+  const { cardTitle, activeUserID, projectID, setShowDeleteModal } = props;
   const navigate = useNavigate();
 
   const cardTitleRef = useRef<HTMLInputElement | null>(null);
@@ -42,7 +43,10 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
       </div>
 
       <div className='card-modal-actions'>
-        <div className='delete-card-modal'>
+        <div
+          className='delete-card-modal'
+          onClick={() => setShowDeleteModal((prev) => !prev)}
+        >
           <DeleteRounded />
         </div>
 

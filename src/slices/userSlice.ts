@@ -4,6 +4,8 @@ import { RootState } from "../app/store";
 import type { AppState } from "../types/types";
 
 import projectReducers from "./reducers/projectReducers";
+import boardReducers from "./reducers/boardReducers";
+import cardReducers from "./reducers/cardReducers";
 import userReducers from "./reducers/userReducers";
 
 const initialState: AppState = {
@@ -25,7 +27,10 @@ const userSlice = createSlice({
     // Project reducers
     ...projectReducers,
 
-    // Selected fields file reducer
+    // Board reducers
+    ...boardReducers,
+
+    ...cardReducers,
   },
 });
 

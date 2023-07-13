@@ -38,7 +38,7 @@ const SelectedCardModal: React.FC = () => {
     setSelectedCard(initialSelectedCard);
 
     console.log("Selected card:", initialSelectedCard);
-  }, [activeUser, boardID, cardID, projectID, setSelectedCard]);
+  }, [activeUser.projects, boardID, cardID, projectID]);
 
   // delete modal purposes
   const componentNameToDelete = "card";
@@ -46,7 +46,31 @@ const SelectedCardModal: React.FC = () => {
     console.log("card deleted");
   };
 
-  const [showDeleteModal, setShowDeleteModal] = useState(true);
+  const [completedTodos, setCompletedTodos] = useState<number>(0);
+
+  useEffect(() => {
+    if (selectedCard === undefined) return;
+    let completed = 0;
+
+    const { todos } = selectedCard;
+    todos.forEach((todo) => {
+      if (todo.checked) {
+        completed += 1;
+      }
+    });
+
+    setCompletedTodos(completed);
+  }, [selectedCard]);
+
+  // const calculateTodoProgressWidth = useMemo(() => {
+  //   return completedTodos === 0
+  //     ? 0
+  //     : selectedCard !== undefined
+  //     ? (completedTodos / selectedCard.todos.length) * 100
+  //     : 0;
+  // }, [completedTodos, selectedCard]);
+
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(true);
 
   return selectedCard !== undefined && projectID !== undefined ? (
     <div
@@ -64,6 +88,7 @@ const SelectedCardModal: React.FC = () => {
 
       <div className='selected-card-modal' onClick={(e) => e.stopPropagation()}>
         <SelectedCardNav
+          setShowDeleteModal={setShowDeleteModal}
           cardTitle={selectedCard.cardTitle}
           activeUserID={activeUser.userID}
           projectID={projectID}
@@ -81,6 +106,20 @@ const SelectedCardModal: React.FC = () => {
 
         {/* Submit : addCardTag */}
         <AddCardTagForm cardTags={selectedCard.cardTags} params={params} />
+
+        <div
+          className='todo-progress'
+          style={{
+            height: "4px",
+            width: `${
+              (selectedCard.todos.length === 0
+                ? 0
+                : completedTodos / selectedCard.todos.length) * 100
+            }%`,
+            backgroundColor: "#f00",
+            transition: "0.1s ease-in",
+          }}
+        />
 
         <TodoListForm todos={selectedCard.todos} />
       </div>

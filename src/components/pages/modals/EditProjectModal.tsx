@@ -3,6 +3,7 @@ import { editProject } from "../../../slices/userSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import { Button, TextField, Chip } from "@mui/material";
 import type { Project, EditableProjectValues } from "../../../types/types";
+import { propagationStopper } from "./propagationStopper";
 // import "../../styles/modals/CreateProjectModal.css";
 
 interface EditProjectModalProps {
@@ -55,9 +56,6 @@ const EditProjectModal: React.FC<EditProjectModalProps> = (
   useEffect(() => {
     if (projectToEdit !== undefined) console.log(projectToEdit.tags);
   }, [projectToEdit]);
-
-  const propagationStopper = (e: React.MouseEvent<HTMLDivElement>) =>
-    e.stopPropagation();
 
   const [newTagValue, setNewTagValue] = useState<string>("");
 

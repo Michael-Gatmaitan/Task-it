@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@mui/material";
 import "../../styles/modals/DeleteModal.css";
+import { propagationStopper } from "./propagationStopper";
 
 interface DeleteModalProps {
   componentNameToDelete: string;
@@ -25,17 +26,30 @@ const DeleteModal: React.FC<DeleteModalProps> = (props: DeleteModalProps) => {
     setShowDeleteModal((prev) => !prev);
   };
 
+  useEffect(() => {
+    console.log(showDeleteModal);
+  }, [showDeleteModal]);
+
   return showDeleteModal ? (
-    <div className='delete-modal-bg' onClick={closeModal}>
-      <div className='bordered-container delete-modal'>
+    <div
+      className='delete-modal-bg modal-container-background'
+      onClick={closeModal}
+    >
+      <div
+        className='bordered-container delete-modal header2 modal'
+        onClick={propagationStopper}
+      >
         Are you sure you want to delete this {componentNameToDelete}?
         <div className='delete-modal-buttons'>
-          <Button variant='contained' onClick={onDeleteFunction}>
+          <Button variant='contained' color='error' onClick={onDeleteFunction}>
             Delete
           </Button>
           <Button
             variant='outlined'
-            onClick={() => setShowDeleteModal((prev) => !prev)}
+            onClick={() => {
+              setShowDeleteModal(false);
+              console.log("closed? ", showDeleteModal);
+            }}
           >
             Cancel
           </Button>

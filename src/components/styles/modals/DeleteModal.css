@@ -1,14 +1,17 @@
-.delete-modal-bg {
-  width: 1000vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
+.modal-container-background .delete-modal,
 .delete-modal-bg .delete-modal {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  border-radius: 16px;
+  background-color: #fcfdff;
+  z-index: 101;
+}
+.modal-container-background .delete-modal .delete-modal-buttons,
+.delete-modal-bg .delete-modal .delete-modal-buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  margin-top: 30px;
 }/*# sourceMappingURL=DeleteModal.css.map */

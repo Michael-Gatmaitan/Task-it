@@ -11,6 +11,7 @@ import "../../styles/modals/CreateProjectModal.css";
 
 // MUI
 import { Button, TextField, Chip } from "@mui/material";
+import { propagationStopper } from "./propagationStopper";
 
 /** CREATE PROJECT MODAL */
 
@@ -75,9 +76,6 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
     setSubmitDisabled(projectTitle.trim() === "" || isTitleExists);
   }, [projectTitle, isTitleExists]);
 
-  const propagationStopper = (e: React.MouseEvent<HTMLDivElement>) =>
-    e.stopPropagation();
-
   const handleSubmitTag = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -93,7 +91,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
       onClick={() => setShowCreateProjectModal(false)}
     >
       <div
-        className='create-project-modal bordered-container'
+        className='create-project-modal bordered-container modal'
         onClick={propagationStopper}
       >
         <div className='modal-header header2'>Create Project</div>
