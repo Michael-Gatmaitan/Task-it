@@ -12,7 +12,7 @@ import "../styles/Projects.css";
 import CreateProjectModal from "./modals/CreateProjectModal";
 
 // MUI components
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { AddCircleRounded } from "@mui/icons-material";
 import EditProjectModal from "./modals/EditProjectModal";
 import CustomStyledSkeleton from "../CustomStyledSkeleton";
@@ -44,14 +44,16 @@ const Projects: React.FC = () => {
           ) : null}
         </div>
 
-        <Button
-          variant='outlined'
-          onClick={showModal}
-          className='create-new-project'
-        >
-          <AddCircleRounded />
-          <span className='button-text'>Create new project</span>
-        </Button>
+        <Tooltip title='Add project' placement='top'>
+          <Button
+            variant='outlined'
+            onClick={showModal}
+            className='create-new-project'
+          >
+            <AddCircleRounded />
+            <span className='button-text'>Create new project</span>
+          </Button>
+        </Tooltip>
       </div>
 
       <div className='projects-container'>

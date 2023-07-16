@@ -8,7 +8,7 @@ import { MenuRounded, CloseRounded } from "@mui/icons-material";
 import ProfileRibbon from "../components/ProfileRibbon";
 
 // MUI
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 
 // Redux
 import { getUserLoggedIn } from "../slices/userSlice";
@@ -38,10 +38,12 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       {/* Buttons */}
       <div className='nav-buttons'>
         {navBarButtons.centerButtons.map((button, key) => (
-          <NavLink to={button.path} key={key}>
-            <button.Icon />
-            <span>{button.text}</span>
-          </NavLink>
+          <Tooltip title={button.text} placement='bottom'>
+            <NavLink to={button.path} key={key}>
+              <button.Icon />
+              <span>{button.text}</span>
+            </NavLink>
+          </Tooltip>
         ))}
       </div>
 

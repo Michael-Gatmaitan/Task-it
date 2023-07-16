@@ -12,6 +12,7 @@ import TodoListForm from "./TodoListForm";
 import AddCardTagForm from "./AddCardTagForm";
 
 import DeleteModal from "../../../../modals/DeleteModal";
+import TodoProgressBar from "./TodoProgressBar";
 
 const SelectedCardModal: React.FC = () => {
   const navigate = useNavigate();
@@ -46,31 +47,9 @@ const SelectedCardModal: React.FC = () => {
     console.log("card deleted");
   };
 
-  const [completedTodos, setCompletedTodos] = useState<number>(0);
-
-  useEffect(() => {
-    if (selectedCard === undefined) return;
-    let completed = 0;
-
-    const { todos } = selectedCard;
-    todos.forEach((todo) => {
-      if (todo.checked) {
-        completed += 1;
-      }
-    });
-
-    setCompletedTodos(completed);
-  }, [selectedCard]);
-
-  // const calculateTodoProgressWidth = useMemo(() => {
-  //   return completedTodos === 0
-  //     ? 0
-  //     : selectedCard !== undefined
-  //     ? (completedTodos / selectedCard.todos.length) * 100
-  //     : 0;
-  // }, [completedTodos, selectedCard]);
-
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(true);
+
+  // const []
 
   return selectedCard !== undefined && projectID !== undefined ? (
     <div
@@ -107,24 +86,18 @@ const SelectedCardModal: React.FC = () => {
         {/* Submit : addCardTag */}
         <AddCardTagForm cardTags={selectedCard.cardTags} params={params} />
 
-        <div
-          className='todo-progress'
-          style={{
-            height: "4px",
-            width: `${
-              (selectedCard.todos.length === 0
-                ? 0
-                : completedTodos / selectedCard.todos.length) * 100
-            }%`,
-            backgroundColor: "#f00",
-            transition: "0.1s ease-in",
-          }}
-        />
+        <TodoProgressBar selectedCardTodos={selectedCard.todos} />
 
         <TodoListForm todos={selectedCard.todos} />
       </div>
     </div>
-  ) : null;
+  ) : (
+    <SelectedCardUndefined />
+  );
+};
+
+const SelectedCardUndefined: React.FC = () => {
+  return <div className='selected-card-undefined'>Selected card undefined</div>;
 };
 
 export default SelectedCardModal;

@@ -143,7 +143,17 @@ const cardReducers = {
         (t) => t.todoID === todo.todoID
       );
 
-      cardTodos_STATE[todoIndex] = todo;
+      /* splice,
+        (
+          *expected index*,
+          *n element of deletion from that index*, 
+          *value to replace on expected index*
+        ); */
+      cardTodos_STATE.splice(todoIndex, 1, todo);
+
+      // state.activeUser.projects[project].boards[board].cards[card].todos[
+      //   todoIndex
+      // ] = todo;
 
       console.log("Todo edited with: ", todo);
     };

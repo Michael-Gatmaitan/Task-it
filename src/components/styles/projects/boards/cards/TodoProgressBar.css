@@ -1,0 +1,11 @@
+.todo-progress-container {
+  width: 100%;
+  height: 5px;
+  background-color: #121212;
+}
+.todo-progress-container .todo-progress-bar {
+  height: 5px;
+  background-color: #5b87f8;
+  transition: 0.1s ease-in;
+  border-radius: 2px;
+}/*# sourceMappingURL=TodoProgressBar.css.map */

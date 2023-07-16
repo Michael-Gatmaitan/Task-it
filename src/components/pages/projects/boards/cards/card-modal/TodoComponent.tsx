@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, memo } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import { useAppDispatch } from "../../../../../../app/hooks";
 import { useParams } from "react-router";
 import { handleTodo } from "../../../../../../slices/userSlice";
@@ -20,10 +20,7 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
   const dispatch = useAppDispatch();
   const params = useParams<ReactRouterParamsType>();
   const { projectID, boardID, cardID } = params;
-
-  // const { projectID, boardID, cardID } = params;
   const { title, checked } = todo;
-  // const [initialTitle, setInitialTitle] = useState<string>(title);
 
   const inputTitleRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,7 +32,14 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
-  const onEditTodo = (e: React.FocusEvent<HTMLInputElement>) => {
+  const [titleInit, setTitleInit] = useState<string>(title);
+  const [checkedInit, setCheckedInit] = useState<boolean>(checked);
+
+  const onEditTodo = (
+    e:
+      | React.FocusEvent<HTMLInputElement, Element>
+      | React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (
       projectID !== undefined &&
       boardID !== undefined &&
@@ -69,7 +73,7 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
           handleTodo({
             todo: {
               title: title,
-              checked: !checked,
+              checked: e.currentTarget.checked,
               todoID: todo.todoID,
             },
             projectID: parseInt(projectID),
@@ -104,29 +108,33 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
     }
   };
 
-  // const initializedTitle = useMemo(() => {
-
-  // })
-
   return (
     <div className='todo'>
       <input
         type='checkbox'
         name='checked'
-        defaultChecked={checked}
+        // checked={checked}
         // onChange={() => setTodoChecked(!checked)}
-        onChange={onEditTodo}
+        checked={checked}
+        onChange={(e) => {
+          setCheckedInit(e.currentTarget.checked);
+          console.log(titleInit, checkedInit);
+          onEditTodo(e);
+        }}
       />
 
       <input
         type='text'
         name='title'
-        defaultValue={title}
+        // defaultValue={title}
+        value={title}
+        // value={titleInit}
         ref={inputTitleRef}
         style={{
           width: `${title.length}ch`,
         }}
         onChange={(e) => {
+          setTitleInit(e.target.value);
           e.target.style.width = `calc(${e.target.value.length}ch * 0.8)`;
         }}
         placeholder='Add todo (Max of 50 character)'

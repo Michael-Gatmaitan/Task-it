@@ -33,6 +33,7 @@
     height: 32px;
     border-radius: 4px;
     transition: 0.1s ease;
+    cursor: pointer;
 
     :hover {
       background-color: #eee;
@@ -44,7 +45,7 @@
     }
   }
 
-  @include desktop {
+  @include tablet {
     display: grid;
     max-width: 200px;
   }
@@ -89,7 +90,7 @@
       }
     }
 
-    @include desktop {
+    @include tablet {
       width: 420px;
       right: 0;
     }

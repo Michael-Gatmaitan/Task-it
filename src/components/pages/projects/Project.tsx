@@ -5,7 +5,7 @@ import { getActiveUser } from "../../../slices/userSlice";
 import { Project as ProjectType } from "../../../types/types";
 
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 
 // dayjs
 import dayjs from "dayjs";
@@ -61,9 +61,11 @@ const Project: React.FC = () => {
           />
         </div>
 
-        <div className='header2'>
-          {currentProject.projectTitle || "Loading"}
-        </div>
+        <Tooltip title={currentProject.projectTitle} placement='top-start'>
+          <div className='header2'>
+            {currentProject.projectTitle || "Loading"}
+          </div>
+        </Tooltip>
 
         <div className='date-created card-title'>{time}</div>
       </div>

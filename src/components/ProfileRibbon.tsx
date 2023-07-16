@@ -130,10 +130,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
     setUserInputError(
       usernameVal.trim() === "" ||
-        usernameVal.trim() === username ||
         usernameExist ||
         !isImageLinkValid ||
-        (imgVal.trim() === "" && selectedImage === "")
+        imgVal.trim() === ""
     );
 
     setDisablePreviewImage(imgVal === "");
@@ -233,9 +232,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
                   : "Edit image link"
               }
               variant='outlined'
-              disabled={selectedImage !== ""}
+              // disabled={selectedImage !== ""}
               onChange={(e) => setEditImageLinkValue(e.target.value)}
-              error={!isImageLinkValid}
+              error={!isImageLinkValid || selectedImage !== ""}
               defaultValue={
                 selectedImage !== "" ? selectedImage : profileImageLink
               }
