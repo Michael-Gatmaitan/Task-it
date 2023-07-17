@@ -56,6 +56,8 @@ export const {
 
   // Card
   addCard,
+  deleteCard,
+  editCardProperties,
 
   // Card's tag
   handleCardTag,

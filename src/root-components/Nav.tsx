@@ -38,8 +38,8 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
       {/* Buttons */}
       <div className='nav-buttons'>
         {navBarButtons.centerButtons.map((button, key) => (
-          <Tooltip title={button.text} placement='bottom'>
-            <NavLink to={button.path} key={key}>
+          <Tooltip title={button.text} placement='bottom' key={key}>
+            <NavLink to={button.path}>
               <button.Icon />
               <span>{button.text}</span>
             </NavLink>

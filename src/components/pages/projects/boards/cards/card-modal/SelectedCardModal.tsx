@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useAppSelector } from "../../../../../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../../../../../app/hooks";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../../../../styles/projects/boards/cards/SelectedCardModal.css";
 
 import type { Card } from "../../../../../../types/types";
-import { getActiveUser } from "../../../../../../slices/userSlice";
+import { deleteCard, getActiveUser } from "../../../../../../slices/userSlice";
 
 // Components
 import SelectedCardNav from "./SelectedCardNav";
@@ -14,13 +14,18 @@ import AddCardTagForm from "./AddCardTagForm";
 import DeleteModal from "../../../../modals/DeleteModal";
 import TodoProgressBar from "./TodoProgressBar";
 
+// Mui
+import { Skeleton } from "@mui/material";
+
 const SelectedCardModal: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const activeUser = useAppSelector(getActiveUser);
   const params = useParams();
   const { projectID, boardID, cardID } = params;
 
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   useEffect(() => {
     let initialSelectedCard: Card | undefined = undefined;
@@ -44,12 +49,16 @@ const SelectedCardModal: React.FC = () => {
   // delete modal purposes
   const componentNameToDelete = "card";
   const handleDeleteCard = () => {
-    console.log("card deleted");
+    if (
+      projectID !== undefined &&
+      boardID !== undefined &&
+      cardID !== undefined
+    ) {
+      // Navigate to main project before deleting the board's card
+      navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`);
+      dispatch(deleteCard({ projectID, boardID, cardID }));
+    }
   };
-
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(true);
-
-  // const []
 
   return selectedCard !== undefined && projectID !== undefined ? (
     <div
@@ -97,7 +106,11 @@ const SelectedCardModal: React.FC = () => {
 };
 
 const SelectedCardUndefined: React.FC = () => {
-  return <div className='selected-card-undefined'>Selected card undefined</div>;
+  return (
+    <div className='selected-card-undefined'>
+      <Skeleton className='card-skeleton'>Undefineeeed</Skeleton>
+    </div>
+  );
 };
 
 export default SelectedCardModal;

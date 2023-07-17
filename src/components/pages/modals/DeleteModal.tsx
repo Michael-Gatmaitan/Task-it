@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@mui/material";
 import "../../styles/modals/DeleteModal.css";
 import { propagationStopper } from "./propagationStopper";
@@ -25,10 +25,6 @@ const DeleteModal: React.FC<DeleteModalProps> = (props: DeleteModalProps) => {
 
     setShowDeleteModal((prev) => !prev);
   };
-
-  useEffect(() => {
-    console.log(showDeleteModal);
-  }, [showDeleteModal]);
 
   return showDeleteModal ? (
     <div

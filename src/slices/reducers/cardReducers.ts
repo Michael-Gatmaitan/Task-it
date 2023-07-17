@@ -1,4 +1,4 @@
-import { PayloadAction as PA } from "@reduxjs/toolkit";
+import { PayloadAction as PA, current } from "@reduxjs/toolkit";
 
 import {
   Card,
@@ -8,17 +8,54 @@ import {
   AppState,
 } from "../../types/types";
 
+interface AddCardPayload {
+  projectID: number;
+  boardID: number;
+  newCard: Card;
+}
+
+interface DeleteCardPayload {
+  projectID: string;
+  boardID: string;
+  cardID: string;
+}
+
+interface EditCardPropsPayload {
+  type: "card-title" | "card-description";
+  value: string;
+  projectID: string;
+  boardID: string;
+  cardID: string;
+}
+
+interface searchCardParams {
+  state: AppState;
+  projectID: string;
+  boardID: string;
+  cardID: string;
+}
+
+const searchCard = (params: searchCardParams) => {
+  const { state, projectID, boardID, cardID } = params;
+
+  const { projects } = state.activeUser;
+  const projectIDX = projects.findIndex(
+    (p) => p.projectID === parseInt(projectID)
+  );
+  const boardIDX = projects[projectIDX].boards.findIndex(
+    (b) => b.boardID === parseInt(boardID)
+  );
+  const cardIDX = projects[projectIDX].boards[boardIDX].cards.findIndex(
+    (c) => c.cardID === parseInt(cardID)
+  );
+
+  return { projectIDX, boardIDX, cardIDX };
+};
+
 const cardReducers = {
   // Card reducers
 
-  addCard(
-    state: AppState,
-    action: PA<{
-      projectID: number;
-      boardID: number;
-      newCard: Card;
-    }>
-  ) {
+  addCard(state: AppState, action: PA<AddCardPayload>) {
     const { projectID, boardID, newCard } = action.payload;
 
     if (projectID === -1) {
@@ -48,6 +85,56 @@ const cardReducers = {
     );
   },
 
+  deleteCard(state: AppState, action: PA<DeleteCardPayload>) {
+    const { projectID, boardID, cardID } = action.payload;
+    const projectIndex = state.activeUser.projects.findIndex(
+      (pr) => pr.projectID === parseInt(projectID)
+    );
+    const boardIndex = state.activeUser.projects[projectIndex].boards.findIndex(
+      (br) => br.boardID === parseInt(boardID)
+    );
+
+    const cardIndexToDelete = state.activeUser.projects[projectIndex].boards[
+      boardIndex
+    ].cards.findIndex((c) => c.cardID === parseInt(cardID));
+
+    const { cards } =
+      state.activeUser.projects[projectIndex].boards[boardIndex];
+
+    if (cardIndexToDelete === -1) {
+      console.log(
+        `Card to delete cannot be found in value of index: ${cardIndexToDelete}`
+      );
+      return;
+    }
+
+    console.log("Card deletion performed.");
+    cards.splice(cardIndexToDelete, 1);
+  },
+
+  // Edit card title
+  editCardProperties(state: AppState, action: PA<EditCardPropsPayload>) {
+    const { type, value, projectID, boardID, cardID } = action.payload;
+    const { projectIDX, boardIDX, cardIDX } = searchCard({
+      state,
+      projectID,
+      boardID,
+      cardID,
+    });
+
+    const card =
+      state.activeUser.projects[projectIDX].boards[boardIDX].cards[cardIDX];
+
+    if (type === "card-title") {
+      // Edit card title
+      console.log("On edit card title reducer", value, current(card));
+      if (value.trim() !== "") card.cardTitle = value;
+    } else if (type === "card-description") {
+      // Edit card description
+    }
+  },
+
+  // For card's tags
   handleCardTag(state: AppState, action: PA<CardTagPayloadProps>) {
     const { type: actionType, idPaths } = action.payload;
     const { projectID, boardID, cardID } = idPaths;
