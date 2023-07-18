@@ -60,7 +60,13 @@ const SelectedCardModal: React.FC = () => {
     }
   };
 
-  return selectedCard !== undefined && projectID !== undefined ? (
+  const renderOptions =
+    selectedCard !== undefined &&
+    projectID !== undefined &&
+    boardID !== undefined &&
+    cardID !== undefined;
+
+  return renderOptions ? (
     <div
       className='selected-card-modal-bg'
       onClick={() =>
@@ -76,21 +82,14 @@ const SelectedCardModal: React.FC = () => {
 
       <div className='selected-card-modal' onClick={(e) => e.stopPropagation()}>
         <SelectedCardNav
-          setShowDeleteModal={setShowDeleteModal}
           cardTitle={selectedCard.cardTitle}
+          cardDescription={selectedCard.cardDescription}
+          setShowDeleteModal={setShowDeleteModal}
           activeUserID={activeUser.userID}
           projectID={projectID}
+          boardID={boardID}
+          cardID={cardID}
         />
-
-        <div className='card-description body-text'>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
-          inventore, ut eligendi pariatur ipsam dolores consequatur molestias
-          facere, dolorem provident alias sed ab atque a vel natus dignissimos
-          nostrum incidunt! Suscipit quisquam illo deserunt, impedit autem
-          cupiditate eos alias aliquam vel, mollitia, laudantium dicta soluta
-          iure fugiat iste atque facere. Saepe deserunt incidunt aliquid
-          repellat ratione dignissimos aut fugiat veritatis?
-        </div>
 
         {/* Submit : addCardTag */}
         <AddCardTagForm cardTags={selectedCard.cardTags} params={params} />
@@ -107,9 +106,9 @@ const SelectedCardModal: React.FC = () => {
 
 const SelectedCardUndefined: React.FC = () => {
   return (
-    <div className='selected-card-undefined'>
-      <Skeleton className='card-skeleton'>Undefineeeed</Skeleton>
-    </div>
+    <Skeleton variant='rounded' className='selected-card-undefined'>
+      <div className='card-skeleton'>Undefineeeed</div>
+    </Skeleton>
   );
 };
 

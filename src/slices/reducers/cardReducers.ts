@@ -1,8 +1,8 @@
 import { PayloadAction as PA, current } from "@reduxjs/toolkit";
-
+import { searchIndices } from "./searchIndices";
 import {
   Card,
-  HandleTodoProps,
+  Todo,
   CardTagPayloadProps,
   CardTag,
   AppState,
@@ -21,36 +21,20 @@ interface DeleteCardPayload {
 }
 
 interface EditCardPropsPayload {
-  type: "card-title" | "card-description";
+  editType: "card-title" | "card-description";
   value: string;
   projectID: string;
   boardID: string;
   cardID: string;
 }
 
-interface searchCardParams {
-  state: AppState;
-  projectID: string;
-  boardID: string;
-  cardID: string;
+interface HandleTodoProps {
+  todo: Todo;
+  projectID: number;
+  boardID: number;
+  cardID: number;
+  mode: "add" | "edit" | "delete";
 }
-
-const searchCard = (params: searchCardParams) => {
-  const { state, projectID, boardID, cardID } = params;
-
-  const { projects } = state.activeUser;
-  const projectIDX = projects.findIndex(
-    (p) => p.projectID === parseInt(projectID)
-  );
-  const boardIDX = projects[projectIDX].boards.findIndex(
-    (b) => b.boardID === parseInt(boardID)
-  );
-  const cardIDX = projects[projectIDX].boards[boardIDX].cards.findIndex(
-    (c) => c.cardID === parseInt(cardID)
-  );
-
-  return { projectIDX, boardIDX, cardIDX };
-};
 
 const cardReducers = {
   // Card reducers
@@ -76,6 +60,7 @@ const cardReducers = {
     // Setting card values from payload
     const newCardToAdd: Card = {
       cardTitle: newCard.cardTitle,
+      cardDescription: "",
       cardTags: newCard.cardTags,
       cardID: newCard.cardID,
       todos: newCard.todos,
@@ -87,19 +72,16 @@ const cardReducers = {
 
   deleteCard(state: AppState, action: PA<DeleteCardPayload>) {
     const { projectID, boardID, cardID } = action.payload;
-    const projectIndex = state.activeUser.projects.findIndex(
-      (pr) => pr.projectID === parseInt(projectID)
-    );
-    const boardIndex = state.activeUser.projects[projectIndex].boards.findIndex(
-      (br) => br.boardID === parseInt(boardID)
-    );
 
-    const cardIndexToDelete = state.activeUser.projects[projectIndex].boards[
-      boardIndex
-    ].cards.findIndex((c) => c.cardID === parseInt(cardID));
+    const { projectIDX, boardIDX, cardIDX } = searchIndices({
+      state,
+      projectID,
+      boardID,
+      cardID,
+    });
 
-    const { cards } =
-      state.activeUser.projects[projectIndex].boards[boardIndex];
+    const { cards } = state.activeUser.projects[projectIDX].boards[boardIDX];
+    const cardIndexToDelete = cardIDX;
 
     if (cardIndexToDelete === -1) {
       console.log(
@@ -114,23 +96,28 @@ const cardReducers = {
 
   // Edit card title
   editCardProperties(state: AppState, action: PA<EditCardPropsPayload>) {
-    const { type, value, projectID, boardID, cardID } = action.payload;
-    const { projectIDX, boardIDX, cardIDX } = searchCard({
+    const { editType, value, projectID, boardID, cardID } = action.payload;
+    const { projects } = state.activeUser;
+
+    const { projectIDX, boardIDX, cardIDX } = searchIndices({
       state,
       projectID,
       boardID,
       cardID,
     });
 
-    const card =
-      state.activeUser.projects[projectIDX].boards[boardIDX].cards[cardIDX];
+    const card = projects[projectIDX].boards[boardIDX].cards[cardIDX];
 
-    if (type === "card-title") {
+    // We can assume that @value is not empty.
+
+    if (editType === "card-title") {
       // Edit card title
+      card.cardTitle = value;
       console.log("On edit card title reducer", value, current(card));
-      if (value.trim() !== "") card.cardTitle = value;
-    } else if (type === "card-description") {
+    } else if (editType === "card-description") {
       // Edit card description
+
+      card.cardDescription = value;
     }
   },
 
@@ -144,15 +131,13 @@ const cardReducers = {
 
     if (PARAMS_NOT_UNDEFINED) {
       const { projects } = state.activeUser;
-      const projectIDX = projects.findIndex(
-        (p) => p.projectID === parseInt(projectID)
-      );
-      const boardIDX = projects[projectIDX].boards.findIndex(
-        (b) => b.boardID === parseInt(boardID)
-      );
-      const cardIDX = projects[projectIDX].boards[boardIDX].cards.findIndex(
-        (c) => c.cardID === parseInt(cardID)
-      );
+
+      const { projectIDX, boardIDX, cardIDX } = searchIndices({
+        state,
+        projectID,
+        boardID,
+        cardID,
+      });
 
       const { cardTags: cardTags_STATE } =
         projects[projectIDX].boards[boardIDX].cards[cardIDX];
@@ -172,7 +157,7 @@ const cardReducers = {
             cardTagID: customCardTagID,
           };
 
-          cardTags_STATE[cardTagsLen] = newCardTag;
+          cardTags_STATE.push(newCardTag);
 
           console.log("Add card");
         },
@@ -205,18 +190,20 @@ const cardReducers = {
 
   // Todo reducers
   handleTodo(state: AppState, action: PA<HandleTodoProps>) {
-    const { todo, boardID, cardID, projectID, mode } = action.payload;
+    const { todo, projectID, boardID, cardID, mode } = action.payload;
     const { projects } = state.activeUser;
-    const project = projects.findIndex((p) => p.projectID === projectID);
-    const board = projects[project].boards.findIndex(
-      (b) => b.boardID === boardID
-    );
-    const card = projects[project].boards[board].cards.findIndex(
-      (c) => c.cardID === cardID
-    );
+
+    // const { } = search
+
+    const { projectIDX, boardIDX, cardIDX } = searchIndices({
+      state,
+      projectID,
+      boardID,
+      cardID,
+    });
 
     const cardTodos_STATE =
-      state.activeUser.projects[project].boards[board].cards[card].todos;
+      projects[projectIDX].boards[boardIDX].cards[cardIDX].todos;
 
     // mode: 'add'
     const addTodo = () => {

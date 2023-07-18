@@ -19,6 +19,7 @@ interface Todo {
 
 interface Card {
   cardTitle: string;
+  cardDescription: string;
   cardTags: CardTag[];
   todos: Todo[];
   cardID: number;
@@ -78,19 +79,6 @@ export type EditableProjectValues = Pick<
 export interface EditProjectPayload {
   editedProject: EditableProjectValues;
   editedProjectID: number;
-}
-
-export interface AddBoardPayload {
-  boardTitle: string;
-  projectID: number;
-}
-
-export interface HandleTodoProps {
-  todo: Todo;
-  projectID: number;
-  boardID: number;
-  cardID: number;
-  mode: "add" | "edit" | "delete";
 }
 
 export type ReactRouterParamsType = {

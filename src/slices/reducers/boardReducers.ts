@@ -1,6 +1,17 @@
 import { PayloadAction as PA } from "@reduxjs/toolkit";
-import { AddBoardPayload, AppState } from "../../types/types";
+import { AppState } from "../../types/types";
 
+interface AddBoardPayload {
+  boardTitle: string;
+  projectID: number;
+}
+
+interface EditBoardTitleOnBlurProps {
+  currentTitle: string;
+  newBoardTitle: string;
+  projectID: number;
+  boardID: number;
+}
 const boardReducers = {
   addBoard(state: AppState, action: PA<AddBoardPayload>) {
     const { boardTitle, projectID } = action.payload;
@@ -30,15 +41,7 @@ const boardReducers = {
     console.log(projectBoards_STATE);
   },
 
-  editBoardTitleOnBlur(
-    state: AppState,
-    action: PA<{
-      currentTitle: string;
-      newBoardTitle: string;
-      projectID: number;
-      boardID: number;
-    }>
-  ) {
+  editBoardTitleOnBlur(state: AppState, action: PA<EditBoardTitleOnBlurProps>) {
     const { currentTitle, newBoardTitle, projectID, boardID } = action.payload;
 
     if (projectID === -1) {
