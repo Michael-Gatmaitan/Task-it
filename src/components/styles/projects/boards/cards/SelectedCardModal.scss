@@ -38,6 +38,18 @@
         align-items: center;
         gap: 8px;
 
+        // show input = false
+        .edit-card-title-input {
+          border: inset 0 0 0 0 1px $border;
+          outline: none;
+          padding: 0;
+          background: transparent;
+
+          max-width: 200px;
+          min-width: 100px;
+        }
+
+        // show input = true
         .edit-card-title {
           width: 32px;
           height: 32px;
@@ -78,6 +90,10 @@
       }
     }
 
+    // .edit-card-description-button {
+
+    // }
+
     @include tablet {
       width: 80%;
       height: 80%;
@@ -85,6 +101,21 @@
       left: 50%;
       transform: translate(-50%, -50%);
       border-radius: 16px;
+
+      .selected-card-nav {
+        .selected-card-header {
+          // show input = false
+          .edit-card-title-input {
+            max-width: 350px;
+            min-width: 200px;
+          }
+        }
+      }
+
+      .edit-card-description-button {
+        width: fit-content;
+        word-spacing: normal;
+      }
 
       &::-webkit-scrollbar {
         display: block;

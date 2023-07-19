@@ -2,39 +2,14 @@ import { PayloadAction as PA, current } from "@reduxjs/toolkit";
 import { searchIndices } from "./searchIndices";
 import {
   Card,
-  Todo,
   CardTagPayloadProps,
   CardTag,
   AppState,
+  AddCardPayload,
+  DeleteCardPayload,
+  EditCardPropsPayload,
+  HandleTodoProps,
 } from "../../types/types";
-
-interface AddCardPayload {
-  projectID: number;
-  boardID: number;
-  newCard: Card;
-}
-
-interface DeleteCardPayload {
-  projectID: string;
-  boardID: string;
-  cardID: string;
-}
-
-interface EditCardPropsPayload {
-  editType: "card-title" | "card-description";
-  value: string;
-  projectID: string;
-  boardID: string;
-  cardID: string;
-}
-
-interface HandleTodoProps {
-  todo: Todo;
-  projectID: number;
-  boardID: number;
-  cardID: number;
-  mode: "add" | "edit" | "delete";
-}
 
 const cardReducers = {
   // Card reducers

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../../../app/hooks";
 import { CloseRounded, EditRounded, DeleteRounded } from "@mui/icons-material";
-import { Tooltip } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { editCardProperties } from "../../../../../../slices/userSlice";
 
 interface SelectedCardNavProps {
@@ -13,6 +13,15 @@ interface SelectedCardNavProps {
   boardID: string;
   cardID: string;
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface CardTitleProps {
+  cardTitle: string;
+  showEditCardTitle: boolean;
+  setShowEditCardTitle: React.Dispatch<React.SetStateAction<boolean>>;
+  projectID: string;
+  boardID: string;
+  cardID: string;
 }
 
 const SelectedCardNav: React.FC<SelectedCardNavProps> = (
@@ -31,7 +40,7 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
 
   const [showEditCardTitle, setShowEditCardTitle] = useState<boolean>(false);
   const [showEditCardDescription, setShowEditCardDescription] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   return (
     <>
@@ -81,18 +90,17 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
         boardID={boardID}
         cardID={cardID}
       />
+
+      <Button
+        variant='contained'
+        className='edit-card-description-button'
+        onClick={() => setShowEditCardDescription(false)}
+      >
+        Edit card description
+      </Button>
     </>
   );
 };
-
-interface CardTitleProps {
-  cardTitle: string;
-  showEditCardTitle: boolean;
-  setShowEditCardTitle: React.Dispatch<React.SetStateAction<boolean>>;
-  projectID: string;
-  boardID: string;
-  cardID: string;
-}
 
 const CardTitle: React.FC<CardTitleProps> = (props: CardTitleProps) => {
   const {
@@ -142,7 +150,8 @@ const CardTitle: React.FC<CardTitleProps> = (props: CardTitleProps) => {
       <input
         autoFocus
         value={newTitle}
-        className='header2'
+        style={{ width: `${newTitle.length}ch` }}
+        className='edit-card-title-input header2'
         onChange={(e) => setNewTitle(e.target.value)}
         onBlur={handleSubmitOrBlurEditCardTitle}
       />
@@ -180,21 +189,41 @@ const CardDescription: React.FC<CardDescriptionProps> = (
     cardID,
   } = props;
 
+  const dispatch = useAppDispatch();
+
   const [initialDes, setInitialDes] = useState<string>(cardDescription);
 
+  const handleEditDescription = () => {
+    setShowEditCardDescription(true);
+
+    dispatch(
+      editCardProperties({
+        editType: "card-description",
+        value: initialDes,
+        projectID,
+        boardID,
+        cardID,
+      })
+    );
+  };
+
   return showEditCardDescription ? (
-    <div
-      className='card-description body-text'
-      onClick={() => setShowEditCardDescription((p) => !p)}
-    >
-      {cardDescription === "" ? "No card description." : cardDescription}
+    <div className='card-description body-text'>
+      {cardDescription === "" ? "No Description" : cardDescription}
     </div>
   ) : (
     <textarea
-      className='card-description body-text'
-      onClick={() => setShowEditCardDescription((p) => !p)}
-      value={initialDes === "" ? "No card description." : initialDes}
-      onChange={(e) => setInitialDes(e.target.value)}
+      autoFocus
+      className='edit-card-description-input body-text'
+      // onClick={() => setShowEditCardDescription((p) => !p)}
+      value={initialDes}
+      style={{ overflow: "hidden" }}
+      onChange={(e) => {
+        e.target.style.height = "1px";
+        e.target.style.height = `${25 + e.target.scrollHeight}px`;
+        setInitialDes(`${e.target.value}`);
+      }}
+      onBlur={handleEditDescription}
     />
   );
 };

@@ -8,7 +8,7 @@
 }
 .todo-list-form .create-todo-container {
   display: grid;
-  grid-template-columns: 300px min-content;
+  grid-template-columns: auto min-content;
   gap: 8px;
 }
 .todo-list-form .create-todo-container input[type=text] {
@@ -19,6 +19,8 @@
   border-bottom: solid 2px #cfd0eb;
   background-color: transparent;
 }
-.todo-list-form .create-todo-container input[type=text]:focus {
-  background-color: #fff;
+@media (min-width: 700px) {
+  .todo-list-form .create-todo-container {
+    grid-template-columns: 300px min-content;
+  }
 }/*# sourceMappingURL=TodoListForm.css.map */

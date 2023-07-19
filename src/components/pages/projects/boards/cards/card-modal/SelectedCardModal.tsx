@@ -27,6 +27,21 @@ const SelectedCardModal: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
+  // Keypress - if user pres 'esc', close the modal.
+  useEffect(() => {
+    const handleEvent = (event: KeyboardEvent) => {
+      const { key } = event;
+      if (key === "Escape")
+        navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`);
+    };
+
+    window.addEventListener("keydown", handleEvent);
+
+    return () => {
+      window.removeEventListener("keydown", handleEvent);
+    };
+  }, []);
+
   useEffect(() => {
     let initialSelectedCard: Card | undefined = undefined;
 

@@ -11,7 +11,7 @@
 
   .create-todo-container {
     display: grid;
-    grid-template-columns: 300px min-content;
+    grid-template-columns: auto min-content;
     gap: 8px;
 
     input[type="text"] {
@@ -21,10 +21,12 @@
       font-family: $inter;
       border-bottom: solid 2px $border;
       background-color: transparent;
+    }
+  }
 
-      &:focus {
-        background-color: #fff;
-      }
+  @include tablet {
+    .create-todo-container {
+      grid-template-columns: 300px min-content;
     }
   }
 }

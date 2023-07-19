@@ -102,6 +102,34 @@ type DeleteCardTag = {
   cardTagID: number;
 };
 
+export interface AddCardPayload {
+  projectID: number;
+  boardID: number;
+  newCard: Card;
+}
+
+export interface DeleteCardPayload {
+  projectID: string;
+  boardID: string;
+  cardID: string;
+}
+
+export interface EditCardPropsPayload {
+  editType: "card-title" | "card-description";
+  value: string;
+  projectID: string;
+  boardID: string;
+  cardID: string;
+}
+
+export interface HandleTodoProps {
+  todo: Todo;
+  projectID: number;
+  boardID: number;
+  cardID: number;
+  mode: "add" | "edit" | "delete";
+}
+
 // structure
 // const pr: Project[] = [
 //   {

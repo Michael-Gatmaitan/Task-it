@@ -79,6 +79,7 @@ const Board: React.FC<BoardProps> = (props) => {
           ))
         )}
       </div>
+
       {/* This is a board!!!! */}
 
       {showCardMaker ? (

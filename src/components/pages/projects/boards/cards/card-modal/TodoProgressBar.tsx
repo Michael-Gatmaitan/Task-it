@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Todo } from "../../../../../../types/types";
+import type { Todo } from "../../../../../../types/types";
 import "../../../../../styles/projects/boards/cards/TodoProgressBar.css";
 
 interface TodoProgressBarProps {
@@ -32,11 +32,11 @@ const TodoProgressBar: React.FC<TodoProgressBarProps> = (
     width: `${(completed / selectedCardTodos.length) * 100}%`,
   };
 
-  return (
+  return selectedCardTodos.length !== 0 ? (
     <div className='todo-progress-container'>
       <div className='todo-progress-bar' style={ProgressStyles} />
     </div>
-  );
+  ) : null;
 };
 
 export default TodoProgressBar;

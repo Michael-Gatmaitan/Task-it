@@ -17,6 +17,7 @@ const CardMaker: React.FC<CardMakerProps> = (props: CardMakerProps) => {
 
   const [newCard, setNewCard] = useState<CardType>({
     cardTitle: "",
+    cardDescription: "",
     cardTags: [],
     todos: [],
     cardID: Number.MAX_VALUE,
@@ -44,7 +45,6 @@ const CardMaker: React.FC<CardMakerProps> = (props: CardMakerProps) => {
           variant='outlined'
           label='Card Title'
           autoFocus
-          error={newCard.cardTitle.trim() === ""}
           onChange={(e) =>
             setNewCard((defaultValues) => ({
               ...defaultValues,

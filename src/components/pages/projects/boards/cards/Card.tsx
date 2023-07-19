@@ -17,7 +17,10 @@ const Card: React.FC<CardProps> = ({ card }) => {
     card.todos.length && countOfCompletedTodo === card.todos.length;
 
   return (
-    <div className='card bordered-container'>
+    <div
+      onFocus={() => console.log("Focused")}
+      className='card bordered-container'
+    >
       <div className='card-title'>{card.cardTitle}</div>
       <div className='card-infos'>
         <div
