@@ -31,7 +31,7 @@ const SelectedCardModal: React.FC = () => {
   useEffect(() => {
     const handleEvent = (event: KeyboardEvent) => {
       const { key } = event;
-      if (key === "Escape")
+      if (key === "Escape" && projectID !== undefined)
         navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`);
     };
 
@@ -40,6 +40,7 @@ const SelectedCardModal: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleEvent);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
