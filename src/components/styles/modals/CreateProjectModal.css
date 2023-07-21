@@ -1,7 +1,6 @@
 .create-project-modal,
 .edit-project-modal {
   width: 80%;
-  background-color: #5b87f8;
   z-index: 102;
 }
 .create-project-modal .modal-header,
