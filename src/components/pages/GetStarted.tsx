@@ -4,13 +4,30 @@ import CreateAccount from "../get-started-components/CreateAccount";
 
 import "../styles/getStarted.css";
 
-// Getters of userSlice
+// framer-motion
+import { AnimatePresence, motion } from "framer-motion";
+
+const variant = {
+  hidden: { opacity: 0 },
+  opened: { opacity: 1 },
+  exit: { opacity: 1 },
+};
 
 const GetStarted: React.FC = () => (
-  <div className='get-started page'>
-    <DetectedAccounts />
-    <CreateAccount />
-  </div>
+  <AnimatePresence>
+    <motion.div
+      className='get-started page'
+      variants={variant}
+      initial='hidden'
+      animate='opened'
+      exit={"exit"}
+      key={"getStarted"}
+      transition={{ duration: 3 }}
+    >
+      <DetectedAccounts />
+      <CreateAccount />
+    </motion.div>
+  </AnimatePresence>
 );
 
 export default GetStarted;

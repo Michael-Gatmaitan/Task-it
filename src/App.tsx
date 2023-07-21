@@ -13,6 +13,9 @@ import { useAppSelector } from "./app/hooks";
 import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
 import { useLocalStorageUpdater } from "./app/localStorageUpdater";
 
+// Framer motion
+import { AnimatePresence } from "framer-motion";
+
 // MUI StyledEngineProvider
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
 
@@ -32,8 +35,8 @@ const SelectedCardModal = lazy(
       "./components/pages/projects/boards/cards/card-modal/SelectedCardModal"
     )
 );
-/*
 
+/*
   --- Home /
     - About /about
     - Contact /contact
@@ -47,9 +50,6 @@ const SelectedCardModal = lazy(
 const App: React.FC = () => {
   // Custom hooks we need if some data is changed;.
   useLocalStorageUpdater();
-
-  const loggedIn = useAppSelector(getUserLoggedIn);
-  const { userID } = useAppSelector(getActiveUser);
   // const users = useAppSelector((state) => state.userReducer.accounts);
 
   // firebase realtime database
@@ -62,6 +62,10 @@ const App: React.FC = () => {
 
   /* Making a short hand function to return where to
       direct depends on { loggedIn } state. */
+
+  const loggedIn = useAppSelector(getUserLoggedIn);
+  const { userID } = useAppSelector(getActiveUser);
+
   const GetStartedPage = loggedIn ? (
     <Navigate replace to={`/${userID}/projects`} />
   ) : (
@@ -111,9 +115,9 @@ const App: React.FC = () => {
 
         {/* There will be boards/:boardID path, instead, boards/:boardID/cards/:cardID */}
         {/* <Route
-          path=':userID/projects/:projectID/boards'
-          element={ProjectPage}
-        /> */}
+            path=':userID/projects/:projectID/boards'
+            element={ProjectPage}
+          /> */}
 
         {/* Dynamic routes for boards */}
 
@@ -122,9 +126,13 @@ const App: React.FC = () => {
     )
   );
 
+  // const location = useLocation();
+
   return (
     <StyledEngineProvider injectFirst>
-      <RouterProvider router={router} />
+      <AnimatePresence>
+        <RouterProvider router={router} />
+      </AnimatePresence>
     </StyledEngineProvider>
   );
 };
