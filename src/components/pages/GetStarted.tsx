@@ -1,6 +1,7 @@
 import React from "react";
 import DetectedAccounts from "../get-started-components/DetectedAccounts";
 import CreateAccount from "../get-started-components/CreateAccount";
+import { titleChanger } from "../../app/titleChanger";
 
 import "../styles/getStarted.css";
 
@@ -13,21 +14,25 @@ const variant = {
   exit: { opacity: 1 },
 };
 
-const GetStarted: React.FC = () => (
-  <AnimatePresence>
-    <motion.div
-      className='get-started page'
-      variants={variant}
-      initial='hidden'
-      animate='opened'
-      exit={"exit"}
-      key={"getStarted"}
-      transition={{ duration: 3 }}
-    >
-      <DetectedAccounts />
-      <CreateAccount />
-    </motion.div>
-  </AnimatePresence>
-);
+const GetStarted: React.FC = () => {
+  titleChanger({ title: "Get Started" });
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        className='get-started page'
+        variants={variant}
+        initial='hidden'
+        animate='opened'
+        exit={"exit"}
+        key={"getStarted"}
+        transition={{ duration: 3 }}
+      >
+        <DetectedAccounts />
+        <CreateAccount />
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 export default GetStarted;

@@ -24,17 +24,23 @@
   // Project container
   // this is parent of project-card
   .projects-container {
-    $gap: 12px;
     display: grid;
-    grid-template-columns: repeat(2, calc((100% - $gap) / 2));
+    grid-template-columns: repeat(2, calc((100% - 12px) / 2));
     grid-auto-rows: 250px;
-    gap: $gap;
+    gap: 12px;
 
     @include desktop {
-      $gap: 18px;
-      grid-template-columns: repeat(3, calc((100% - $gap * 2) / 3));
+      grid-template-columns: repeat(3, calc((100% - 18px * 2) / 3));
       grid-auto-rows: 300px;
-      gap: $gap;
+      gap: 18px;
+    }
+
+    @media screen and (min-width: 1200px) {
+      grid-template-columns: repeat(4, calc((100% - 18px * 2) / 4));
+    }
+
+    @media screen and (min-width: 1600px) {
+      grid-template-columns: repeat(5, calc((100% - 18px * 2) / 5));
     }
   }
 }

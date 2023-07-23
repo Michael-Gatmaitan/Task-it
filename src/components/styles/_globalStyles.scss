@@ -1,5 +1,16 @@
 @import "./mixins";
 
+// all the whole page's classes in the website contains .page className
+.page {
+  @include customMediaQuery(1400px) {
+    padding: 0 80px;
+  }
+
+  @include customMediaQuery(1700px) {
+    padding: 0 120px;
+  }
+}
+
 // Customize MUI contained button
 .MuiButtonGroup-root {
   box-shadow: none;

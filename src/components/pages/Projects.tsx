@@ -1,4 +1,5 @@
 import React, { useState, Suspense } from "react";
+import { titleChanger } from "../../app/titleChanger";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logoutUser } from "../../slices/userSlice";
 import { RootState } from "../../app/store";
@@ -20,6 +21,8 @@ import CustomStyledSkeleton from "../CustomStyledSkeleton";
 const ProjectCard = React.lazy(() => import("./projects/ProjectCard"));
 
 const Projects: React.FC = () => {
+  titleChanger({ title: "Projects" });
+
   const dispatch = useAppDispatch();
   const projects: ProjectType[] = useAppSelector(
     (state: RootState) => state.userReducer.activeUser.projects

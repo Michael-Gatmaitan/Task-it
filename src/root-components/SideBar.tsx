@@ -2,6 +2,9 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
+// CSS
+import "../components/styles/Sidebar.css";
+
 import type { NavButtons } from "../types/types";
 import ProfileRibbon from "../components/ProfileRibbon";
 

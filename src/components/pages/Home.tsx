@@ -3,8 +3,11 @@ import "../styles/Home.css";
 // MUI
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { titleChanger } from "../../app/titleChanger";
 
 const Home: React.FC = () => {
+  titleChanger({ title: "Home" });
+
   const cardValues = [
     {
       cardTitle: "Project",

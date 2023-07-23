@@ -40,19 +40,26 @@
 
         // show input = false
         .edit-card-title-input {
-          border: inset 0 0 0 0 1px $border;
-          outline: none;
-          padding: 0;
+          border: none;
+          box-shadow: inset 0 0 0 1px $primary;
+          margin: 0;
           background: transparent;
-
           max-width: 200px;
           min-width: 100px;
+          padding: 4px;
+          border: none;
+          border-radius: 3px;
+
+          &:focus {
+            box-shadow: inset 0 0 0 2px $primary;
+          }
         }
 
         // show input = true
         .edit-card-title {
           width: 32px;
           height: 32px;
+          padding: 4px;
           @include flexCenter;
           border-radius: 4px;
           background-color: $inputBG;

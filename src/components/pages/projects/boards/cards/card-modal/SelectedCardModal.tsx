@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { titleChanger } from "../../../../../../app/titleChanger";
+
 import { useAppSelector, useAppDispatch } from "../../../../../../app/hooks";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../../../../styles/projects/boards/cards/SelectedCardModal.css";
@@ -27,6 +29,11 @@ const SelectedCardModal: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (selectedCard !== undefined)
+      titleChanger({ cardTitle: selectedCard.cardTitle });
+  }, [selectedCard]);
+
   // Keypress - if user pres 'esc', close the modal.
   useEffect(() => {
     const handleEvent = (event: KeyboardEvent) => {
@@ -40,7 +47,7 @@ const SelectedCardModal: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleEvent);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

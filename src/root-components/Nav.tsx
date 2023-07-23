@@ -1,14 +1,15 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-// MUI Icons
-import { MenuRounded, CloseRounded } from "@mui/icons-material";
-
 // Components
 import ProfileRibbon from "../components/ProfileRibbon";
 
+// CSS
+import "../components/styles/Nav.css";
+
 // MUI
 import { Button, Tooltip } from "@mui/material";
+import { MenuRounded, CloseRounded } from "@mui/icons-material";
 
 // Redux
 import { getUserLoggedIn } from "../slices/userSlice";

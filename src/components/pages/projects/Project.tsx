@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Suspense, useMemo } from "react";
-import { useNavigate, useParams, Outlet } from "react-router-dom";
+import { titleChanger } from "../../../app/titleChanger";
+import { Link, useParams, Outlet } from "react-router-dom";
 import { useAppSelector } from "../../../app/hooks";
 import { getActiveUser } from "../../../slices/userSlice";
 import { Project as ProjectType } from "../../../types/types";
@@ -25,11 +26,10 @@ type ProjectRouteParams = {
 };
 
 const Project: React.FC = () => {
-  const { projectID } = useParams<ProjectRouteParams>();
+  const params = useParams<ProjectRouteParams>();
+  const { projectID } = params;
 
   dayjs.extend(relativeTime);
-
-  const navigate = useNavigate();
 
   const { projects: userProjects, userID } = useAppSelector(getActiveUser);
 
@@ -43,6 +43,12 @@ const Project: React.FC = () => {
     [userProjects, projectID]
   );
 
+  // Title changer
+  useEffect(() => {
+    if (currentProject !== undefined)
+      titleChanger({ projectTitle: currentProject.projectTitle });
+  }, [currentProject, params]);
+
   const [time, setTime] = useState<string>("");
   const [showBoardMaker, setShowBoardMaker] = useState<boolean>(false);
 
@@ -54,12 +60,12 @@ const Project: React.FC = () => {
   return currentProject !== undefined ? (
     <div className='project page'>
       <div className='project-nav'>
-        <div className='bordered-container arrow-back-nav'>
-          <ArrowBackIosNewRounded
-            onClick={() => navigate(`/${userID}/projects`)}
-            fontSize='small'
-          />
-        </div>
+        <Link
+          to={`/${userID}/projects`}
+          className='bordered-container arrow-back-nav'
+        >
+          <ArrowBackIosNewRounded fontSize='small' />
+        </Link>
 
         <Tooltip title={currentProject.projectTitle} placement='top-start'>
           <div className='header2'>

@@ -8,6 +8,7 @@
 .project .project-nav .arrow-back-nav {
   width: 32px;
   height: 32px;
+  cursor: pointer;
   padding: 0 !important;
   display: flex;
   align-items: center;

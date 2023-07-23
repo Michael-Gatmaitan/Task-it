@@ -113,20 +113,12 @@ const App: React.FC = () => {
           />
         </Route>
 
-        {/* There will be boards/:boardID path, instead, boards/:boardID/cards/:cardID */}
-        {/* <Route
-            path=':userID/projects/:projectID/boards'
-            element={ProjectPage}
-          /> */}
-
         {/* Dynamic routes for boards */}
 
         <Route path='*' element={<Page404 />} />
       </Route>
     )
   );
-
-  // const location = useLocation();
 
   return (
     <StyledEngineProvider injectFirst>

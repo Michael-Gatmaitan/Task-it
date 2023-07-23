@@ -15,7 +15,7 @@ import {
   ExpandLessRounded,
   CloseRounded,
 } from "@mui/icons-material";
-import { useImageLinkChecker, useIsUsernameExist } from "../app/formValidation";
+import { useImageLinkChecker } from "../app/formValidation";
 
 interface ProfileRibbonProps {
   platform: "desktop" | "mobile";
@@ -122,18 +122,15 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const [userInputError, setUserInputError] = useState<boolean>(true);
 
   // custom hook that validates exists username.
-  const usernameExist = useIsUsernameExist(deferredEditUsernameValue);
 
   useEffect(() => {
-    const usernameVal = deferredEditUsernameValue.trim();
+    // const usernameVal = deferredEditUsernameValue.trim();
     const imgVal = deferredEditImageLinkValue.trim();
 
-    setUserInputError(
-      usernameVal.trim() === "" ||
-        usernameExist ||
-        !isImageLinkValid ||
-        imgVal.trim() === ""
-    );
+    // setUserInputError(
+    //   usernameVal.trim() === "" || !isImageLinkValid || imgVal.trim() === ""
+    // );
+    setUserInputError(!isImageLinkValid);
 
     setDisablePreviewImage(imgVal === "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,7 +139,6 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     deferredEditImageLinkValue,
     username,
     selectedImage,
-    usernameExist,
   ]);
 
   const handleEditProfileSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -197,15 +193,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
           }}
         >
           <TextField
-            label={
-              deferredEditUsernameValue === username
-                ? "Same username detected"
-                : usernameExist
-                ? "Username already exist"
-                : "Enter new name"
-            }
             variant='outlined'
-            error={deferredEditUsernameValue === username || usernameExist}
             onChange={(e) => setEditUsernameValue(e.target.value)}
             defaultValue={username}
           />

@@ -38,6 +38,13 @@ const CardMaker: React.FC<CardMakerProps> = (props: CardMakerProps) => {
     setShowCardMaker(false);
   };
 
+  const handleOnCardTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewCard((defaultValues) => ({
+      ...defaultValues,
+      cardTitle: e.target.value,
+    }));
+  };
+
   return (
     <div className='card-maker'>
       <form id='card-maker-form' onSubmit={handleSubmitAddCard}>
@@ -45,12 +52,7 @@ const CardMaker: React.FC<CardMakerProps> = (props: CardMakerProps) => {
           variant='outlined'
           label='Card Title'
           autoFocus
-          onChange={(e) =>
-            setNewCard((defaultValues) => ({
-              ...defaultValues,
-              cardTitle: e.target.value,
-            }))
-          }
+          onChange={handleOnCardTitleChange}
           onBlur={handleOnTitleInputBlur}
         />
 

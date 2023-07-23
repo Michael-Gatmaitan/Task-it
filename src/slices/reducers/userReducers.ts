@@ -99,6 +99,7 @@ const userReducers = {
   editProfileInformation(state: AppState, action: PA<EditProfilePayload>) {
     /* If the username already used in other account,
     this function will stop */
+
     if (usernameExists(state.accounts, action.payload.username)) {
       console.log(
         `Cannot replace the username: ${state.activeUser.username}
@@ -110,11 +111,11 @@ const userReducers = {
     }
 
     // Edit current user profile
-    const item = state.accounts.find(
+    const account = state.accounts.find(
       (deviceAcc) => state.activeUser.userID === deviceAcc.userID
     );
 
-    if (item != undefined) {
+    if (account != undefined) {
       let {
         username: editedUsername,
         profileImageLink: editedProfileImageLink,

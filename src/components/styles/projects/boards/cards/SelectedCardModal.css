@@ -36,16 +36,23 @@
   gap: 8px;
 }
 .selected-card-modal-bg .selected-card-modal .selected-card-nav .selected-card-header .edit-card-title-input {
-  border: inset 0 0 0 0 1px #cfd0eb;
-  outline: none;
-  padding: 0;
+  border: none;
+  box-shadow: inset 0 0 0 1px #5b87f8;
+  margin: 0;
   background: transparent;
   max-width: 200px;
   min-width: 100px;
+  padding: 4px;
+  border: none;
+  border-radius: 3px;
+}
+.selected-card-modal-bg .selected-card-modal .selected-card-nav .selected-card-header .edit-card-title-input:focus {
+  box-shadow: inset 0 0 0 2px #5b87f8;
 }
 .selected-card-modal-bg .selected-card-modal .selected-card-nav .selected-card-header .edit-card-title {
   width: 32px;
   height: 32px;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;

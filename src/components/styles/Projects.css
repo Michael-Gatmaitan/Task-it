@@ -28,4 +28,14 @@
     grid-auto-rows: 300px;
     gap: 18px;
   }
+}
+@media screen and (min-width: 1200px) {
+  .projects .projects-container {
+    grid-template-columns: repeat(4, calc((100% - 36px) / 4));
+  }
+}
+@media screen and (min-width: 1600px) {
+  .projects .projects-container {
+    grid-template-columns: repeat(5, calc((100% - 36px) / 5));
+  }
 }/*# sourceMappingURL=Projects.css.map */

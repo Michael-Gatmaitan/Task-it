@@ -5,10 +5,6 @@ import { Outlet } from "react-router-dom";
 import Nav from "./root-components/Nav";
 import SideBar from "./root-components/SideBar";
 
-// CSS styles
-import "./components/styles/Nav.css";
-import "./components/styles/Sidebar.css";
-
 // Types
 import type { NavButtons } from "./types/types";
 import { useAppSelector } from "./app/hooks";
@@ -23,6 +19,8 @@ import {
   InfoRounded as AboutIcon,
   PlayCircleFilledWhiteRounded as GetStartedIcon,
 } from "@mui/icons-material";
+
+import LoadingComponent from "./components/loading-component/index";
 
 const Footer = lazy(() => import("./components/Footer"));
 
@@ -101,7 +99,7 @@ const Root: React.FC = () => {
         setToggleSidebar={setToggleSidebar}
       />
 
-      <Suspense fallback={<div className='loading-fallback'>LOADING!!!</div>}>
+      <Suspense fallback={<LoadingComponent />}>
         <Outlet />
       </Suspense>
 

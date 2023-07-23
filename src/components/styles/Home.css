@@ -54,11 +54,9 @@
 }
 .home .cards .card-container {
   padding: 12px 12px 30px 12px;
-  background-color: #5b87f8;
 }
 .home .cards .card-container .card-presenter {
   width: 100%;
-  background-color: #5b87f8;
   border-radius: 8px !important;
   height: 80px;
   margin-bottom: 12px;
@@ -107,15 +105,5 @@
     margin: auto;
     width: 70%;
     margin-top: 24px;
-  }
-}
-@media (min-width: 1400px) {
-  .home {
-    padding: 0 80px;
-  }
-}
-@media (min-width: 1700px) {
-  .home {
-    padding: 0 120px;
   }
 }/*# sourceMappingURL=Home.css.map */

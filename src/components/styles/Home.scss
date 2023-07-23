@@ -70,12 +70,10 @@
 
     .card-container {
       padding: 12px 12px 30px 12px;
-      background-color: $primary;
 
       .card-presenter {
         width: 100%;
         // Change height base on input image
-        background-color: $primary;
         border-radius: 8px !important;
         height: 80px;
         margin-bottom: 12px;
@@ -130,13 +128,5 @@
         margin-top: 24px;
       }
     }
-  }
-
-  @include customMediaQuery(1400px) {
-    padding: 0 80px;
-  }
-
-  @include customMediaQuery(1700px) {
-    padding: 0 120px;
   }
 }

@@ -1,3 +1,14 @@
+@media (min-width: 1400px) {
+  .page {
+    padding: 0 80px;
+  }
+}
+@media (min-width: 1700px) {
+  .page {
+    padding: 0 120px;
+  }
+}
+
 .MuiButtonGroup-root {
   box-shadow: none;
 }

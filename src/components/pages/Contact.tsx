@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { titleChanger } from "../../app/titleChanger";
 import { motion } from "framer-motion";
 
 const variant = {
@@ -8,6 +9,8 @@ const variant = {
 };
 
 const Contact: React.FC = () => {
+  titleChanger({ title: "Contact" });
+
   const [isOpened, setIsOpened] = useState(false);
   return (
     <motion.div
