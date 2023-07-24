@@ -14,13 +14,6 @@ export const useLocalStorageUpdater = () => {
 
   const activeUser = useAppSelector(getActiveUser);
   const isLoggedIn = useAppSelector(getUserLoggedIn);
-  const { userID } = activeUser;
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      console.log("only ID changed, means changing user occured");
-    }
-  }, [userID, isLoggedIn]);
 
   // Whenever the properties of dependencies has change,
   // we will update the localstorage

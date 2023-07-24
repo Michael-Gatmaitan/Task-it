@@ -12,7 +12,7 @@ export const titleChanger = (
     cardTitle: undefined,
   }
 ) => {
-  if (props.title !== undefined) document.title = props.title;
+  if (props.title !== undefined) document.title = `Taskit | ${props.title}`;
   if (props.projectTitle !== undefined)
     document.title = `Project | ${props.projectTitle}`;
   if (props.boardTitle !== undefined)

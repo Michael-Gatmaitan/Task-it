@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   addProject,
+  getActiveUser,
   // editProject,
   // getActiveUser,
 } from "../../../slices/userSlice";
@@ -15,16 +17,13 @@ import { propagationStopper } from "./propagationStopper";
 
 /** CREATE PROJECT MODAL */
 
-interface CreateProjectModalProps {
-  setShowCreateProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
+const CreateProjectModal: React.FC = () => {
+  const navigate = useNavigate();
   const projects = useAppSelector(
     (state: RootState) => state.userReducer.activeUser.projects
   );
+  const { userID } = useAppSelector(getActiveUser);
   const dispatch = useAppDispatch();
-  const { setShowCreateProjectModal } = props;
 
   // Rework the states
   const [projectTitle, setProjectTitle] = useState<string>("");
@@ -64,10 +63,15 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
       done: false,
       projectID:
         projects.length === 0 ? 0 : projects[projects.length - 1].projectID + 1,
+
+      totalTodos: 0,
+      completedTodos: 0,
     };
 
     dispatch(addProject(newProjectToAdd));
-    setShowCreateProjectModal(false);
+
+    // Redirect
+    navigate(`/${userID}/projects`);
   };
 
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
@@ -85,11 +89,14 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
     console.log("Submit tag...");
   };
 
+  const navigateToProjects: React.MouseEventHandler<
+    HTMLDivElement | HTMLButtonElement
+  > = () => {
+    navigate(`/${userID}/projects`);
+  };
+
   return (
-    <div
-      className='modal-container-background'
-      onClick={() => setShowCreateProjectModal(false)}
-    >
+    <div className='modal-container-background' onClick={navigateToProjects}>
       <div
         className='create-project-modal bordered-container modal'
         onClick={propagationStopper}
@@ -160,12 +167,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = (props) => {
               Create
             </Button>
 
-            <Button
-              variant='outlined'
-              onClick={() =>
-                setShowCreateProjectModal((prevState) => !prevState)
-              }
-            >
+            <Button variant='outlined' onClick={navigateToProjects}>
               Cancel
             </Button>
           </div>

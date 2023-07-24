@@ -11,6 +11,11 @@
 .projects .projects-page-nav .create-new-project .button-text {
   display: none;
 }
+@media (min-width: 700px) {
+  .projects .projects-page-nav .create-new-project .button-text {
+    display: block;
+  }
+}
 @media (min-width: 1024px) {
   .projects .projects-page-nav {
     margin-bottom: 18px;

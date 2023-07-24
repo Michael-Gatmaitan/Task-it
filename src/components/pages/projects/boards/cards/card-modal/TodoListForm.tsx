@@ -20,7 +20,6 @@ const TodoListForm: React.FC<TodoListFormProps> = (
   const { todos } = props;
   const [todoTitleState, setTodoTitleState] = useState<string>("");
   const { projectID, boardID, cardID } = useParams();
-  // const currentTodos =
 
   const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

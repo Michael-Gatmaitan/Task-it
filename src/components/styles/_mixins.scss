@@ -26,6 +26,9 @@ $idx_modalBackground: 101;
 $idx_navigation: 100;
 $idx_behindModal: 99;
 
+// Shadows
+$hoverShadow: rgba(0, 0, 0, 0.1) 0px 10px 20px 0px;
+
 @mixin fontProps($family, $color, $size: 15px, $weight: 400) {
   font-family: $family;
   color: $color;

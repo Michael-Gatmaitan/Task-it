@@ -18,6 +18,7 @@ import { AnimatePresence } from "framer-motion";
 
 // MUI StyledEngineProvider
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
+import CreateProjectModal from "./components/pages/modals/CreateProjectModal";
 
 // Components | Pages
 const Home = lazy(() => import("./components/pages/Home"));
@@ -102,7 +103,9 @@ const App: React.FC = () => {
 
         {/* Dynamic routing for projects */}
 
-        <Route path=':userID/projects' element={ProjectsPage} />
+        <Route path=':userID/projects' element={ProjectsPage}>
+          <Route path='create' element={<CreateProjectModal />} />
+        </Route>
 
         {/* Direct into project's boards -> cards */}
         <Route path=':userID/projects/:projectID' element={ProjectPage}>

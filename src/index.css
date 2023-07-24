@@ -9,6 +9,10 @@
   }
 }
 
+a {
+  text-decoration: none;
+}
+
 .MuiButtonGroup-root {
   box-shadow: none;
 }

@@ -183,6 +183,8 @@ const cardReducers = {
     // mode: 'add'
     const addTodo = () => {
       cardTodos_STATE.push(todo);
+
+      projects[projectIDX].totalTodos += 1;
     };
 
     // mode: 'edit'
@@ -204,6 +206,11 @@ const cardReducers = {
       //   todoIndex
       // ] = todo;
 
+      const sameTitle = cardTodos_STATE[todoIndex].title === todo.title;
+      if (todo.checked && sameTitle) projects[projectIDX].completedTodos += 1;
+      else if (todo.checked === false && sameTitle)
+        projects[projectIDX].completedTodos -= 1;
+
       console.log("Todo edited with: ", todo);
     };
 
@@ -219,6 +226,10 @@ const cardReducers = {
         console.log("Cannot find todo to delete.");
         return;
       }
+
+      projects[projectIDX].totalTodos -= 1;
+      if (cardTodos_STATE[indexOfTodoToDelete].checked)
+        projects[projectIDX].completedTodos -= 1;
 
       cardTodos_STATE.splice(indexOfTodoToDelete, 1);
 

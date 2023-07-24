@@ -16,6 +16,14 @@
       }
     }
 
+    @include tablet {
+      .create-new-project {
+        .button-text {
+          display: block;
+        }
+      }
+    }
+
     @include desktop {
       margin-bottom: 18px;
     }

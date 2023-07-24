@@ -4,7 +4,7 @@ import "./LoadingComponent.css";
 const LoadingComponent = () => {
   return (
     <div className='page loading-component'>
-      <Skeleton variant='circular' width='50' height='50' />
+      <Skeleton variant='rectangular' width='50' height='50' />
       Loading component
     </div>
   );

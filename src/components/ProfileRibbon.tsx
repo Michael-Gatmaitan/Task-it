@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useDeferredValue } from "react";
 import SelectProfileImage from "./reusable/selectProfileImage/SelectProfileImage";
+import { logoutUser } from "../slices/userSlice";
 
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
@@ -283,6 +284,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
             Close
           </Button>
         </Box>
+        <Button
+          variant='outlined'
+          color='error'
+          onClick={() => dispatch(logoutUser())}
+        >
+          Log out
+        </Button>
       </form>
     </div>
   );

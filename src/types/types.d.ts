@@ -41,6 +41,9 @@ export interface Project {
   done: boolean;
   boards: Board[];
   tags: string[];
+
+  totalTodos: number;
+  completedTodos: number;
 }
 
 export interface User {
