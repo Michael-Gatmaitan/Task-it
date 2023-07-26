@@ -5,8 +5,31 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { titleChanger } from "../../app/titleChanger";
 
+// Framer motion
+import { motion } from "framer-motion";
+import { variantsForPages } from "../../framer-motion-variants";
+
 const Home: React.FC = () => {
   titleChanger({ title: "Home" });
+
+  const staggerParent = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const staggerTexts = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+  };
 
   const cardValues = [
     {
@@ -30,21 +53,37 @@ const Home: React.FC = () => {
   ];
 
   return (
-    <div className='home page'>
-      <div className='header-container'>
+    <motion.div className='home page' {...variantsForPages}>
+      <motion.div
+        variants={staggerParent}
+        initial='hidden'
+        animate='show'
+        className='header-container'
+      >
         <div className='main-headers'>
-          <div className='header1'>Organize your projects using Taskit</div>
+          <motion.div variants={staggerTexts} className='header1'>
+            Organize your projects using Taskit
+          </motion.div>
 
           <div className='description-container'>
-            <div className='header-text-description'>
+            <motion.div
+              variants={staggerTexts}
+              className='header-text-description'
+            >
               Taskit is a tool for organizing assignments or projects that will
               make your workflow easy and faster to accomplish using Kanban
               style.
-            </div>
+            </motion.div>
 
             <div>
               <Link to='/get-started'>
-                <Button variant='contained'>Let's get started</Button>
+                <Button
+                  variant='contained'
+                  variants={staggerTexts}
+                  component={motion.div}
+                >
+                  Let's get started
+                </Button>
               </Link>
             </div>
           </div>
@@ -52,24 +91,28 @@ const Home: React.FC = () => {
 
         <div className='sub-headers'>
           <div className='sub-header-container'>
-            <div className='header2'>Backendless</div>
+            <motion.div variants={staggerTexts} className='header2'>
+              Backendless
+            </motion.div>
 
-            <div className='body-text'>
+            <motion.div variants={staggerTexts} className='body-text'>
               Taskit saves data on device's local storage that makes it fast to
               access all the data you store.
-            </div>
+            </motion.div>
           </div>
 
           <div className='sub-header-container'>
-            <div className='header2'>All ready, already</div>
+            <motion.div variants={staggerTexts} className='header2'>
+              All ready, already
+            </motion.div>
 
-            <div className='body-text'>
+            <motion.div variants={staggerTexts} className='body-text'>
               Taskit has features you need to organize your projects and making
               workflow easier to maintain.
-            </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <div className='cards'>
         {cardValues.map((card, i) => (
@@ -97,7 +140,7 @@ const Home: React.FC = () => {
           organize their works easily for more motivation nad inspiration.
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

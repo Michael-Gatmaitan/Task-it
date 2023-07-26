@@ -10,25 +10,32 @@ import { Button, Chip } from "@mui/material";
 import { TaskAltRounded } from "@mui/icons-material";
 import "../../styles/projects/ProjectCard.css";
 
+// Framer motion
+import { Variants, motion } from "framer-motion";
+
 interface ProjectProps {
   project: ProjectType;
   setProjectToEdit: React.Dispatch<
     React.SetStateAction<ProjectType | undefined>
   >;
   setShowEditProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
+  variantItem: Variants;
 }
 
 const ProjectCard: React.FC<ProjectProps> = (props: ProjectProps) => {
   const dispatch = useAppDispatch();
   const [toggleOptions, setToggleOptions] = useState<boolean>(false);
 
-  const { project, setProjectToEdit, setShowEditProjectModal } = props;
-
+  const { project, setProjectToEdit, setShowEditProjectModal, variantItem } =
+    props;
   const [showDeleteProject, setShowDeleteProject] = useState<boolean>(false);
   const deleteProjectFunc = () => dispatch(deleteProject(project));
 
   return (
-    <div className='project-card bordered-container'>
+    <motion.div
+      variants={variantItem}
+      className='project-card bordered-container'
+    >
       <DeleteModal
         showDeleteModal={showDeleteProject}
         setShowDeleteModal={setShowDeleteProject}
@@ -99,7 +106,7 @@ const ProjectCard: React.FC<ProjectProps> = (props: ProjectProps) => {
         <ProjectProgress project={project} />
       </div>
       {/* <div>{project.projectDescription}</div> */}
-    </div>
+    </motion.div>
   );
 };
 

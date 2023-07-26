@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   addProject,
-  getActiveUser,
   // editProject,
   // getActiveUser,
 } from "../../../slices/userSlice";
@@ -15,15 +13,25 @@ import "../../styles/modals/CreateProjectModal.css";
 import { Button, TextField, Chip } from "@mui/material";
 import { propagationStopper } from "./propagationStopper";
 
+// Framer motion
+import { motion } from "framer-motion";
+import { variantsForModals } from "../../../framer-motion-variants.ts";
+
 /** CREATE PROJECT MODAL */
 
-const CreateProjectModal: React.FC = () => {
-  const navigate = useNavigate();
+interface CreateProjectModalProps {
+  setShowCreateProjectModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CreateProjectModal: React.FC<CreateProjectModalProps> = (
+  props: CreateProjectModalProps
+) => {
   const projects = useAppSelector(
     (state: RootState) => state.userReducer.activeUser.projects
   );
-  const { userID } = useAppSelector(getActiveUser);
   const dispatch = useAppDispatch();
+
+  const { setShowCreateProjectModal } = props;
 
   // Rework the states
   const [projectTitle, setProjectTitle] = useState<string>("");
@@ -69,9 +77,7 @@ const CreateProjectModal: React.FC = () => {
     };
 
     dispatch(addProject(newProjectToAdd));
-
-    // Redirect
-    navigate(`/${userID}/projects`);
+    setShowCreateProjectModal(false);
   };
 
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(true);
@@ -89,15 +95,16 @@ const CreateProjectModal: React.FC = () => {
     console.log("Submit tag...");
   };
 
-  const navigateToProjects: React.MouseEventHandler<
-    HTMLDivElement | HTMLButtonElement
-  > = () => {
-    navigate(`/${userID}/projects`);
-  };
+  const toggleShowCreateProjectModal = () =>
+    setShowCreateProjectModal((p) => !p);
 
   return (
-    <div className='modal-container-background' onClick={navigateToProjects}>
-      <div
+    <div
+      className='modal-container-background'
+      onClick={toggleShowCreateProjectModal}
+    >
+      <motion.div
+        {...variantsForModals}
         className='create-project-modal bordered-container modal'
         onClick={propagationStopper}
       >
@@ -167,12 +174,12 @@ const CreateProjectModal: React.FC = () => {
               Create
             </Button>
 
-            <Button variant='outlined' onClick={navigateToProjects}>
+            <Button variant='outlined' onClick={toggleShowCreateProjectModal}>
               Cancel
             </Button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

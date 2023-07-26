@@ -16,6 +16,9 @@ import AddCardTagForm from "./AddCardTagForm";
 import DeleteModal from "../../../../modals/DeleteModal";
 import TodoProgressBar from "./TodoProgressBar";
 
+import { motion } from "framer-motion";
+import { variantsForModals } from "../../../../../../framer-motion-variants";
+
 // Mui
 import { Skeleton } from "@mui/material";
 
@@ -103,7 +106,11 @@ const SelectedCardModal: React.FC = () => {
         onDeleteFunction={handleDeleteCard}
       />
 
-      <div className='selected-card-modal' onClick={(e) => e.stopPropagation()}>
+      <motion.div
+        className='selected-card-modal'
+        onClick={(e) => e.stopPropagation()}
+        {...variantsForModals}
+      >
         <SelectedCardNav
           cardTitle={selectedCard.cardTitle}
           cardDescription={selectedCard.cardDescription}
@@ -120,7 +127,7 @@ const SelectedCardModal: React.FC = () => {
         <TodoProgressBar selectedCardTodos={selectedCard.todos} />
 
         <TodoListForm todos={selectedCard.todos} />
-      </div>
+      </motion.div>
     </div>
   ) : (
     <SelectedCardUndefined />

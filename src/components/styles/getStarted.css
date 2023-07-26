@@ -45,6 +45,9 @@
   font-size: 18px;
   font-weight: 600;
 }
+.get-started .detected-accounts .detected-account-list .detected-account a .MuiButton-root {
+  width: 100%;
+}
 @media (min-width: 1024px) {
   .get-started .detected-accounts .detected-account-list {
     margin-top: 18px;
@@ -54,6 +57,11 @@
   }
   .get-started .detected-accounts .detected-account-list .detected-account {
     gap: 12px;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .get-started .detected-accounts .detected-account-list {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 .get-started .create-account .form-container {

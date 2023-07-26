@@ -13,6 +13,8 @@ const TodoProgressBar: React.FC<TodoProgressBarProps> = (
   const [completed, setCompleted] = useState<number>(0);
 
   useEffect(() => {
+    if (selectedCardTodos === undefined) return;
+
     let completedCount = 0;
     selectedCardTodos.forEach((todo) => {
       if (todo.checked) {

@@ -6,32 +6,17 @@ import { titleChanger } from "../../app/titleChanger";
 import "../styles/getStarted.css";
 
 // framer-motion
-import { AnimatePresence, motion } from "framer-motion";
-
-const variant = {
-  hidden: { opacity: 0 },
-  opened: { opacity: 1 },
-  exit: { opacity: 1 },
-};
+import { motion } from "framer-motion";
+import { variantsForPages } from "../../framer-motion-variants";
 
 const GetStarted: React.FC = () => {
   titleChanger({ title: "Get Started" });
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className='get-started page'
-        variants={variant}
-        initial='hidden'
-        animate='opened'
-        exit={"exit"}
-        key={"getStarted"}
-        transition={{ duration: 3 }}
-      >
-        <DetectedAccounts />
-        <CreateAccount />
-      </motion.div>
-    </AnimatePresence>
+    <motion.div className='get-started page' {...variantsForPages}>
+      <DetectedAccounts />
+      <CreateAccount />
+    </motion.div>
   );
 };
 

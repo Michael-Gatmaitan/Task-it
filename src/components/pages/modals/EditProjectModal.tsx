@@ -6,6 +6,10 @@ import type { Project, EditableProjectValues } from "../../../types/types";
 import { propagationStopper } from "./propagationStopper";
 // import "../../styles/modals/CreateProjectModal.css";
 
+// Framer motion
+import { motion } from "framer-motion";
+import { variantsForModals } from "../../../framer-motion-variants";
+
 interface EditProjectModalProps {
   projectToEdit: Project | undefined;
   setProjectToEdit: React.Dispatch<React.SetStateAction<Project | undefined>>;
@@ -106,7 +110,8 @@ const EditProjectModal: React.FC<EditProjectModalProps> = (
       onClick={handleCloseEditProjectModal}
     >
       {projectToEdit !== undefined ? (
-        <div
+        <motion.div
+          {...variantsForModals}
           className='edit-project-modal bordered-container'
           onClick={propagationStopper}
         >
@@ -191,7 +196,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = (
               </Button>
             </div>
           </form>
-        </div>
+        </motion.div>
       ) : (
         <div> There's is no project to eidt.!!!</div>
       )}
