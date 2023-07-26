@@ -15,6 +15,10 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "../../styles/projects/Project.css";
 import CustomStyledSkeleton from "../../CustomStyledSkeleton";
 
+// Framer motion
+import { motion } from "framer-motion";
+import { variantsForPages } from "../../../framer-motion-variants";
+
 // Code splitting
 const BoardMaker = React.lazy(() => import("./BoardMaker"));
 const Board = React.lazy(() => import("./boards/Board"));
@@ -58,7 +62,7 @@ const Project: React.FC = () => {
   }, [currentProject]);
 
   return currentProject !== undefined ? (
-    <div className='project page'>
+    <motion.div className='project page' {...variantsForPages}>
       <div className='project-nav'>
         <Link
           to={`/${userID}/projects`}
@@ -127,7 +131,7 @@ const Project: React.FC = () => {
       </div>
 
       <Outlet />
-    </div>
+    </motion.div>
   ) : null;
 };
 

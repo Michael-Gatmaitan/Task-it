@@ -55,6 +55,12 @@
             font-weight: 600;
           }
         }
+
+        a {
+          .MuiButton-root {
+            width: 100%;
+          }
+        }
       }
 
       @include desktop {
@@ -69,6 +75,10 @@
         .detected-account {
           gap: 12px;
         }
+      }
+
+      @media screen and (min-width: 1500px) {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
   }

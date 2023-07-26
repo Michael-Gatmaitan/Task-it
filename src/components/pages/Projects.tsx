@@ -1,5 +1,4 @@
 import React, { useState, Suspense } from "react";
-import { Link, Outlet } from "react-router-dom";
 import { titleChanger } from "../../app/titleChanger";
 import { useAppSelector } from "../../app/hooks";
 
@@ -16,6 +15,14 @@ import { AddCircleRounded } from "@mui/icons-material";
 import EditProjectModal from "./modals/EditProjectModal";
 import CustomStyledSkeleton from "../CustomStyledSkeleton";
 
+// Framer motion
+import { motion } from "framer-motion";
+import {
+  staggerAnimation,
+  variantsForPages,
+} from "../../framer-motion-variants";
+import CreateProjectModal from "./modals/CreateProjectModal";
+
 const ProjectCard = React.lazy(() => import("./projects/ProjectCard"));
 
 const Projects: React.FC = () => {
@@ -25,12 +32,17 @@ const Projects: React.FC = () => {
     (state: RootState) => state.userReducer.activeUser.projects
   );
 
+  const [showCreateProjectModal, setShowCreateProjectModal] =
+    useState<boolean>(false);
+
   const [showEditProjectModal, setShowEditProjectModal] =
     useState<boolean>(false);
   const [projectToEdit, setProjectToEdit] = useState<ProjectType | undefined>();
 
+  const showModal = () => setShowCreateProjectModal(true);
+
   return (
-    <div className='projects page'>
+    <motion.div className='projects page' {...variantsForPages}>
       <div className='projects-page-nav'>
         <div className='projects-page-title header2'>
           Projects{" "}
@@ -42,17 +54,24 @@ const Projects: React.FC = () => {
         </div>
 
         <Tooltip title='Add project' placement='top'>
-          <Link to='create'>
-            <Button variant='outlined' className='create-new-project'>
-              <AddCircleRounded />
-              <span className='button-text'>Create new project</span>
-            </Button>
-          </Link>
+          <Button
+            variant='outlined'
+            className='create-new-project'
+            onClick={showModal}
+          >
+            <AddCircleRounded />
+            <span className='button-text'>Create new project</span>
+          </Button>
         </Tooltip>
       </div>
 
       {projects.length !== 0 ? (
-        <div className='projects-container'>
+        <motion.div
+          variants={staggerAnimation.container}
+          initial='hidden'
+          animate='show'
+          className='projects-container'
+        >
           {projects !== undefined
             ? projects.map((project, i) => (
                 <Suspense
@@ -63,20 +82,21 @@ const Projects: React.FC = () => {
                     project={project}
                     setProjectToEdit={setProjectToEdit}
                     setShowEditProjectModal={setShowEditProjectModal}
+                    variantItem={staggerAnimation.item}
                   />
                 </Suspense>
               ))
             : null}
-        </div>
+        </motion.div>
       ) : (
         <div className='label'>No project was found.</div>
       )}
 
-      {/* {showCreateProjectModal ? (
+      {showCreateProjectModal ? (
         <CreateProjectModal
           setShowCreateProjectModal={setShowCreateProjectModal}
         />
-      ) : null} */}
+      ) : null}
 
       {showEditProjectModal ? (
         <EditProjectModal
@@ -86,8 +106,8 @@ const Projects: React.FC = () => {
         />
       ) : null}
 
-      <Outlet />
-    </div>
+      {/* <Outlet /> */}
+    </motion.div>
   );
 };
 
