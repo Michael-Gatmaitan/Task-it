@@ -112,17 +112,17 @@ export interface AddCardPayload {
 }
 
 export interface DeleteCardPayload {
-  projectID: string;
-  boardID: string;
-  cardID: string;
+  projectID: number;
+  boardID: number;
+  cardID: number;
 }
 
 export interface EditCardPropsPayload {
   editType: "card-title" | "card-description";
   value: string;
-  projectID: string;
-  boardID: string;
-  cardID: string;
+  projectID: number;
+  boardID: number;
+  cardID: number;
 }
 
 export interface HandleTodoProps {

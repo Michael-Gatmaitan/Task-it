@@ -3,12 +3,20 @@ import React from "react";
 import { Card as CardType } from "../../../../../types/types";
 import "../../../../styles/projects/boards/cards/Card.css";
 import { ChecklistRounded } from "@mui/icons-material";
+import { useAppDispatch } from "../../../../../app/hooks";
+import {
+  toggleShowSelectedCard,
+  setCustomUrlID,
+} from "../../../../../slices/stateSlice";
 
 interface CardProps {
   card: CardType;
+  boardID: number;
+  cardID: number;
 }
 
-const Card: React.FC<CardProps> = ({ card }) => {
+const Card: React.FC<CardProps> = ({ card, cardID, boardID }) => {
+  const dispatch = useAppDispatch();
   const countOfCompletedTodo = card.todos.filter(
     (todo) => todo.checked === true
   ).length;
@@ -18,7 +26,11 @@ const Card: React.FC<CardProps> = ({ card }) => {
 
   return (
     <div
-      onFocus={() => console.log("Focused")}
+      onClick={() => {
+        dispatch(toggleShowSelectedCard());
+        dispatch(setCustomUrlID({ key: "cardID", value: cardID }));
+        dispatch(setCustomUrlID({ key: "boardID", value: boardID }));
+      }}
       className='card bordered-container'
     >
       <div className='card-title'>{card.cardTitle}</div>

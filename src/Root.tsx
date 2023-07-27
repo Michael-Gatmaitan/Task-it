@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 // Components
@@ -22,7 +22,7 @@ import {
 
 import LoadingComponent from "./components/loading-component/index";
 
-const Footer = lazy(() => import("./components/Footer"));
+// const Footer = lazy(() => import("./components/Footer"));
 
 const Root: React.FC = () => {
   // States
@@ -103,9 +103,9 @@ const Root: React.FC = () => {
         <Outlet />
       </Suspense>
 
-      <Suspense fallback={<div>Loading footer</div>}>
+      {/* <Suspense fallback={<div>Loading footer</div>}>
         <Footer />
-      </Suspense>
+      </Suspense> */}
     </>
   );
 };

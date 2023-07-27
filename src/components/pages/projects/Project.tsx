@@ -1,6 +1,6 @@
-import React, { useEffect, useState, Suspense, useMemo } from "react";
+import React, { useEffect, useState, Suspense, useMemo, lazy } from "react";
 import { titleChanger } from "../../../app/titleChanger";
-import { Link, useParams, Outlet } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../app/hooks";
 import { getActiveUser } from "../../../slices/userSlice";
 import { Project as ProjectType } from "../../../types/types";
@@ -19,9 +19,15 @@ import CustomStyledSkeleton from "../../CustomStyledSkeleton";
 import { motion } from "framer-motion";
 import { variantsForPages } from "../../../framer-motion-variants";
 
+// State reducers
+import { getShowSelectedCard } from "../../../slices/stateSlice";
+
 // Code splitting
-const BoardMaker = React.lazy(() => import("./BoardMaker"));
-const Board = React.lazy(() => import("./boards/Board"));
+const BoardMaker = lazy(() => import("./BoardMaker"));
+const Board = lazy(() => import("./boards/Board"));
+const SelectedCardModal = lazy(
+  () => import("./boards/cards/card-modal/SelectedCardModal")
+);
 
 // This is a Project page
 
@@ -47,19 +53,36 @@ const Project: React.FC = () => {
     [userProjects, projectID]
   );
 
+  const showBoardMakerFunc = () => {
+    setShowBoardMaker((prev) => !prev);
+
+    const timeout = setTimeout(() => {
+      const boardsContainer = document.getElementsByClassName(
+        "boards-container"
+      )[0] as HTMLDivElement;
+
+      boardsContainer.scrollLeft = boardsContainer.scrollWidth;
+    }, 50);
+
+    return () => clearTimeout(timeout);
+  };
+
   // Title changer
   useEffect(() => {
     if (currentProject !== undefined)
       titleChanger({ projectTitle: currentProject.projectTitle });
   }, [currentProject, params]);
 
-  const [time, setTime] = useState<string>("");
-  const [showBoardMaker, setShowBoardMaker] = useState<boolean>(false);
-
+  // Set project time created.
   useEffect(() => {
     if (currentProject !== undefined)
       setTime(dayjs(currentProject.dateCreated).fromNow());
   }, [currentProject]);
+
+  const [time, setTime] = useState<string>("");
+  const [showBoardMaker, setShowBoardMaker] = useState<boolean>(false);
+
+  const showSelectedCard = useAppSelector(getShowSelectedCard);
 
   return currentProject !== undefined ? (
     <motion.div className='project page' {...variantsForPages}>
@@ -111,26 +134,18 @@ const Project: React.FC = () => {
           <Button
             variant='contained'
             className='add-board'
-            onClick={() => {
-              setShowBoardMaker((prev) => !prev);
-
-              const timeout = setTimeout(() => {
-                const boardsContainer = document.getElementsByClassName(
-                  "boards-container"
-                )[0] as HTMLDivElement;
-
-                boardsContainer.scrollLeft = boardsContainer.scrollWidth;
-              }, 50);
-
-              return () => clearTimeout(timeout);
-            }}
+            onClick={showBoardMakerFunc}
           >
             Add Board
           </Button>
         )}
       </div>
 
-      <Outlet />
+      {showSelectedCard ? (
+        <Suspense fallback={<div>HAHA</div>}>
+          <SelectedCardModal />
+        </Suspense>
+      ) : null}
     </motion.div>
   ) : null;
 };
