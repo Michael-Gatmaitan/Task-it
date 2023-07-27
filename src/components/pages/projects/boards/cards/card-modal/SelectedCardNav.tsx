@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../../../app/hooks";
 import { CloseRounded, EditRounded, DeleteRounded } from "@mui/icons-material";
 import { Button, Tooltip } from "@mui/material";
 import { editCardProperties } from "../../../../../../slices/userSlice";
+import { toggleShowSelectedCard } from "../../../../../../slices/stateSlice";
 
 interface SelectedCardNavProps {
   cardTitle: string;
   cardDescription: string;
-  activeUserID: number;
-  projectID: string;
-  boardID: string;
-  cardID: string;
+  projectID: number;
+  boardID: number;
+  cardID: number;
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -19,24 +18,23 @@ interface CardTitleProps {
   cardTitle: string;
   showEditCardTitle: boolean;
   setShowEditCardTitle: React.Dispatch<React.SetStateAction<boolean>>;
-  projectID: string;
-  boardID: string;
-  cardID: string;
+  projectID: number;
+  boardID: number;
+  cardID: number;
 }
 
 const SelectedCardNav: React.FC<SelectedCardNavProps> = (
   props: SelectedCardNavProps
 ) => {
+  const dispatch = useAppDispatch();
   const {
     cardTitle,
     cardDescription,
-    activeUserID,
     projectID,
     boardID,
     cardID,
     setShowDeleteModal,
   } = props;
-  const navigate = useNavigate();
 
   const [showEditCardTitle, setShowEditCardTitle] = useState<boolean>(false);
   const [showEditCardDescription, setShowEditCardDescription] =
@@ -73,9 +71,7 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
 
           <div
             className='close-card-modal'
-            onClick={() =>
-              navigate(`/${activeUserID}/projects/${parseInt(projectID)}`)
-            }
+            onClick={() => dispatch(toggleShowSelectedCard())}
           >
             <CloseRounded fontSize='small' />
           </div>
@@ -172,9 +168,9 @@ interface CardDescriptionProps {
   cardDescription: string;
   showEditCardDescription: boolean;
   setShowEditCardDescription: React.Dispatch<React.SetStateAction<boolean>>;
-  projectID: string;
-  boardID: string;
-  cardID: string;
+  projectID: number;
+  boardID: number;
+  cardID: number;
 }
 
 const CardDescription: React.FC<CardDescriptionProps> = (

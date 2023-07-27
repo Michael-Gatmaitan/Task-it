@@ -1,5 +1,5 @@
 import React, { useState, lazy, Suspense } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../../app/hooks";
 import { editBoardTitleOnBlur } from "../../../../slices/userSlice";
 import type { Board as BoardType } from "../../../../types/types";
@@ -72,9 +72,7 @@ const Board: React.FC<BoardProps> = (props) => {
               fallback={<CustomStyledSkeleton componentName='card' />}
               key={i}
             >
-              <Link to={`boards/${board.boardID}/cards/${card.cardID}`}>
-                <Card card={card} />
-              </Link>
+              <Card card={card} boardID={board.boardID} cardID={card.cardID} />
             </Suspense>
           ))
         )}

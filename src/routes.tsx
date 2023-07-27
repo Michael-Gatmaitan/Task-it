@@ -1,5 +1,13 @@
 import { lazy, useEffect } from "react";
-import { Route, Navigate, useLocation, Routes } from "react-router-dom";
+import {
+  Route,
+  Navigate,
+  useLocation,
+  useParams,
+  Routes,
+} from "react-router-dom";
+import { useAppDispatch } from "./app/hooks";
+import { setUrlIDs } from "./slices/stateSlice";
 import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
 import { useAppSelector } from "./app/hooks";
 import Root from "./Root";
@@ -17,12 +25,6 @@ const GetStarted = lazy(() => import("./components/pages/GetStarted"));
 const Projects = lazy(() => import("./components/pages/Projects"));
 // v
 const Project = lazy(() => import("./components/pages/projects/Project"));
-const SelectedCardModal = lazy(
-  () =>
-    import(
-      "./components/pages/projects/boards/cards/card-modal/SelectedCardModal"
-    )
-);
 
 export const AnimatePresenceRoutes: React.FC = () => {
   const loggedIn = useAppSelector(getUserLoggedIn);
@@ -52,26 +54,18 @@ export const AnimatePresenceRoutes: React.FC = () => {
     <Navigate replace to='/get-started' />
   );
 
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const locationCPY = { ...location };
-  const { pathname } = locationCPY;
-  const locationArr = pathname?.split("/") ?? [];
-  const hasCardURL = pathname.includes("/cards/") && locationArr.length === 8;
-
-  const customKey = hasCardURL ? locationArr.splice(4, 4).join("/") : pathname;
+  const params = useParams();
 
   useEffect(() => {
-    console.log(locationCPY);
-
-    console.log(locationArr);
-    console.log(customKey);
-    location.pathname = customKey;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+    console.log(params["*"]);
+    dispatch(setUrlIDs(params["*"]));
+  }, [dispatch, params]);
 
   return (
     <AnimatePresence mode='wait'>
-      <Routes location={locationCPY} key={customKey}>
+      <Routes location={location} key={location.pathname}>
         <Route element={<Root />}>
           <Route index path='/' element={<Home />} />
           <Route path='get-started' element={GetStartedPage} />
@@ -85,15 +79,9 @@ export const AnimatePresenceRoutes: React.FC = () => {
 
           {/* Direct into project's boards -> cards */}
 
-          <Route path=':userID/projects/:projectID' element={ProjectPage}>
-            {/* Direct into board's card */}
-            {/* <Routes location={location} key={locationArr[4]}> */}
-            <Route
-              path='boards/:boardID/cards/:cardID'
-              element={<SelectedCardModal />}
-            />
-            {/* </Routes> */}
-          </Route>
+          <Route path=':userID/projects/:projectID' element={ProjectPage} />
+          {/* Direct into board's card */}
+          {/* <Routes location={location} key={locationArr[4]}> */}
 
           {/* Dynamic routes for boards */}
 

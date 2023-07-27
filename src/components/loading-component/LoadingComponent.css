@@ -1,4 +1,43 @@
 .loading-component {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-component .bar-container {
+  width: 30px;
+  display: grid;
+  gap: 5px;
+}
+.loading-component .bar-container .bar {
+  width: 30px;
+  height: 5px;
+  background-color: #5b87f8;
+  animation: loadingAnimation infinite 0.5s ease-in-out;
+}
+.loading-component .bar-container .bar:nth-child(1) {
+  animation-delay: 100ms;
+}
+.loading-component .bar-container .bar:nth-child(2) {
+  animation-delay: 200ms;
+}
+.loading-component .bar-container .bar:nth-child(3) {
+  animation-delay: 300ms;
+}
+@keyframes loadingAnimation {
+  0% {
+    width: 0;
+    justify-self: flex-start;
+  }
+  50% {
+    width: 30px;
+  }
+  100% {
+    width: 0;
+    justify-self: flex-end;
+  }
 }/*# sourceMappingURL=LoadingComponent.css.map */

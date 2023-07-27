@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { titleChanger } from "../../../../../../app/titleChanger";
 
 import { useAppSelector, useAppDispatch } from "../../../../../../app/hooks";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../../../../../styles/projects/boards/cards/SelectedCardModal.css";
 
 import type { Card } from "../../../../../../types/types";
@@ -21,16 +21,24 @@ import { variantsForModals } from "../../../../../../framer-motion-variants";
 
 // Mui
 import { Skeleton } from "@mui/material";
+import {
+  getUrlIDs,
+  toggleShowSelectedCard,
+} from "../../../../../../slices/stateSlice";
 
 const SelectedCardModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const activeUser = useAppSelector(getActiveUser);
   const params = useParams();
-  const { projectID, boardID, cardID } = params;
+
+  // const { boardID, cardID } = props;
+
+  const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
 
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+
+  const closeModal = () => dispatch(toggleShowSelectedCard());
 
   useEffect(() => {
     if (selectedCard !== undefined)
@@ -41,8 +49,7 @@ const SelectedCardModal: React.FC = () => {
   useEffect(() => {
     const handleEvent = (event: KeyboardEvent) => {
       const { key } = event;
-      if (key === "Escape" && projectID !== undefined)
-        navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`);
+      if (key === "Escape" && projectID !== undefined) closeModal();
     };
 
     window.addEventListener("keydown", handleEvent);
@@ -62,14 +69,16 @@ const SelectedCardModal: React.FC = () => {
       cardID !== undefined
     ) {
       initialSelectedCard = activeUser.projects
-        .find((pr) => pr.projectID === parseInt(projectID))
-        ?.boards.find((br) => br.boardID === parseInt(boardID))
-        ?.cards.find((cr) => cr.cardID === parseInt(cardID));
+        .find((pr) => pr.projectID === projectID)
+        ?.boards.find((br) => br.boardID === boardID)
+        ?.cards.find((cr) => cr.cardID === cardID);
+
+      setSelectedCard(initialSelectedCard);
+
+      console.log("Selected card:", initialSelectedCard);
+    } else {
+      console.log("something is undefined");
     }
-
-    setSelectedCard(initialSelectedCard);
-
-    console.log("Selected card:", initialSelectedCard);
   }, [activeUser.projects, boardID, cardID, projectID]);
 
   // delete modal purposes
@@ -81,7 +90,7 @@ const SelectedCardModal: React.FC = () => {
       cardID !== undefined
     ) {
       // Navigate to main project before deleting the board's card
-      navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`);
+      closeModal();
       dispatch(deleteCard({ projectID, boardID, cardID }));
     }
   };
@@ -93,12 +102,7 @@ const SelectedCardModal: React.FC = () => {
     cardID !== undefined;
 
   return renderOptions ? (
-    <div
-      className='selected-card-modal-bg'
-      onClick={() =>
-        navigate(`/${activeUser.userID}/projects/${parseInt(projectID)}`)
-      }
-    >
+    <div className='selected-card-modal-bg' onClick={() => closeModal()}>
       <DeleteModal
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
@@ -115,7 +119,6 @@ const SelectedCardModal: React.FC = () => {
           cardTitle={selectedCard.cardTitle}
           cardDescription={selectedCard.cardDescription}
           setShowDeleteModal={setShowDeleteModal}
-          activeUserID={activeUser.userID}
           projectID={projectID}
           boardID={boardID}
           cardID={cardID}
