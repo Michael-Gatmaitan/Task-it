@@ -10,12 +10,10 @@ interface URLTypes {
 }
 
 interface StateTypes {
-  showSelectedCard: boolean;
   urlID: URLTypes;
 }
 
 const initialState: StateTypes = {
-  showSelectedCard: false,
   urlID: {
     projectID: -1,
     boardID: -1,
@@ -28,9 +26,6 @@ const stateSlice = createSlice({
   name: "stateSlice",
   initialState,
   reducers: {
-    toggleShowSelectedCard(state) {
-      state.showSelectedCard = !state.showSelectedCard;
-    },
     setUrlIDs(state, action: PayloadAction<SetIDsParams>) {
       const url = action.payload;
       if (url === undefined) return;
@@ -65,11 +60,8 @@ const stateSlice = createSlice({
   },
 });
 
-export const { toggleShowSelectedCard, setUrlIDs, setCustomUrlID } =
-  stateSlice.actions;
+export const { setUrlIDs, setCustomUrlID } = stateSlice.actions;
 
-export const getShowSelectedCard = (state: RootState) =>
-  state.stateReducer.showSelectedCard;
 export const getUrlIDs = (state: RootState) => state.stateReducer.urlID;
 
 export default stateSlice.reducer;

@@ -20,7 +20,7 @@ import { motion } from "framer-motion";
 import { variantsForPages } from "../../../framer-motion-variants";
 
 // State reducers
-import { getShowSelectedCard } from "../../../slices/stateSlice";
+// import { getShowSelectedCard } from "../../../slices/stateSlice";
 
 // Code splitting
 const BoardMaker = lazy(() => import("./BoardMaker"));
@@ -42,6 +42,8 @@ const Project: React.FC = () => {
   dayjs.extend(relativeTime);
 
   const { projects: userProjects, userID } = useAppSelector(getActiveUser);
+
+  const [showCardModal, setShowCardModal] = useState<boolean>(false);
 
   const currentProject: ProjectType | undefined = useMemo(
     () =>
@@ -82,7 +84,7 @@ const Project: React.FC = () => {
   const [time, setTime] = useState<string>("");
   const [showBoardMaker, setShowBoardMaker] = useState<boolean>(false);
 
-  const showSelectedCard = useAppSelector(getShowSelectedCard);
+  // const showSelectedCard = useAppSelector(getShowSelectedCard);
 
   return currentProject !== undefined ? (
     <motion.div className='project page' {...variantsForPages}>
@@ -118,7 +120,7 @@ const Project: React.FC = () => {
                 key={i}
                 fallback={<CustomStyledSkeleton componentName='board' />}
               >
-                <Board board={board} />
+                <Board board={board} setShowCardModal={setShowCardModal} />
               </Suspense>
             ))
           : null}
@@ -141,9 +143,15 @@ const Project: React.FC = () => {
         )}
       </div>
 
-      {showSelectedCard ? (
+      {/* {showSelectedCard ? (
         <Suspense fallback={<div>HAHA</div>}>
           <SelectedCardModal />
+        </Suspense>
+      ) : null} */}
+
+      {showCardModal ? (
+        <Suspense fallback={<div>HAHA</div>}>
+          <SelectedCardModal setShowCardModal={setShowCardModal} />
         </Suspense>
       ) : null}
     </motion.div>

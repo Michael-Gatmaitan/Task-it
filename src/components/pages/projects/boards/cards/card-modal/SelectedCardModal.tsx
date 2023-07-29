@@ -21,12 +21,16 @@ import { variantsForModals } from "../../../../../../framer-motion-variants";
 
 // Mui
 import { Skeleton } from "@mui/material";
-import {
-  getUrlIDs,
-  toggleShowSelectedCard,
-} from "../../../../../../slices/stateSlice";
+import { getUrlIDs } from "../../../../../../slices/stateSlice";
 
-const SelectedCardModal: React.FC = () => {
+interface SelectedCardModalProps {
+  setShowCardModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SelectedCardModal: React.FC<SelectedCardModalProps> = (
+  props: SelectedCardModalProps
+) => {
+  const { setShowCardModal } = props;
   const dispatch = useAppDispatch();
   const activeUser = useAppSelector(getActiveUser);
   const params = useParams();
@@ -38,7 +42,7 @@ const SelectedCardModal: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
-  const closeModal = () => dispatch(toggleShowSelectedCard());
+  const closeModal = () => setShowCardModal(false);
 
   useEffect(() => {
     if (selectedCard !== undefined)
@@ -63,11 +67,7 @@ const SelectedCardModal: React.FC = () => {
   useEffect(() => {
     let initialSelectedCard: Card | undefined = undefined;
 
-    if (
-      projectID !== undefined &&
-      boardID !== undefined &&
-      cardID !== undefined
-    ) {
+    if (projectID !== undefined) {
       initialSelectedCard = activeUser.projects
         .find((pr) => pr.projectID === projectID)
         ?.boards.find((br) => br.boardID === boardID)
@@ -77,7 +77,7 @@ const SelectedCardModal: React.FC = () => {
 
       console.log("Selected card:", initialSelectedCard);
     } else {
-      console.log("something is undefined");
+      console.log("something is undefined", projectID, boardID, cardID);
     }
   }, [activeUser.projects, boardID, cardID, projectID]);
 
@@ -122,6 +122,7 @@ const SelectedCardModal: React.FC = () => {
           projectID={projectID}
           boardID={boardID}
           cardID={cardID}
+          setShowCardModal={setShowCardModal}
         />
 
         {/* Submit : addCardTag */}

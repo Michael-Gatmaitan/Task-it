@@ -3,7 +3,6 @@ import { useAppDispatch } from "../../../../../../app/hooks";
 import { CloseRounded, EditRounded, DeleteRounded } from "@mui/icons-material";
 import { Button, Tooltip } from "@mui/material";
 import { editCardProperties } from "../../../../../../slices/userSlice";
-import { toggleShowSelectedCard } from "../../../../../../slices/stateSlice";
 
 interface SelectedCardNavProps {
   cardTitle: string;
@@ -12,6 +11,7 @@ interface SelectedCardNavProps {
   boardID: number;
   cardID: number;
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowCardModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface CardTitleProps {
@@ -26,7 +26,6 @@ interface CardTitleProps {
 const SelectedCardNav: React.FC<SelectedCardNavProps> = (
   props: SelectedCardNavProps
 ) => {
-  const dispatch = useAppDispatch();
   const {
     cardTitle,
     cardDescription,
@@ -34,6 +33,7 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
     boardID,
     cardID,
     setShowDeleteModal,
+    setShowCardModal,
   } = props;
 
   const [showEditCardTitle, setShowEditCardTitle] = useState<boolean>(false);
@@ -71,7 +71,8 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
 
           <div
             className='close-card-modal'
-            onClick={() => dispatch(toggleShowSelectedCard())}
+            // onClick={() => dispatch(toggleShowSelectedCard())}
+            onClick={() => setShowCardModal(false)}
           >
             <CloseRounded fontSize='small' />
           </div>
@@ -111,18 +112,10 @@ const CardTitle: React.FC<CardTitleProps> = (props: CardTitleProps) => {
 
   const [newTitle, setNewTitle] = useState<string>(cardTitle);
 
-  const dispatchEditCardProperties: VoidFunction = () => {
-    dispatch(
-      editCardProperties({
-        editType: "card-title",
-        value: newTitle,
-        projectID,
-        boardID,
-        cardID,
-      })
-    );
-    console.log("dispatchEditCardProperties() runned");
-  };
+  // const dispatchEditCardProperties: VoidFunction = () => {
+
+  //   console.log("dispatchEditCardProperties() runned");
+  // };
 
   const handleSubmitOrBlurEditCardTitle = (
     e: React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>
@@ -138,7 +131,16 @@ const CardTitle: React.FC<CardTitleProps> = (props: CardTitleProps) => {
       return;
     }
 
-    dispatchEditCardProperties();
+    // dispatchEditCardProperties();
+    dispatch(
+      editCardProperties({
+        editType: "card-title",
+        value: newTitle,
+        projectID,
+        boardID,
+        cardID,
+      })
+    );
   };
 
   return showEditCardTitle ? (

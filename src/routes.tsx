@@ -1,11 +1,5 @@
 import { lazy, useEffect } from "react";
-import {
-  Route,
-  Navigate,
-  useLocation,
-  useParams,
-  Routes,
-} from "react-router-dom";
+import { Route, Navigate, useLocation, Routes } from "react-router-dom";
 import { useAppDispatch } from "./app/hooks";
 import { setUrlIDs } from "./slices/stateSlice";
 import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
@@ -56,12 +50,12 @@ export const AnimatePresenceRoutes: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const params = useParams();
-
   useEffect(() => {
-    console.log(params["*"]);
-    dispatch(setUrlIDs(params["*"]));
-  }, [dispatch, params]);
+    console.log(location.pathname);
+    dispatch(setUrlIDs(location.pathname));
+
+    console.log("SET URL ID RUNNED");
+  }, [dispatch, location]);
 
   return (
     <AnimatePresence mode='wait'>

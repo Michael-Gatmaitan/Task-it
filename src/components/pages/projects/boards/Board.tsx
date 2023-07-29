@@ -14,6 +14,7 @@ const Card = lazy(() => import("./cards/Card"));
 
 interface BoardProps {
   board: BoardType;
+  setShowCardModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 type ParamsType = {
@@ -21,7 +22,7 @@ type ParamsType = {
 };
 
 const Board: React.FC<BoardProps> = (props) => {
-  const { board } = props;
+  const { board, setShowCardModal } = props;
   const dispatch = useAppDispatch();
   const params: ParamsType = useParams();
 
@@ -72,7 +73,12 @@ const Board: React.FC<BoardProps> = (props) => {
               fallback={<CustomStyledSkeleton componentName='card' />}
               key={i}
             >
-              <Card card={card} boardID={board.boardID} cardID={card.cardID} />
+              <Card
+                card={card}
+                setShowCardModal={setShowCardModal}
+                boardID={board.boardID}
+                cardID={card.cardID}
+              />
             </Suspense>
           ))
         )}
