@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect, memo } from "react";
-import { useAppDispatch } from "../../../../../../app/hooks";
-import { useParams } from "react-router";
+
+// Redux
+import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
 import { handleTodo } from "../../../../../../slices/userSlice";
+import { getUrlIDs } from "../../../../../../slices/stateSlice";
 
 //  Types
-import type {
-  Todo,
-  ReactRouterParamsType,
-} from "../../../../../../types/types";
+import type { Todo } from "../../../../../../types/types";
 
 // Mui
 import { CloseRounded } from "@mui/icons-material";
@@ -18,8 +17,7 @@ import "../../../../../styles/projects/boards/cards/TodoComponent.css";
 // eslint-disable-next-line react-refresh/only-export-components
 const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
   const dispatch = useAppDispatch();
-  const params = useParams<ReactRouterParamsType>();
-  const { projectID, boardID, cardID } = params;
+  const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
   const { title, checked } = todo;
 
   const inputTitleRef = useRef<HTMLInputElement | null>(null);
@@ -60,9 +58,9 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
               checked: checked,
               todoID: todo.todoID,
             },
-            projectID: parseInt(projectID),
-            boardID: parseInt(boardID),
-            cardID: parseInt(cardID),
+            projectID: projectID,
+            boardID: boardID,
+            cardID: cardID,
             mode: "edit",
           })
         );
@@ -76,9 +74,9 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
               checked: e.currentTarget.checked,
               todoID: todo.todoID,
             },
-            projectID: parseInt(projectID),
-            boardID: parseInt(boardID),
-            cardID: parseInt(cardID),
+            projectID: projectID,
+            boardID: boardID,
+            cardID: cardID,
             mode: "edit",
           })
         );
@@ -99,9 +97,9 @@ const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
             checked: checked,
             todoID: todo.todoID,
           },
-          projectID: parseInt(projectID),
-          boardID: parseInt(boardID),
-          cardID: parseInt(cardID),
+          projectID: projectID,
+          boardID: boardID,
+          cardID: cardID,
           mode: "delete",
         })
       );

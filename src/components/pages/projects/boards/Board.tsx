@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../../app/hooks";
 import { editBoardTitleOnBlur } from "../../../../slices/userSlice";
 import type { Board as BoardType } from "../../../../types/types";
-import { Button } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
 import { MenuRounded } from "@mui/icons-material";
 
 import CardMaker from "./CardMaker";
@@ -44,8 +44,28 @@ const Board: React.FC<BoardProps> = (props) => {
 
   const [showCardMaker, setShowCardMaker] = useState<boolean>(false);
 
+  const [showBoardOptions, setShowBoardOptions] = useState<boolean>(false);
+
   return (
     <div className='board bordered-container'>
+      {showBoardOptions ? (
+        <div
+          className='board-options'
+          onClick={() => setShowBoardOptions((p) => !p)}
+        >
+          <ButtonGroup
+            variant='contained'
+            orientation='vertical'
+            className='option-group'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Button>Move to left</Button>
+            <Button>Move to right</Button>
+            <Button color='error'>Delete board</Button>
+          </ButtonGroup>
+        </div>
+      ) : null}
+
       <div className='board-nav'>
         <div className='board-title-container'>
           <input
@@ -59,7 +79,10 @@ const Board: React.FC<BoardProps> = (props) => {
           />
         </div>
 
-        <div className='board-options'>
+        <div
+          className='board-options-menu'
+          onClick={() => setShowBoardOptions((p) => !p)}
+        >
           <MenuRounded />
         </div>
       </div>

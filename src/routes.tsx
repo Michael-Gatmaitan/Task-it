@@ -1,13 +1,15 @@
 import { lazy, useEffect } from "react";
 import { Route, Navigate, useLocation, Routes } from "react-router-dom";
-import { useAppDispatch } from "./app/hooks";
+
+// Redux
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { setUrlIDs } from "./slices/stateSlice";
 import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
-import { useAppSelector } from "./app/hooks";
-import Root from "./Root";
 
 // Framer motion
 import { AnimatePresence } from "framer-motion";
+
+import Root from "./Root";
 
 // Components | Pages
 const Home = lazy(() => import("./components/pages/Home"));
@@ -23,6 +25,16 @@ const Project = lazy(() => import("./components/pages/projects/Project"));
 export const AnimatePresenceRoutes: React.FC = () => {
   const loggedIn = useAppSelector(getUserLoggedIn);
   const { userID } = useAppSelector(getActiveUser);
+
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.pathname);
+    dispatch(setUrlIDs(location.pathname));
+
+    console.log("SET URL ID RUNNED");
+  }, [dispatch, location]);
 
   const GetStartedPage = loggedIn ? (
     <Navigate replace to={`/${userID}/projects`} />
@@ -47,15 +59,6 @@ export const AnimatePresenceRoutes: React.FC = () => {
   ) : (
     <Navigate replace to='/get-started' />
   );
-
-  const dispatch = useAppDispatch();
-  const location = useLocation();
-  useEffect(() => {
-    console.log(location.pathname);
-    dispatch(setUrlIDs(location.pathname));
-
-    console.log("SET URL ID RUNNED");
-  }, [dispatch, location]);
 
   return (
     <AnimatePresence mode='wait'>

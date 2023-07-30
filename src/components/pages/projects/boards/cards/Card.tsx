@@ -1,13 +1,11 @@
 import React from "react";
 
 import { Card as CardType } from "../../../../../types/types";
-import "../../../../styles/projects/boards/cards/Card.css";
 import { ChecklistRounded } from "@mui/icons-material";
 import { useAppDispatch } from "../../../../../app/hooks";
-import {
-  // toggleShowSelectedCard,
-  setCustomUrlID,
-} from "../../../../../slices/stateSlice";
+import { setCustomUrlID } from "../../../../../slices/stateSlice";
+
+import "../../../../styles/projects/boards/cards/Card.css";
 
 interface CardProps {
   card: CardType;

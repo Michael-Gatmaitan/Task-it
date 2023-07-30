@@ -67,7 +67,11 @@ const SelectedCardModal: React.FC<SelectedCardModalProps> = (
   useEffect(() => {
     let initialSelectedCard: Card | undefined = undefined;
 
-    if (projectID !== undefined) {
+    if (
+      projectID !== undefined &&
+      projectID !== undefined &&
+      cardID !== undefined
+    ) {
       initialSelectedCard = activeUser.projects
         .find((pr) => pr.projectID === projectID)
         ?.boards.find((br) => br.boardID === boardID)

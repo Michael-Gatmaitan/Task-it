@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useDeferredValue } from "react";
+import React, {
+  useState,
+  useEffect,
+  useDeferredValue,
+  useCallback,
+} from "react";
 import SelectProfileImage from "./reusable/selectProfileImage/SelectProfileImage";
 import { logoutUser } from "../slices/userSlice";
 
@@ -88,24 +93,6 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
 
   const dispatch = useAppDispatch();
 
-  const setDefaultValueOfStates = () => {
-    /*
-      Set all state back to default when profile EDITED or
-      profile ribbon is CLOSED
-    */
-
-    console.log("Closing all states");
-
-    setDisablePreviewImage(false);
-    setPreviewImage(false);
-
-    // Set all state value to empty.
-    if (deferredEditUsernameValue !== username) setEditUsernameValue(username);
-
-    if (deferredEditImageLinkValue !== profileImageLink)
-      setEditImageLinkValue(profileImageLink);
-  };
-
   // Deferred value for editUsernameValue state.
   const [editUsernameValue, setEditUsernameValue] = useState<string>("");
   const deferredEditUsernameValue = useDeferredValue(editUsernameValue);
@@ -121,6 +108,29 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const [selectedImage, setSelectedImage] = useState<string>("");
 
   const [userInputError, setUserInputError] = useState<boolean>(true);
+
+  const setDefaultValueOfStates = useCallback(() => {
+    /*
+      Set all state back to default when profile EDITED or
+      profile ribbon is CLOSED
+    */
+
+    console.log("Closing all states");
+
+    setDisablePreviewImage(false);
+    setPreviewImage(false);
+
+    // Set all state value to empty.
+    if (deferredEditUsernameValue !== username) setEditUsernameValue(username);
+
+    if (deferredEditImageLinkValue !== profileImageLink)
+      setEditImageLinkValue(profileImageLink);
+  }, [
+    deferredEditImageLinkValue,
+    deferredEditUsernameValue,
+    profileImageLink,
+    username,
+  ]);
 
   // custom hook that validates exists username.
 

@@ -4,6 +4,25 @@
   height: min-content;
   display: grid;
   grid-template-columns: 100%;
+  position: relative;
+}
+.board .board-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  border-radius: inherit;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+.board .board-options .option-group {
+  width: 100%;
 }
 .board .board-nav {
   width: 100%;
@@ -27,7 +46,7 @@
 .board .board-nav .board-title-container .editable-board-title:focus {
   box-shadow: inset 0 0 0 2px #5b87f8;
 }
-.board .board-nav .board-options {
+.board .board-nav .board-options-menu {
   width: 25px;
   height: 25px;
   display: flex;
@@ -36,7 +55,7 @@
   border-radius: 4px;
   background-color: #f0f0f2;
 }
-.board .board-nav .board-options svg {
+.board .board-nav .board-options-menu svg {
   width: 20px;
 }
 .board .cards-container {
