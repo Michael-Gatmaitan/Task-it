@@ -57,7 +57,9 @@
     top: calc(100% + 24px);
     border-radius: 16px;
     z-index: 99;
+    display: grid;
 
+    // #profile-editor
     form {
       display: grid;
       gap: 12px;

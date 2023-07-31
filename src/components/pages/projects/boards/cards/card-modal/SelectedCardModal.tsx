@@ -56,6 +56,8 @@ const SelectedCardModal: React.FC<SelectedCardModalProps> = (
       if (key === "Escape" && projectID !== undefined) closeModal();
     };
 
+    console.log(projectID, boardID, cardID);
+
     window.addEventListener("keydown", handleEvent);
 
     return () => {

@@ -66,12 +66,14 @@ const ProfileRibbon: React.FC<ProfileRibbonProps> = ({ platform }) => {
         )}
       </div>
 
-      <EditProfileModal
-        toggleEditProfile={toggleEditProfile}
-        setToggleEditProfile={setToggleEditProfile}
-        username={username}
-        profileImageLink={profileImageLink}
-      />
+      {toggleEditProfile ? (
+        <EditProfileModal
+          toggleEditProfile={toggleEditProfile}
+          setToggleEditProfile={setToggleEditProfile}
+          username={username}
+          profileImageLink={profileImageLink}
+        />
+      ) : null}
     </div>
   ) : null;
 };
@@ -185,12 +187,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   }, [isImageLinkValid]);
 
   return (
-    <div
-      className='edit-profile bordered-container'
-      style={{
-        display: toggleEditProfile ? "grid" : "none",
-      }}
-    >
+    <div className='edit-profile bordered-container'>
       <form id='profile-editor' onSubmit={handleEditProfileSubmit}>
         <Box
           sx={{
