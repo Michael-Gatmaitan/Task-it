@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../../../../../app/hooks";
 import { CloseRounded, EditRounded, DeleteRounded } from "@mui/icons-material";
 import { Button, Tooltip } from "@mui/material";
 import { editCardProperties } from "../../../../../../slices/userSlice";
+import { toggleShowCardModal } from "../../../../../../slices/stateSlice";
 
 interface SelectedCardNavProps {
   cardTitle: string;
@@ -11,7 +12,6 @@ interface SelectedCardNavProps {
   boardID: number;
   cardID: number;
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowCardModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface CardTitleProps {
@@ -33,8 +33,9 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
     boardID,
     cardID,
     setShowDeleteModal,
-    setShowCardModal,
   } = props;
+
+  const dispatch = useAppDispatch();
 
   const [showEditCardTitle, setShowEditCardTitle] = useState<boolean>(false);
   const [showEditCardDescription, setShowEditCardDescription] =
@@ -71,8 +72,8 @@ const SelectedCardNav: React.FC<SelectedCardNavProps> = (
 
           <div
             className='close-card-modal'
-            // onClick={() => dispatch(toggleShowSelectedCard())}
-            onClick={() => setShowCardModal(false)}
+            onClick={() => dispatch(toggleShowCardModal(false))}
+            // onClick={() => setShowCardModal(false)}
           >
             <CloseRounded fontSize='small' />
           </div>

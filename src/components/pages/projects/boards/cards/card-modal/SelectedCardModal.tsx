@@ -21,16 +21,12 @@ import { variantsForModals } from "../../../../../../framer-motion-variants";
 
 // Mui
 import { Skeleton } from "@mui/material";
-import { getUrlIDs } from "../../../../../../slices/stateSlice";
+import {
+  getUrlIDs,
+  toggleShowCardModal,
+} from "../../../../../../slices/stateSlice";
 
-interface SelectedCardModalProps {
-  setShowCardModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const SelectedCardModal: React.FC<SelectedCardModalProps> = (
-  props: SelectedCardModalProps
-) => {
-  const { setShowCardModal } = props;
+const SelectedCardModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const activeUser = useAppSelector(getActiveUser);
   const params = useParams();
@@ -42,7 +38,7 @@ const SelectedCardModal: React.FC<SelectedCardModalProps> = (
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
-  const closeModal = () => setShowCardModal(false);
+  const closeModal = () => dispatch(toggleShowCardModal(true));
 
   useEffect(() => {
     if (selectedCard !== undefined)
@@ -71,7 +67,7 @@ const SelectedCardModal: React.FC<SelectedCardModalProps> = (
 
     if (
       projectID !== undefined &&
-      projectID !== undefined &&
+      boardID !== undefined &&
       cardID !== undefined
     ) {
       initialSelectedCard = activeUser.projects
@@ -128,7 +124,6 @@ const SelectedCardModal: React.FC<SelectedCardModalProps> = (
           projectID={projectID}
           boardID={boardID}
           cardID={cardID}
-          setShowCardModal={setShowCardModal}
         />
 
         {/* Submit : addCardTag */}

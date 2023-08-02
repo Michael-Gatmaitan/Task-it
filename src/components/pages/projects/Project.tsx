@@ -18,6 +18,7 @@ import CustomStyledSkeleton from "../../CustomStyledSkeleton";
 // Framer motion
 import { motion } from "framer-motion";
 import { variantsForPages } from "../../../framer-motion-variants";
+import { getShowCardModal } from "../../../slices/stateSlice";
 
 // State reducers
 // import { getShowSelectedCard } from "../../../slices/stateSlice";
@@ -43,7 +44,7 @@ const Project: React.FC = () => {
 
   const { projects: userProjects, userID } = useAppSelector(getActiveUser);
 
-  const [showCardModal, setShowCardModal] = useState<boolean>(false);
+  const showCardModal = useAppSelector(getShowCardModal);
 
   const currentProject: ProjectType | undefined = useMemo(
     () =>
@@ -120,7 +121,7 @@ const Project: React.FC = () => {
                 key={i}
                 fallback={<CustomStyledSkeleton componentName='board' />}
               >
-                <Board board={board} setShowCardModal={setShowCardModal} />
+                <Board board={board} />
               </Suspense>
             ))
           : null}
@@ -151,7 +152,7 @@ const Project: React.FC = () => {
 
       {showCardModal ? (
         <Suspense fallback={<div>HAHA</div>}>
-          <SelectedCardModal setShowCardModal={setShowCardModal} />
+          <SelectedCardModal />
         </Suspense>
       ) : null}
     </motion.div>
