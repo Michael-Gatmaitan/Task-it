@@ -3,7 +3,10 @@ import React from "react";
 import { Card as CardType } from "../../../../../types/types";
 import { ChecklistRounded } from "@mui/icons-material";
 import { useAppDispatch } from "../../../../../app/hooks";
-import { setCustomUrlID } from "../../../../../slices/stateSlice";
+import {
+  setCustomUrlID,
+  toggleShowCardModal,
+} from "../../../../../slices/stateSlice";
 
 import "../../../../styles/projects/boards/cards/Card.css";
 
@@ -11,15 +14,11 @@ interface CardProps {
   card: CardType;
   boardID: number;
   cardID: number;
-  setShowCardModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Card: React.FC<CardProps> = ({
-  card,
-  cardID,
-  boardID,
-  setShowCardModal,
-}) => {
+const Card: React.FC<CardProps> = (props: CardProps) => {
+  const { card, cardID, boardID } = props;
+
   const dispatch = useAppDispatch();
   const countOfCompletedTodo = card.todos.filter(
     (todo) => todo.checked === true
@@ -31,8 +30,10 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       onClick={() => {
-        setShowCardModal(true);
-        // dispatch(toggleShowSelectedCard());
+        // setShowCardModal(true);
+
+        dispatch(toggleShowCardModal(true));
+
         dispatch(setCustomUrlID({ key: "cardID", value: cardID }));
         dispatch(setCustomUrlID({ key: "boardID", value: boardID }));
       }}

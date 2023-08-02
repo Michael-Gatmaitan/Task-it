@@ -23,6 +23,8 @@ interface IndicesTypes {
 interface StateTypes {
   urlID: URLTypes;
   indices: IndicesTypes;
+
+  showCardModal: boolean;
 }
 
 const initialState: StateTypes = {
@@ -37,15 +39,17 @@ const initialState: StateTypes = {
     boardIndex: undefined,
     cardIndex: undefined,
   },
+
+  showCardModal: false,
 };
 
 const stateSlice = createSlice({
   name: "stateSlice",
   initialState,
   reducers: {
-    setUrlIDs(state, action: PayloadAction<SetIDsParams>) {
+    setUrlIDs(state: StateTypes, action: PayloadAction<SetIDsParams>) {
       const url = action.payload;
-      if (url === undefined) return;
+      if (url === undefined || state.showCardModal) return;
 
       const urlTemp = url;
 
@@ -63,19 +67,31 @@ const stateSlice = createSlice({
         state.urlID[key as keyof typeof state.urlID] = ids[i + 1];
       });
 
-      console.log(current(state.urlID));
+      console.log("From state slice: ", current(state.urlID));
     },
 
-    setCustomUrlID(state, action: PayloadAction<SetCustomUrlIDParams>) {
+    setCustomUrlID(
+      state: StateTypes,
+      action: PayloadAction<SetCustomUrlIDParams>
+    ) {
       const { key, value } = action.payload;
       state.urlID[key] = value;
+    },
+
+    // Reducers for boolean states
+    toggleShowCardModal(state: StateTypes, action: PayloadAction<boolean>) {
+      state.showCardModal = action.payload;
     },
   },
 });
 
-export const { setUrlIDs, setCustomUrlID } = stateSlice.actions;
+export const { setUrlIDs, setCustomUrlID, toggleShowCardModal } =
+  stateSlice.actions;
 
 export const getUrlIDs = (state: RootState) => state.stateReducer.urlID;
 export const getIndices = (state: RootState) => state.stateReducer.indices;
+
+export const getShowCardModal = (state: RootState) =>
+  state.stateReducer.showCardModal;
 
 export default stateSlice.reducer;

@@ -48,6 +48,7 @@
   top: calc(100% + 24px);
   border-radius: 16px;
   z-index: 99;
+  display: grid;
 }
 .profile-ribbon .edit-profile form {
   display: grid;
