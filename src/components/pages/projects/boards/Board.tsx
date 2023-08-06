@@ -1,14 +1,15 @@
 import React, { useState, lazy, Suspense } from "react";
-import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { editBoardTitleOnBlur } from "../../../../slices/userSlice";
 import type { Board as BoardType } from "../../../../types/types";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button } from "@mui/material";
 import { MenuRounded } from "@mui/icons-material";
 
 import CardMaker from "./CardMaker";
 import "../../../styles/projects/boards/Board.css";
 import CustomStyledSkeleton from "../../../CustomStyledSkeleton";
+import BoardOptions from "./BoardOptions";
+import { getUrlIDs } from "../../../../slices/stateSlice";
 
 const Card = lazy(() => import("./cards/Card"));
 
@@ -16,26 +17,21 @@ interface BoardProps {
   board: BoardType;
 }
 
-type ParamsType = {
-  projectID?: string | undefined;
-};
-
 const Board: React.FC<BoardProps> = (props) => {
   const { board } = props;
+
   const dispatch = useAppDispatch();
-  const params: ParamsType = useParams();
+
+  const ids = useAppSelector(getUrlIDs);
+  const { projectID } = ids;
 
   const [newBoardTitle, setNewBoardTitle] = useState<string>("");
   const boardTitleOnBlur = () => {
-    const { projectID } = params;
-
-    const projectID_reducerArg: number = projectID ? parseInt(projectID) : -1;
-
     const editBoardReducerArgs = {
       currentTitle: board.boardTitle,
       newBoardTitle: newBoardTitle,
-      projectID: projectID_reducerArg,
-      boardID: board.boardID,
+      projectID: ids.projectID,
+      boardID: ids.boardID,
     };
 
     dispatch(editBoardTitleOnBlur(editBoardReducerArgs));
@@ -48,21 +44,10 @@ const Board: React.FC<BoardProps> = (props) => {
   return (
     <div className='board bordered-container'>
       {showBoardOptions ? (
-        <div
-          className='board-options'
-          onClick={() => setShowBoardOptions((p) => !p)}
-        >
-          <ButtonGroup
-            variant='contained'
-            orientation='vertical'
-            className='option-group'
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Button>Move to left</Button>
-            <Button>Move to right</Button>
-            <Button color='error'>Delete board</Button>
-          </ButtonGroup>
-        </div>
+        <BoardOptions
+          setShowBoardOptions={setShowBoardOptions}
+          boardID={board.boardID}
+        />
       ) : null}
 
       <div className='board-nav'>
@@ -71,8 +56,8 @@ const Board: React.FC<BoardProps> = (props) => {
             type='text'
             name='boardTitle'
             className='header3 editable-board-title'
-            defaultValue={board.boardTitle}
-            id={`board-title-input-pID${params.projectID}-bID${board.boardID}`}
+            value={board.boardTitle}
+            id={`board-title-input-pID${projectID}-bID${board.boardID}`}
             onBlur={boardTitleOnBlur}
             onChange={(e) => setNewBoardTitle(e.target.value)}
           />
@@ -80,7 +65,7 @@ const Board: React.FC<BoardProps> = (props) => {
 
         <div
           className='board-options-menu'
-          onClick={() => setShowBoardOptions((p) => !p)}
+          onClick={() => setShowBoardOptions(true)}
         >
           <MenuRounded />
         </div>
@@ -105,9 +90,7 @@ const Board: React.FC<BoardProps> = (props) => {
 
       {showCardMaker ? (
         <CardMaker
-          projectID={
-            params.projectID !== undefined ? parseInt(params.projectID) : -1
-          }
+          projectID={projectID}
           boardID={board.boardID}
           setShowCardMaker={setShowCardMaker}
         />

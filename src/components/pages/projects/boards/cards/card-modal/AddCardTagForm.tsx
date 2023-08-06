@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../../../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
 import { TextField, Button, Chip } from "@mui//material";
 
 // Style
 import "../.././../../../styles/projects/boards/cards/AddCardTagForm.css";
-import { CardTag, ReactRouterParamsType } from "../../../../../../types/types";
+import { CardTag } from "../../../../../../types/types";
 import { handleCardTag } from "../../../../../../slices/userSlice";
+import { getUrlIDs } from "../../../../../../slices/stateSlice";
 
 interface AddCardTagFormProps {
-  params: ReactRouterParamsType;
   cardTags: CardTag[];
 }
 
@@ -16,9 +16,11 @@ const AddCardTagForm: React.FC<AddCardTagFormProps> = (
   props: AddCardTagFormProps
 ) => {
   const dispatch = useAppDispatch();
-  const { params, cardTags } = props;
+  const { cardTags } = props;
 
   const [newCardTag, setNewCardTag] = useState<string>("");
+
+  const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
 
   const handleAddCardTag = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,14 +30,14 @@ const AddCardTagForm: React.FC<AddCardTagFormProps> = (
         type: "add",
         cardTagTitle: newCardTag,
         idPaths: {
-          projectID: params.projectID,
-          boardID: params.boardID,
-          cardID: params.cardID,
+          projectID: projectID,
+          boardID: boardID,
+          cardID: cardID,
         },
       })
     );
 
-    console.log(params.cardID);
+    console.log(cardID);
 
     setNewCardTag("");
   };
@@ -46,9 +48,9 @@ const AddCardTagForm: React.FC<AddCardTagFormProps> = (
         type: "delete",
         cardTagID: cardTagID,
         idPaths: {
-          projectID: params.projectID,
-          boardID: params.boardID,
-          cardID: params.cardID,
+          projectID: projectID,
+          boardID: boardID,
+          cardID: cardID,
         },
       })
     );

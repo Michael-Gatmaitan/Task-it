@@ -1,5 +1,5 @@
 import { PayloadAction as PA } from "@reduxjs/toolkit";
-import { AppState } from "../../types/types";
+import type { AppState } from "../../types/types";
 
 interface AddBoardPayload {
   boardTitle: string;
@@ -12,6 +12,13 @@ interface EditBoardTitleOnBlurProps {
   projectID: number;
   boardID: number;
 }
+
+interface MoveBoardArgs {
+  projectID: number;
+  boardID: number;
+  direction: "left" | "right";
+}
+
 const boardReducers = {
   addBoard(state: AppState, action: PA<AddBoardPayload>) {
     const { boardTitle, projectID } = action.payload;
@@ -35,6 +42,7 @@ const boardReducers = {
     projectBoards_STATE.push({
       boardTitle: boardTitle.trim(),
       boardID: boardID,
+      showBoardOptions: false,
       cards: [],
     });
 
@@ -87,6 +95,54 @@ const boardReducers = {
   // Delete board
 
   // Board mover
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  moveBoard(state: AppState, action: PA<MoveBoardArgs>) {
+    const { projectID, boardID, direction } = action.payload;
+
+    const projectIndex = state.activeUser.projects.findIndex(
+      (pr) => pr.projectID === projectID
+    );
+
+    const project = state.activeUser.projects[projectIndex];
+
+    if (project !== undefined) {
+      const { boards } = project;
+
+      const boardIndex = boards.findIndex((br) => br.boardID === boardID);
+
+      if (boardIndex === 0 && direction === "left") {
+        console.log("Board already on the left-most");
+        return;
+      }
+
+      if (boardIndex === boards.length - 1 && direction === "right") {
+        console.log("Board already on the right-most");
+        return;
+      }
+
+      if (direction === "left") {
+        const temp =
+          state.activeUser.projects[projectIndex].boards[boardIndex - 1];
+        state.activeUser.projects[projectIndex].boards[boardIndex - 1] =
+          state.activeUser.projects[projectIndex].boards[boardIndex];
+        state.activeUser.projects[projectIndex].boards[boardIndex] = temp;
+      }
+
+      if (direction === "right") {
+        const temp =
+          state.activeUser.projects[projectIndex].boards[boardIndex + 1];
+        state.activeUser.projects[projectIndex].boards[boardIndex + 1] =
+          state.activeUser.projects[projectIndex].boards[boardIndex];
+        state.activeUser.projects[projectIndex].boards[boardIndex] = temp;
+      }
+
+      // if (board !== undefined) {
+      //   console.log(board, direction);
+      // }
+    }
+
+    console.log(direction);
+  },
 };
 
 export default boardReducers;

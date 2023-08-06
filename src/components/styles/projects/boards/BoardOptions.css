@@ -1,0 +1,33 @@
+.board-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  border-radius: inherit;
+  display: grid;
+  padding: 12px;
+  gap: 8px;
+}
+.board-options .direction-buttons {
+  display: flex;
+  height: -moz-min-content;
+  height: min-content;
+  width: 100%;
+  gap: 8px;
+}
+.board-options .direction-buttons .MuiButton-root {
+  flex-grow: 1;
+  height: -moz-min-content;
+  height: min-content;
+  font-size: 12px !important;
+}
+@media (min-width: 1024px) {
+  .board-options {
+    gap: 12px;
+  }
+}/*# sourceMappingURL=BoardOptions.css.map */

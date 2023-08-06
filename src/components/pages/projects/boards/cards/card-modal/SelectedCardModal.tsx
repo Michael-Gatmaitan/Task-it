@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { titleChanger } from "../../../../../../app/titleChanger";
 
 import { useAppSelector, useAppDispatch } from "../../../../../../app/hooks";
-import { useParams } from "react-router-dom";
 import "../../../../../styles/projects/boards/cards/SelectedCardModal.css";
 
 import type { Card } from "../../../../../../types/types";
@@ -29,9 +28,6 @@ import {
 const SelectedCardModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const activeUser = useAppSelector(getActiveUser);
-  const params = useParams();
-
-  // const { boardID, cardID } = props;
 
   const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
 
@@ -127,7 +123,7 @@ const SelectedCardModal: React.FC = () => {
         />
 
         {/* Submit : addCardTag */}
-        <AddCardTagForm cardTags={selectedCard.cardTags} params={params} />
+        <AddCardTagForm cardTags={selectedCard.cardTags} />
 
         <TodoProgressBar selectedCardTodos={selectedCard.todos} />
 

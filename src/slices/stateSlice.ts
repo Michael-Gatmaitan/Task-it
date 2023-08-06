@@ -9,9 +9,9 @@ interface SetCustomUrlIDParams {
 }
 
 interface URLTypes {
-  projectID: number | undefined;
-  boardID: number | undefined;
-  cardID: number | undefined;
+  projectID: number;
+  boardID: number;
+  cardID: number;
 }
 
 interface IndicesTypes {
@@ -29,9 +29,9 @@ interface StateTypes {
 
 const initialState: StateTypes = {
   urlID: {
-    projectID: undefined,
-    boardID: undefined,
-    cardID: undefined,
+    projectID: Math.PI,
+    boardID: Math.PI,
+    cardID: Math.PI,
   },
 
   indices: {
@@ -50,24 +50,17 @@ const stateSlice = createSlice({
     setUrlIDs(state: StateTypes, action: PayloadAction<SetIDsParams>) {
       const url = action.payload;
       if (url === undefined || state.showCardModal) return;
+      // Detects a group of numbers in string that has slash on left of it.
+      const regex = /\/[0-9]/g;
+      // ['/0', '/1'] nad slicing it to remove slashes then convert to number
+      const res: number[] | undefined = url
+        .match(regex)
+        ?.map((n: string) => parseInt(n.slice(1)));
 
-      const urlTemp = url;
-
-      // const temp = new Array(3).fill(undefined);
-
-      const urlTempArr: string[] = urlTemp.split("/");
-      const filtered: string[] = urlTempArr.filter((str) => {
-        const isNotNaN = parseInt(str).toString() !== "NaN";
-        return isNotNaN;
-      });
-      const ids: number[] = filtered.map((n) => parseInt(n));
-
-      Object.keys(state.urlID).forEach((key, i) => {
-        // USER ID IS NOT BELONG HERE
-        state.urlID[key as keyof typeof state.urlID] = ids[i + 1];
-      });
-
-      console.log("From state slice: ", current(state.urlID));
+      if (res) {
+        state.urlID.projectID = res[res.length - 1];
+        console.log("From state slice: ", current(state.urlID));
+      }
     },
 
     setCustomUrlID(

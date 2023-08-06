@@ -30,9 +30,7 @@ export const AnimatePresenceRoutes: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location.pathname);
     dispatch(setUrlIDs(location.pathname));
-
     console.log("SET URL ID RUNNED");
   }, [dispatch, location]);
 
