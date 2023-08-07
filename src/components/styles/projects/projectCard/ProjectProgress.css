@@ -1,0 +1,32 @@
+.project-progress {
+  border-top: 2px solid #f0f0f2;
+  padding-top: 12px;
+  display: grid;
+  align-items: center;
+  gap: 4px;
+  grid-template-columns: auto 1fr;
+  font-size: 12px;
+}
+.project-progress .progress-info {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 4px;
+}
+.project-progress .progress-info .progress-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #0f1975;
+}
+.project-progress .progress-info .progress-bar .progress-hand {
+  height: 4px;
+  width: 20%;
+  border-radius: 4px;
+  background-color: #5b87f8;
+}
+@media (min-width: 1024px) {
+  .project-progress {
+    padding-top: 18px;
+  }
+}/*# sourceMappingURL=ProjectProgress.css.map */

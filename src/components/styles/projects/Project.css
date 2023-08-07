@@ -33,25 +33,6 @@
   max-height: calc(100vh - 155px);
   overflow: scroll;
 }
-.project .boards-container .board-maker {
-  height: -moz-min-content;
-  height: min-content;
-  width: 200px;
-}
-.project .boards-container .board-maker .header2 {
-  margin-bottom: 8px;
-}
-.project .boards-container .board-maker form {
-  display: grid;
-  gap: 12px;
-  width: 100%;
-}
-.project .boards-container .board-maker form .board-maker-buttons {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
 .project .boards-container .add-board {
   width: 200px;
   margin-right: 12px;
@@ -74,13 +55,6 @@
   }
   .project .boards-container {
     max-height: calc(100vh - 194px);
-  }
-  .project .boards-container .board-maker {
-    width: 280px;
-    gap: 18px;
-  }
-  .project .boards-container .board-maker .header2 {
-    margin-bottom: 12px;
   }
   .project .boards-container .add-board {
     width: -moz-max-content;

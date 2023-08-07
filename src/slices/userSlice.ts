@@ -53,6 +53,7 @@ export const {
   // Board reducers
   addBoard,
   editBoardTitleOnBlur,
+  deleteBoard,
   moveBoard,
 
   // Card

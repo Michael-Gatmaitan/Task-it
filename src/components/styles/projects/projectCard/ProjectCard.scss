@@ -1,0 +1,30 @@
+@import "../../mixins";
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+
+  .toggle-project-options {
+    width: 24px;
+    height: 24px;
+    @include flexCenter;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border-radius: 4px;
+    background-color: $inputBG;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  @include desktop {
+    .toggle-project-options {
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

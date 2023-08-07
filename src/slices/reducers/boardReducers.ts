@@ -1,5 +1,5 @@
 import { PayloadAction as PA } from "@reduxjs/toolkit";
-import type { AppState } from "../../types/types";
+import type { AppState, Board } from "../../types/types";
 
 interface AddBoardPayload {
   boardTitle: string;
@@ -93,9 +93,26 @@ const boardReducers = {
   },
 
   // Delete board
+  deleteBoard(
+    state: AppState,
+    action: PA<{ projectID: number; board: Board }>
+  ) {
+    const { projectID, board } = action.payload;
+    const project = state.activeUser.projects.find(
+      (pr) => pr.projectID === projectID
+    );
+
+    const indexOfBoardToDelete = project?.boards.findIndex(
+      (br) => br.boardID === board.boardID
+    );
+
+    if (indexOfBoardToDelete !== undefined && indexOfBoardToDelete !== -1) {
+      project?.boards.splice(indexOfBoardToDelete, 1);
+      console.log("Board successfully deleted");
+    }
+  },
 
   // Board mover
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   moveBoard(state: AppState, action: PA<MoveBoardArgs>) {
     const { projectID, boardID, direction } = action.payload;
 
@@ -109,18 +126,13 @@ const boardReducers = {
       const { boards } = project;
 
       const boardIndex = boards.findIndex((br) => br.boardID === boardID);
-
-      if (boardIndex === 0 && direction === "left") {
-        console.log("Board already on the left-most");
-        return;
-      }
-
-      if (boardIndex === boards.length - 1 && direction === "right") {
-        console.log("Board already on the right-most");
-        return;
-      }
+      console.log("Board index: ", boardIndex, boards.length - 1);
 
       if (direction === "left") {
+        if (boardIndex === 0) {
+          console.log("Board already on the left-most");
+          return;
+        }
         const temp =
           state.activeUser.projects[projectIndex].boards[boardIndex - 1];
         state.activeUser.projects[projectIndex].boards[boardIndex - 1] =
@@ -129,16 +141,16 @@ const boardReducers = {
       }
 
       if (direction === "right") {
+        if (boardIndex === boards.length - 1) {
+          console.log("Board already on the right-most");
+          return;
+        }
         const temp =
           state.activeUser.projects[projectIndex].boards[boardIndex + 1];
         state.activeUser.projects[projectIndex].boards[boardIndex + 1] =
           state.activeUser.projects[projectIndex].boards[boardIndex];
         state.activeUser.projects[projectIndex].boards[boardIndex] = temp;
       }
-
-      // if (board !== undefined) {
-      //   console.log(board, direction);
-      // }
     }
 
     console.log(direction);

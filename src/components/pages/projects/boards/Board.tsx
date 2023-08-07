@@ -1,6 +1,9 @@
 import React, { useState, lazy, Suspense } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { editBoardTitleOnBlur } from "../../../../slices/userSlice";
+import {
+  deleteBoard,
+  editBoardTitleOnBlur,
+} from "../../../../slices/userSlice";
 import type { Board as BoardType } from "../../../../types/types";
 import { Button } from "@mui/material";
 import { MenuRounded } from "@mui/icons-material";
@@ -10,6 +13,7 @@ import "../../../styles/projects/boards/Board.css";
 import CustomStyledSkeleton from "../../../CustomStyledSkeleton";
 import BoardOptions from "./BoardOptions";
 import { getUrlIDs } from "../../../../slices/stateSlice";
+import DeleteModal from "../../modals/DeleteModal";
 
 const Card = lazy(() => import("./cards/Card"));
 
@@ -41,11 +45,22 @@ const Board: React.FC<BoardProps> = (props) => {
 
   const [showBoardOptions, setShowBoardOptions] = useState<boolean>(false);
 
+  const [showDeleteBoard, setShowDeleteBoard] = useState<boolean>(false);
+  const deleteBoardFunc = () => dispatch(deleteBoard({ projectID, board }));
+
   return (
     <div className='board bordered-container'>
+      <DeleteModal
+        showDeleteModal={showDeleteBoard}
+        setShowDeleteModal={setShowDeleteBoard}
+        onDeleteFunction={deleteBoardFunc}
+        componentNameToDelete='Board'
+      />
+
       {showBoardOptions ? (
         <BoardOptions
           setShowBoardOptions={setShowBoardOptions}
+          setShowDeleteBoard={setShowDeleteBoard}
           boardID={board.boardID}
         />
       ) : null}

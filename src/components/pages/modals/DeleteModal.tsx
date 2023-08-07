@@ -40,7 +40,14 @@ const DeleteModal: React.FC<DeleteModalProps> = (props: DeleteModalProps) => {
       >
         Are you sure you want to delete this {componentNameToDelete}?
         <div className='delete-modal-buttons'>
-          <Button variant='contained' color='error' onClick={onDeleteFunction}>
+          <Button
+            variant='contained'
+            color='error'
+            onClick={() => {
+              onDeleteFunction();
+              setShowDeleteModal(false);
+            }}
+          >
             Delete
           </Button>
           <Button variant='outlined' onClick={() => setShowDeleteModal(false)}>

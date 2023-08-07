@@ -23,13 +23,16 @@ export const variantsForPages = {
 
 export const variantsForModals = {
   variants: {
-    hidden: { marginTop: 50, opacity: 0 },
+    hidden: { marginTop: 20, opacity: 0 },
     opened: {
       marginTop: 0,
       opacity: 1,
-      transition: { duration: 0.2, ease: "easeIn" },
+      transition: { duration: 0.1, ease: "easeIn" },
     },
-    exit: { opacity: 0 },
+    exit: {
+      marginTop: -20,
+      opacity: 0,
+    },
   },
 
   initial: "hidden",
@@ -52,6 +55,14 @@ export const staggerAnimation = {
         ease: "easeInOut",
       },
     },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 2,
+        // staggerChildren: 0.1,
+        // ease: "easeInOut",
+      },
+    },
   },
 
   item: {
@@ -63,6 +74,10 @@ export const staggerAnimation = {
         ease: "easeIn",
         duration: 0.5,
       },
+    },
+    exit: {
+      opacity: 0,
+      y: 10,
     },
   },
 };

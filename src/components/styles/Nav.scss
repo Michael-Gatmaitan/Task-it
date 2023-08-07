@@ -38,35 +38,37 @@ nav {
     left: 50%;
     transform: translateX(-50%);
 
-    a {
-      padding: 14px;
-      font-family: $inter;
-      font-size: 15px;
-      text-decoration: none;
-      position: relative;
-      color: #121212;
-      font-weight: 600;
-      border-radius: 4px;
-      transition: 0.1s ease;
-      display: flex;
-      gap: 8px;
-      align-items: center;
+    .navlink-wrapper-desktop {
+      a {
+        padding: 14px;
+        font-family: $inter;
+        font-size: 15px;
+        text-decoration: none;
+        position: relative;
+        color: #121212;
+        font-weight: 600;
+        border-radius: 4px;
+        transition: 0.1s ease;
+        display: flex;
+        gap: 8px;
+        align-items: center;
 
-      &:hover {
-        background-color: #f1f1f1;
+        &:hover {
+          background-color: #f1f1f1;
+        }
+
+        span {
+          display: none;
+        }
       }
 
-      span {
-        display: none;
-      }
-    }
+      .active {
+        color: #fff;
+        background-color: $primary;
 
-    .active {
-      color: #fff;
-      background-color: $primary;
-
-      &:hover {
-        background-color: $darker;
+        &:hover {
+          background-color: $darker;
+        }
       }
     }
   }

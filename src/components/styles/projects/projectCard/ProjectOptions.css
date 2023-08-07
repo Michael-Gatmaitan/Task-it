@@ -1,0 +1,36 @@
+.project-options {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(238, 238, 238, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 16px;
+  -webkit-backdrop-filter: blur(7.5px);
+          backdrop-filter: blur(7.5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-options .options-container {
+  display: grid;
+  place-items: center;
+  gap: 4px;
+}
+.project-options .options-container .MuiButton-text {
+  color: #121212;
+}
+.project-options .options-container .MuiButton-text:hover {
+  background-color: #5b87f8;
+  color: #fff;
+}
+.project-options .options-container .delete-project {
+  background-color: #fcfdff;
+  color: #ff3333;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.project-options .options-container .delete-project:hover {
+  background-color: #ff3333;
+  color: #fff;
+}/*# sourceMappingURL=ProjectOptions.css.map */

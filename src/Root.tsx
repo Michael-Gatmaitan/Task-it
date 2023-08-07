@@ -93,11 +93,12 @@ const Root: React.FC = () => {
         setToggleSidebar={setToggleSidebar}
       />
 
-      <SideBar
-        navBarButtons={navBarButtons}
-        toggleSidebar={toggleSidebar}
-        setToggleSidebar={setToggleSidebar}
-      />
+      {toggleSidebar ? (
+        <SideBar
+          navBarButtons={navBarButtons}
+          setToggleSidebar={setToggleSidebar}
+        />
+      ) : null}
 
       <Suspense fallback={<LoadingComponent />}>
         <Outlet />

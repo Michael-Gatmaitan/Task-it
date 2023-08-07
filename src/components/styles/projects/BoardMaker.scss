@@ -1,0 +1,32 @@
+@import "../mixins";
+
+.board-maker {
+  height: min-content;
+  width: 200px;
+
+  .header2 {
+    margin-bottom: 8px;
+  }
+
+  form {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+
+    .board-maker-buttons {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+
+  @include desktop {
+    width: 280px;
+    gap: 18px;
+
+    .header2 {
+      margin-bottom: 12px;
+    }
+  }
+}

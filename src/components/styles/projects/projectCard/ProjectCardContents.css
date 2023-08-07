@@ -1,0 +1,31 @@
+.project-contents {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 0.6fr 0.4fr auto;
+}
+.project-contents .project-header {
+  width: 100%;
+  overflow-y: scroll;
+}
+.project-contents .project-header::-webkit-scrollbar {
+  display: none;
+}
+.project-contents .project-header .project-title {
+  max-width: 80%;
+  word-wrap: break-word;
+}
+.project-contents .project-tags {
+  overflow-y: scroll;
+}
+.project-contents .project-tags::-webkit-scrollbar {
+  display: none;
+}
+.project-contents .project-tags .tags-container {
+  padding: 4px 0;
+}
+.project-contents .project-tags .tags-container .MuiChip-root {
+  margin: 4px 4px 0 0;
+  word-wrap: break-word;
+}/*# sourceMappingURL=ProjectCardContents.css.map */

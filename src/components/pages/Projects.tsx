@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, lazy } from "react";
 import { titleChanger } from "../../app/titleChanger";
 import { useAppSelector } from "../../app/hooks";
 
@@ -23,7 +23,9 @@ import {
 } from "../../framer-motion-variants";
 import CreateProjectModal from "./modals/CreateProjectModal";
 
-const ProjectCard = React.lazy(() => import("./projects/ProjectCard"));
+const ProjectCard = lazy(
+  () => import("./projects/projectCard/ProjectCard")
+);
 
 const Projects: React.FC = () => {
   titleChanger({ title: "Projects" });

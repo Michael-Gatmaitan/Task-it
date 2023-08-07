@@ -20,49 +20,54 @@
     display: grid;
     gap: 10px;
 
-    // 'a' or 'sidebar-button'
-    a {
-      width: calc(100% + (18px * 2));
-      padding: 10px 18px;
-      margin-left: -18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background-color: transparent;
-      color: #121212;
-      text-decoration: none;
-      position: relative;
-      transition: 0.2s ease;
+    .navlink-wrapper {
+      width: 100%;
+      height: min-content;
 
-      &::before {
-        content: "";
-        height: 100%;
-        width: 0;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: -1;
-        background-color: $primary;
+      // 'a' or 'sidebar-button'
+      a {
+        width: calc(100% + (18px * 2));
+        padding: 10px 18px;
+        margin-left: -18px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: transparent;
+        color: #121212;
+        text-decoration: none;
+        position: relative;
         transition: 0.2s ease;
+
+        &::before {
+          content: "";
+          height: 100%;
+          width: 0;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: -1;
+          background-color: $primary;
+          transition: 0.2s ease;
+        }
+
+        &:hover {
+          color: $primary;
+
+          // &::before {
+          //   width: 100%;
+          // }
+        }
       }
 
-      &:hover {
-        color: $primary;
-
-        // &::before {
-        //   width: 100%;
-        // }
+      .active {
+        color: #fff;
+        background: linear-gradient(
+          90deg,
+          $primary,
+          rgba($primary, 0.1),
+          rgba($primary, 0)
+        );
       }
-    }
-
-    .active {
-      color: #fff;
-      background: linear-gradient(
-        90deg,
-        $primary,
-        rgba($primary, 0.1),
-        rgba($primary, 0)
-      );
     }
 
     // logout button
@@ -75,9 +80,4 @@
   @include desktop {
     display: none;
   }
-}
-
-.hide-sidebar {
-  opacity: 0;
-  pointer-events: none;
 }

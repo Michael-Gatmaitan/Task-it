@@ -4,6 +4,8 @@ import { useAppDispatch } from "../../../app/hooks";
 import { addBoard } from "../../../slices/userSlice";
 import { Button, TextField } from "@mui/material";
 
+import "../../styles/projects/BoardMaker.css";
+
 interface BoardMakerProps {
   setShowBoardMaker: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -42,7 +44,7 @@ const BoardMaker: React.FC<BoardMakerProps> = (props: BoardMakerProps) => {
 
   return (
     <div className='board-maker bordered-container'>
-      <div className="header2">Create board</div>
+      <div className='header2'>Create board</div>
       <form id='board-maker' onSubmit={handleSubmitAddBoard}>
         <TextField
           autoFocus

@@ -8,35 +8,48 @@ import "../components/styles/Sidebar.css";
 import type { NavButtons } from "../types/types";
 import ProfileRibbon from "../components/ProfileRibbon";
 
+import { motion } from "framer-motion";
+import { staggerAnimation } from "../framer-motion-variants";
+
 // Reducers and getters, top: Reducers, bottom: Getters
 
 interface SideBarProps {
   navBarButtons: NavButtons;
-  toggleSidebar: boolean;
   setToggleSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
-  const { navBarButtons, toggleSidebar, setToggleSidebar } = props;
+  const { navBarButtons, setToggleSidebar } = props;
 
   return (
-    <div className={`sidebar ${!toggleSidebar ? "hide-sidebar" : ""}`}>
+    <motion.div
+      variants={staggerAnimation.container}
+      initial='hidden'
+      animate='show'
+      className='sidebar'
+    >
       <ProfileRibbon platform='mobile' />
 
       <div className='sidebar-buttons'>
         {navBarButtons.centerButtons.map((button, key) => (
-          <NavLink
-            to={button.path}
-            className='header2 sidebar-button'
-            onClick={() => setToggleSidebar(false)}
+          <motion.div
+            whileTap={{ scale: 0.97 }}
+            variants={staggerAnimation.item}
+            className='navlink-wrapper'
             key={key}
           >
-            <button.Icon fontSize='large' />
-            {button.text}
-          </NavLink>
+            <NavLink
+              to={button.path}
+              className='header2 sidebar-button'
+              onClick={() => setToggleSidebar(false)}
+            >
+              <button.Icon fontSize='large' />
+              {button.text}
+            </NavLink>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
