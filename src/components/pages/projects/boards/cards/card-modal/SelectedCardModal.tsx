@@ -20,16 +20,14 @@ import { variantsForModals } from "../../../../../../framer-motion-variants";
 
 // Mui
 import { Skeleton } from "@mui/material";
-import {
-  getUrlIDs,
-  toggleShowCardModal,
-} from "../../../../../../slices/stateSlice";
+import { toggleShowCardModal } from "../../../../../../slices/stateSlice";
+import { useGetUrlIDs } from "../../../../../../slices/getters/stateSliceGetters";
 
 const SelectedCardModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const activeUser = useAppSelector(getActiveUser);
 
-  const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
+  const { projectID, boardID, cardID } = useGetUrlIDs();
 
   const [selectedCard, setSelectedCard] = useState<Card | undefined>(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);

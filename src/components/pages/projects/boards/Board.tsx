@@ -1,19 +1,22 @@
 import React, { useState, lazy, Suspense } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { useAppDispatch } from "../../../../app/hooks";
 import {
   deleteBoard,
   editBoardTitleOnBlur,
 } from "../../../../slices/userSlice";
+
+import { useGetUrlIDs } from "../../../../slices/getters/stateSliceGetters";
+
 import type { Board as BoardType } from "../../../../types/types";
 import { Button } from "@mui/material";
 import { MenuRounded } from "@mui/icons-material";
 
 import CardMaker from "./CardMaker";
-import "../../../styles/projects/boards/Board.css";
 import CustomStyledSkeleton from "../../../CustomStyledSkeleton";
 import BoardOptions from "./BoardOptions";
-import { getUrlIDs } from "../../../../slices/stateSlice";
 import DeleteModal from "../../modals/DeleteModal";
+
+import "../../../styles/projects/boards/Board.css";
 
 const Card = lazy(() => import("./cards/Card"));
 
@@ -26,7 +29,7 @@ const Board: React.FC<BoardProps> = (props) => {
 
   const dispatch = useAppDispatch();
 
-  const ids = useAppSelector(getUrlIDs);
+  const ids = useGetUrlIDs();
   const { projectID } = ids;
 
   const [newBoardTitle, setNewBoardTitle] = useState<string>("");

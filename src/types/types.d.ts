@@ -22,14 +22,12 @@ interface Card {
   cardDescription: string;
   cardTags: CardTag[];
   todos: Todo[];
-  showCardOptions: boolean;
   cardID: number;
 }
 
 export interface Board {
   boardTitle: string;
   cards: Card[];
-  showBoardOptions: boolean;
   boardID: number;
 }
 
@@ -133,15 +131,6 @@ export interface HandleTodoProps {
   boardID: number;
   cardID: number;
   mode: "add" | "edit" | "delete";
-}
-
-export interface SetOptionsProps {
-  val: boolean;
-  ids: {
-    projectID: number;
-    boardID: number;
-    cardID: number;
-  };
 }
 
 // structure

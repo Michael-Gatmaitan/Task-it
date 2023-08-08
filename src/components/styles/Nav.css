@@ -33,7 +33,7 @@ nav .nav-buttons {
   left: 50%;
   transform: translateX(-50%);
 }
-nav .nav-buttons .navlink-wrapper-desktop a {
+nav .nav-buttons a.nav-button {
   padding: 14px;
   font-family: "Inter", sans-serif;
   font-size: 15px;
@@ -47,17 +47,17 @@ nav .nav-buttons .navlink-wrapper-desktop a {
   gap: 8px;
   align-items: center;
 }
-nav .nav-buttons .navlink-wrapper-desktop a:hover {
+nav .nav-buttons a.nav-button:hover {
   background-color: #f1f1f1;
 }
-nav .nav-buttons .navlink-wrapper-desktop a span {
+nav .nav-buttons a.nav-button span {
   display: none;
 }
-nav .nav-buttons .navlink-wrapper-desktop .active {
+nav .nav-buttons .active {
   color: #fff;
   background-color: #5b87f8;
 }
-nav .nav-buttons .navlink-wrapper-desktop .active:hover {
+nav .nav-buttons .active:hover {
   background-color: #0f1975;
 }
 nav .menu-container {

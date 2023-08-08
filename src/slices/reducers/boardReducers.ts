@@ -42,7 +42,6 @@ const boardReducers = {
     projectBoards_STATE.push({
       boardTitle: boardTitle.trim(),
       boardID: boardID,
-      showBoardOptions: false,
       cards: [],
     });
 

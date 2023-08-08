@@ -9,7 +9,6 @@ import {
   DeleteCardPayload,
   EditCardPropsPayload,
   HandleTodoProps,
-  SetOptionsProps,
 } from "../../types/types";
 
 const cardReducers = {
@@ -39,7 +38,6 @@ const cardReducers = {
       cardDescription: "",
       cardTags: newCard.cardTags,
       todos: newCard.todos,
-      showCardOptions: false,
       cardID: newCard.cardID,
     };
     state.activeUser.projects[projectIdx].boards[boardIdx].cards.push(
@@ -255,21 +253,6 @@ const cardReducers = {
         console.error("card's todo action type mode is not valid");
       }
     }
-  },
-
-  setShowCardOptions(state: AppState, action: PA<SetOptionsProps>) {
-    const { val, ids } = action.payload;
-    const { projectID, boardID, cardID } = ids;
-    const { projectIDX, boardIDX, cardIDX } = searchIndices({
-      state,
-      projectID,
-      boardID,
-      cardID,
-    });
-
-    state.activeUser.projects[projectIDX].boards[boardIDX].cards[
-      cardIDX
-    ].showCardOptions = val;
   },
 };
 

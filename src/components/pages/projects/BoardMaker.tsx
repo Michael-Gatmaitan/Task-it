@@ -1,9 +1,8 @@
 import React, { useState, useDeferredValue } from "react";
-import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../app/hooks";
 import { addBoard } from "../../../slices/userSlice";
 import { Button, TextField } from "@mui/material";
-
+import { useGetUrlIDs } from "../../../slices/getters/stateSliceGetters";
 import "../../styles/projects/BoardMaker.css";
 
 interface BoardMakerProps {
@@ -13,7 +12,7 @@ interface BoardMakerProps {
 const BoardMaker: React.FC<BoardMakerProps> = (props: BoardMakerProps) => {
   const dispatch = useAppDispatch();
   const { setShowBoardMaker } = props;
-  const params = useParams();
+  const { projectID } = useGetUrlIDs();
 
   const [boardTitle, setBoardTitle] = useState<string>("");
   const deferredBoardTitle = useDeferredValue(boardTitle);
@@ -23,13 +22,10 @@ const BoardMaker: React.FC<BoardMakerProps> = (props: BoardMakerProps) => {
   ) => {
     e.preventDefault();
 
-    const projectID =
-      params.projectID === undefined ? -1 : parseInt(params.projectID);
-
     console.log(
       "Creating board with arguments of:",
       deferredBoardTitle,
-      params.projectID
+      projectID
     );
     dispatch(
       addBoard({

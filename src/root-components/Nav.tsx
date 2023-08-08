@@ -15,10 +15,6 @@ import { MenuRounded, CloseRounded } from "@mui/icons-material";
 import { getUserLoggedIn } from "../slices/userSlice";
 import { useAppSelector } from "../app/hooks";
 
-import { staggerAnimation } from "../framer-motion-variants";
-
-import { motion } from "framer-motion";
-
 import type { NavButtons } from "../types/types";
 
 interface NavProps {
@@ -33,44 +29,27 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
   const loggedIn = useAppSelector(getUserLoggedIn);
 
   return (
-    <motion.nav
-      variants={staggerAnimation.container}
-      initial='hidden'
-      animate='show'
-      key='nav'
-    >
+    <nav>
       {/* Logo */}
       <div className='logo-container'>
-        <motion.div
-          variants={staggerAnimation.item}
-          className='logo'
-        ></motion.div>
-        <motion.div variants={staggerAnimation.item} className='taskit-text'>
-          Taskit
-        </motion.div>
+        <div className='logo'></div>
+        <div className='taskit-text'>Taskit</div>
       </div>
 
       {/* Buttons */}
       <div className='nav-buttons'>
         {navBarButtons.centerButtons.map((button, key) => (
           <Tooltip title={button.text} placement='bottom' key={key}>
-            <motion.div
-              whileTap={{ scale: 0.97 }}
-              variants={staggerAnimation.item}
-              className='navlink-wrapper-desktop'
-            >
-              <NavLink to={button.path}>
-                <button.Icon />
-                <span>{button.text}</span>
-              </NavLink>
-            </motion.div>
+            <NavLink to={button.path} className='nav-button'>
+              <button.Icon />
+              <span>{button.text}</span>
+            </NavLink>
           </Tooltip>
         ))}
       </div>
 
       {/* Menu */}
-      <motion.div
-        variants={staggerAnimation.item}
+      <div
         className='menu-container'
         onClick={() => setToggleSidebar(!toggleSidebar)}
       >
@@ -79,25 +58,19 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
         ) : (
           <MenuRounded fontSize='large' />
         )}
-      </motion.div>
+      </div>
 
       {/* Desktop side buttons */}
       {loggedIn === false ? (
         <div className='get-started-button-container'>
           <Link to={"/get-started"}>
-            <Button
-              component={motion.div}
-              variants={staggerAnimation.item}
-              variant='outlined'
-            >
-              Get started
-            </Button>
+            <Button variant='outlined'>Get started</Button>
           </Link>
         </div>
       ) : (
         <ProfileRibbon platform='desktop' />
       )}
-    </motion.nav>
+    </nav>
   );
 };
 

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../app/hooks";
 import { TextField, Button, Chip } from "@mui//material";
 
 // Style
 import "../.././../../../styles/projects/boards/cards/AddCardTagForm.css";
 import { CardTag } from "../../../../../../types/types";
 import { handleCardTag } from "../../../../../../slices/userSlice";
-import { getUrlIDs } from "../../../../../../slices/stateSlice";
+import { useGetUrlIDs } from "../../../../../../slices/getters/stateSliceGetters";
 
 interface AddCardTagFormProps {
   cardTags: CardTag[];
@@ -20,7 +20,7 @@ const AddCardTagForm: React.FC<AddCardTagFormProps> = (
 
   const [newCardTag, setNewCardTag] = useState<string>("");
 
-  const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
+  const { projectID, boardID, cardID } = useGetUrlIDs();
 
   const handleAddCardTag = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

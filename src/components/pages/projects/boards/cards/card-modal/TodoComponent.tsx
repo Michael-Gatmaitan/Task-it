@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect, memo } from "react";
 
 // Redux
-import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../app/hooks";
 import { handleTodo } from "../../../../../../slices/userSlice";
-import { getUrlIDs } from "../../../../../../slices/stateSlice";
 
 //  Types
 import type { Todo } from "../../../../../../types/types";
@@ -13,11 +12,12 @@ import { CloseRounded } from "@mui/icons-material";
 
 // Style
 import "../../../../../styles/projects/boards/cards/TodoComponent.css";
+import { useGetUrlIDs } from "../../../../../../slices/getters/stateSliceGetters";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const TodoComponent: React.FC<{ todo: Todo }> = ({ todo }) => {
   const dispatch = useAppDispatch();
-  const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
+  const { projectID, boardID, cardID } = useGetUrlIDs();
   const { title, checked } = todo;
 
   const inputTitleRef = useRef<HTMLInputElement | null>(null);

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 
 // Redux
-import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
+import { useAppDispatch } from "../../../../../../app/hooks";
 import { handleTodo } from "../../../../../../slices/userSlice";
-import { getUrlIDs } from "../../../../../../slices/stateSlice";
 
 // Components
 import TodoComponent from "./TodoComponent";
@@ -13,6 +12,7 @@ import TodoComponent from "./TodoComponent";
 import "../../../../../styles/projects/boards/cards/TodoListForm.css";
 
 import { HandleTodoProps, Todo } from "../../../../../../types/types";
+import { useGetUrlIDs } from "../../../../../../slices/getters/stateSliceGetters";
 interface TodoListFormProps {
   todos: Todo[];
 }
@@ -23,7 +23,7 @@ const TodoListForm: React.FC<TodoListFormProps> = (
   const dispatch = useAppDispatch();
   const { todos } = props;
   const [todoTitleState, setTodoTitleState] = useState<string>("");
-  const { projectID, boardID, cardID } = useAppSelector(getUrlIDs);
+  const { projectID, boardID, cardID } = useGetUrlIDs();
 
   const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

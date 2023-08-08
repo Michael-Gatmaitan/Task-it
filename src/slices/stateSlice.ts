@@ -40,6 +40,7 @@ const initialState: StateTypes = {
     cardIndex: undefined,
   },
 
+  // State for card modal
   showCardModal: false,
 };
 

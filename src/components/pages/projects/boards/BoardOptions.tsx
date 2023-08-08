@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Button } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { getUrlIDs } from "../../../../slices/stateSlice";
+import { useAppDispatch } from "../../../../app/hooks";
 import { moveBoard } from "../../../../slices/userSlice";
 
 import "../../../styles/projects/boards/BoardOptions.css";
+import { useGetUrlIDs } from "../../../../slices/getters/stateSliceGetters";
 
 interface BoardOptionsProps {
   setShowBoardOptions: React.Dispatch<React.SetStateAction<boolean>>;
@@ -63,7 +63,7 @@ interface DirButProps {
 const DirectionButtons: React.FC<DirButProps> = (props: DirButProps) => {
   const dispatch = useAppDispatch();
   const { boardID, setShowBoardOptions } = props;
-  const { projectID } = useAppSelector(getUrlIDs);
+  const { projectID } = useGetUrlIDs();
 
   const handleMoveBoard = (direction: "left" | "right") => {
     dispatch(moveBoard({ projectID, boardID, direction }));
