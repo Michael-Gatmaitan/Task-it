@@ -48,7 +48,7 @@ const Project: React.FC = () => {
 
   const currentProject: ProjectType | undefined = useMemo(
     () =>
-      projectID !== undefined
+      projectID
         ? userProjects.find(
             (project: ProjectType) => project.projectID === parseInt(projectID)
           )
@@ -72,14 +72,13 @@ const Project: React.FC = () => {
 
   // Title changer
   useEffect(() => {
-    if (currentProject !== undefined)
+    if (currentProject)
       titleChanger({ projectTitle: currentProject.projectTitle });
   }, [currentProject, params]);
 
   // Set project time created.
   useEffect(() => {
-    if (currentProject !== undefined)
-      setTime(dayjs(currentProject.dateCreated).fromNow());
+    if (currentProject) setTime(dayjs(currentProject.dateCreated).fromNow());
   }, [currentProject]);
 
   const [time, setTime] = useState<string>("");
@@ -87,7 +86,7 @@ const Project: React.FC = () => {
 
   // const showSelectedCard = useAppSelector(getShowSelectedCard);
 
-  return currentProject !== undefined ? (
+  return currentProject && projectID ? (
     <motion.div className='project page' {...variantsForPages}>
       <div className='project-nav'>
         <Link
@@ -121,7 +120,7 @@ const Project: React.FC = () => {
                 key={i}
                 fallback={<CustomStyledSkeleton componentName='board' />}
               >
-                <Board board={board} />
+                <Board board={board} projectID={parseInt(projectID)} />
               </Suspense>
             ))
           : null}
@@ -131,7 +130,10 @@ const Project: React.FC = () => {
           <Suspense
             fallback={<CustomStyledSkeleton componentName='board-maker' />}
           >
-            <BoardMaker setShowBoardMaker={setShowBoardMaker} />
+            <BoardMaker
+              setShowBoardMaker={setShowBoardMaker}
+              projectID={parseInt(projectID)}
+            />
           </Suspense>
         ) : (
           <Button

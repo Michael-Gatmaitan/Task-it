@@ -4,18 +4,18 @@ import { useAppDispatch } from "../../../../app/hooks";
 import { moveBoard } from "../../../../slices/userSlice";
 
 import "../../../styles/projects/boards/BoardOptions.css";
-import { useGetUrlIDs } from "../../../../slices/getters/stateSliceGetters";
 
 interface BoardOptionsProps {
   setShowBoardOptions: React.Dispatch<React.SetStateAction<boolean>>;
   setShowDeleteBoard: React.Dispatch<React.SetStateAction<boolean>>;
   boardID: number;
+  projectID: number;
 }
 
 const BoardOptions: React.FC<BoardOptionsProps> = (
   props: BoardOptionsProps
 ) => {
-  const { setShowBoardOptions, setShowDeleteBoard, boardID } = props;
+  const { setShowBoardOptions, setShowDeleteBoard, boardID, projectID } = props;
 
   useEffect(() => {
     const handleEscapeKeyEvent = (event: KeyboardEvent) => {
@@ -34,11 +34,12 @@ const BoardOptions: React.FC<BoardOptionsProps> = (
       <DirectionButtons
         setShowBoardOptions={setShowBoardOptions}
         boardID={boardID}
+        projectID={projectID}
       />
 
       <div className='action-buttons' onClick={(e) => e.stopPropagation()}>
         <Button
-          variant='contained'
+          variant='outlined'
           onClick={() => {
             setShowDeleteBoard(true);
             setShowBoardOptions(false);
@@ -58,12 +59,12 @@ const BoardOptions: React.FC<BoardOptionsProps> = (
 interface DirButProps {
   setShowBoardOptions: React.Dispatch<React.SetStateAction<boolean>>;
   boardID: number;
+  projectID: number;
 }
 
 const DirectionButtons: React.FC<DirButProps> = (props: DirButProps) => {
   const dispatch = useAppDispatch();
-  const { boardID, setShowBoardOptions } = props;
-  const { projectID } = useGetUrlIDs();
+  const { boardID, setShowBoardOptions, projectID } = props;
 
   const handleMoveBoard = (direction: "left" | "right") => {
     dispatch(moveBoard({ projectID, boardID, direction }));

@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 type SetIDsParams = string | undefined;
@@ -9,9 +9,9 @@ interface SetCustomUrlIDParams {
 }
 
 interface URLTypes {
-  projectID: number;
-  boardID: number;
-  cardID: number;
+  projectID: number | undefined;
+  boardID: number | undefined;
+  cardID: number | undefined;
 }
 
 interface IndicesTypes {
@@ -29,9 +29,9 @@ interface StateTypes {
 
 const initialState: StateTypes = {
   urlID: {
-    projectID: Math.PI,
-    boardID: Math.PI,
-    cardID: Math.PI,
+    projectID: undefined,
+    boardID: undefined,
+    cardID: undefined,
   },
 
   indices: {
@@ -52,15 +52,23 @@ const stateSlice = createSlice({
       const url = action.payload;
       if (url === undefined || state.showCardModal) return;
       // Detects a group of numbers in string that has slash on left of it.
-      const regex = /\/[0-9]/g;
+      // const regex = /\/([0-9]|[1-9]|[0-9]|[1-9]|[0-9]|[0-9])/g;
       // ['/0', '/1'] nad slicing it to remove slashes then convert to number
-      const res: number[] | undefined = url
-        .match(regex)
-        ?.map((n: string) => parseInt(n.slice(1)));
-
-      if (res) {
-        state.urlID.projectID = res[res.length - 1];
-        console.log("From state slice: ", current(state.urlID));
+      // const res: number[] | undefined = url
+      //   .match(regex)
+      //   ?.map((n: string) => parseInt(n.slice(1)));
+      // console.log(res);
+      // if (res) {
+      //   state.urlID.projectID = res[res.length - 1];
+      // console.log("From state slice: ", current(state.urlID));
+      // }
+      if (url.includes("/projects/")) {
+        const startIndex = url.lastIndexOf("/");
+        const nString = url.slice(startIndex + 1, url.length);
+        if (parseInt(nString).toString() !== "NaN") {
+          state.urlID.projectID = parseInt(nString);
+          console.log("projectID finnally set to: ", parseInt(nString));
+        }
       }
     },
 

@@ -1,11 +1,9 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useRef, useEffect, useState, lazy, Suspense } from "react";
 import { useAppDispatch } from "../../../../app/hooks";
 import {
   deleteBoard,
   editBoardTitleOnBlur,
 } from "../../../../slices/userSlice";
-
-import { useGetUrlIDs } from "../../../../slices/getters/stateSliceGetters";
 
 import type { Board as BoardType } from "../../../../types/types";
 import { Button } from "@mui/material";
@@ -22,23 +20,31 @@ const Card = lazy(() => import("./cards/Card"));
 
 interface BoardProps {
   board: BoardType;
+  projectID: number;
 }
 
 const Board: React.FC<BoardProps> = (props) => {
-  const { board } = props;
+  const { board, projectID } = props;
 
   const dispatch = useAppDispatch();
 
-  const ids = useGetUrlIDs();
-  const { projectID } = ids;
+  const [newBoardTitle, setNewBoardTitle] = useState<string>(board.boardTitle);
 
-  const [newBoardTitle, setNewBoardTitle] = useState<string>("");
+  const titleRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    console.log("TItle changed ort board moved");
+    if (titleRef.current !== null) titleRef.current.value = board.boardTitle;
+  }, [board.boardTitle]);
+
   const boardTitleOnBlur = () => {
+    console.log(`State: ${newBoardTitle}, Redux: ${board.boardTitle}`);
+
     const editBoardReducerArgs = {
       currentTitle: board.boardTitle,
       newBoardTitle: newBoardTitle,
-      projectID: ids.projectID,
-      boardID: ids.boardID,
+      projectID: projectID,
+      boardID: board.boardID,
     };
 
     dispatch(editBoardTitleOnBlur(editBoardReducerArgs));
@@ -65,16 +71,18 @@ const Board: React.FC<BoardProps> = (props) => {
           setShowBoardOptions={setShowBoardOptions}
           setShowDeleteBoard={setShowDeleteBoard}
           boardID={board.boardID}
+          projectID={projectID}
         />
       ) : null}
 
       <div className='board-nav'>
         <div className='board-title-container'>
           <input
+            ref={titleRef}
             type='text'
             name='boardTitle'
             className='header3 editable-board-title'
-            value={board.boardTitle}
+            value={newBoardTitle}
             id={`board-title-input-pID${projectID}-bID${board.boardID}`}
             onBlur={boardTitleOnBlur}
             onChange={(e) => setNewBoardTitle(e.target.value)}

@@ -2,17 +2,16 @@ import React, { useState, useDeferredValue } from "react";
 import { useAppDispatch } from "../../../app/hooks";
 import { addBoard } from "../../../slices/userSlice";
 import { Button, TextField } from "@mui/material";
-import { useGetUrlIDs } from "../../../slices/getters/stateSliceGetters";
 import "../../styles/projects/BoardMaker.css";
 
 interface BoardMakerProps {
   setShowBoardMaker: React.Dispatch<React.SetStateAction<boolean>>;
+  projectID: number;
 }
 
 const BoardMaker: React.FC<BoardMakerProps> = (props: BoardMakerProps) => {
   const dispatch = useAppDispatch();
-  const { setShowBoardMaker } = props;
-  const { projectID } = useGetUrlIDs();
+  const { setShowBoardMaker, projectID } = props;
 
   const [boardTitle, setBoardTitle] = useState<string>("");
   const deferredBoardTitle = useDeferredValue(boardTitle);

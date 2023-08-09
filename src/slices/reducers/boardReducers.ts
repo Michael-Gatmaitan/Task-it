@@ -1,4 +1,4 @@
-import { PayloadAction as PA } from "@reduxjs/toolkit";
+import { PayloadAction as PA, current } from "@reduxjs/toolkit";
 import type { AppState, Board } from "../../types/types";
 
 interface AddBoardPayload {
@@ -34,18 +34,18 @@ const boardReducers = {
 
     const projectBoards_STATE = state.activeUser.projects[projectIndex].boards;
 
-    const boardID: number =
-      projectBoards_STATE.length === 0
-        ? 0
-        : projectBoards_STATE[projectBoards_STATE.length - 1].boardID + 1;
+    // const boardID: number =
+    // projectBoards_STATE.length === 0
+    //   ? 0
+    //   : projectBoards_STATE[projectBoards_STATE.length - 1].boardID + 1;
 
     projectBoards_STATE.push({
       boardTitle: boardTitle.trim(),
-      boardID: boardID,
+      boardID: Date.now(),
       cards: [],
     });
 
-    console.log(projectBoards_STATE);
+    console.log(current(projectBoards_STATE));
   },
 
   editBoardTitleOnBlur(state: AppState, action: PA<EditBoardTitleOnBlurProps>) {
@@ -73,7 +73,6 @@ const boardReducers = {
     // If title is NOT empty or else
     if (newBoardTitle.trim() !== "") {
       boardToEdit_STATE.boardTitle = newBoardTitle.trim();
-
       console.log("Title overwrited");
     } else {
       boardToEdit_STATE.boardTitle = currentTitle;
@@ -81,6 +80,8 @@ const boardReducers = {
       const boardTitleInputEl = document.getElementById(
         `board-title-input-pID${projectID}-bID${boardID}`
       ) as HTMLInputElement;
+
+      console.log(boardTitleInputEl);
 
       boardTitleInputEl.value = currentTitle;
 

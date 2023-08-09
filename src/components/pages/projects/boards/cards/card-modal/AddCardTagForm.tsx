@@ -25,35 +25,51 @@ const AddCardTagForm: React.FC<AddCardTagFormProps> = (
   const handleAddCardTag = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(
-      handleCardTag({
-        type: "add",
-        cardTagTitle: newCardTag,
-        idPaths: {
-          projectID: projectID,
-          boardID: boardID,
-          cardID: cardID,
-        },
-      })
-    );
+    if (
+      projectID !== undefined &&
+      boardID !== undefined &&
+      cardID !== undefined
+    ) {
+      dispatch(
+        handleCardTag({
+          type: "add",
+          cardTagTitle: newCardTag,
+          idPaths: {
+            projectID: projectID,
+            boardID: boardID,
+            cardID: cardID,
+          },
+        })
+      );
 
-    console.log(cardID);
+      console.log(cardID);
+    } else {
+      console.log("Some of idis undefined. ADD CARD TAG");
+    }
 
     setNewCardTag("");
   };
 
   const handleDeleteCardTag = (cardTagID: number) => {
-    dispatch(
-      handleCardTag({
-        type: "delete",
-        cardTagID: cardTagID,
-        idPaths: {
-          projectID: projectID,
-          boardID: boardID,
-          cardID: cardID,
-        },
-      })
-    );
+    if (
+      projectID !== undefined &&
+      boardID !== undefined &&
+      cardID !== undefined
+    ) {
+      dispatch(
+        handleCardTag({
+          type: "delete",
+          cardTagID: cardTagID,
+          idPaths: {
+            projectID: projectID,
+            boardID: boardID,
+            cardID: cardID,
+          },
+        })
+      );
+    } else {
+      console.log("Some of idis undefined. DELETE CARD TAG");
+    }
   };
 
   return (

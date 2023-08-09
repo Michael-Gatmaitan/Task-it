@@ -33,7 +33,7 @@ nav .nav-buttons {
   left: 50%;
   transform: translateX(-50%);
 }
-nav .nav-buttons a.nav-button {
+nav .nav-buttons a {
   padding: 14px;
   font-family: "Inter", sans-serif;
   font-size: 15px;
@@ -47,10 +47,10 @@ nav .nav-buttons a.nav-button {
   gap: 8px;
   align-items: center;
 }
-nav .nav-buttons a.nav-button:hover {
+nav .nav-buttons a:hover {
   background-color: #f1f1f1;
 }
-nav .nav-buttons a.nav-button span {
+nav .nav-buttons a span {
   display: none;
 }
 nav .nav-buttons .active {
