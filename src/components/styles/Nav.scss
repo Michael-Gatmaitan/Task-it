@@ -12,22 +12,28 @@ nav {
   margin-bottom: 35px;
   z-index: $idx_navigation;
 
+  // .logo-container {
+  //   display: flex;
+  //   gap: 12px;
+  //   align-items: center;
+
+  //   .logo {
+  //     width: 42px;
+  //     height: 42px;
+  //     background-color: #eee;
+  //     border-radius: 8px;
+  //   }
+
+  //   .taskit-text {
+  //     font-family: $inter;
+  //     font-size: 20px;
+  //     font-weight: 600;
+  //   }
+  // }
+
   .logo-container {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    .logo {
-      width: 42px;
+    img {
       height: 42px;
-      background-color: #eee;
-      border-radius: 8px;
-    }
-
-    .taskit-text {
-      font-family: $inter;
-      font-size: 20px;
-      font-weight: 600;
     }
   }
 
@@ -93,13 +99,19 @@ nav {
     padding: 15px 0;
     margin-bottom: 24px;
 
+    // .logo-container {
+    //   .logo {
+    //     width: 58px;
+    //     height: 58px;
+    //   }
+    //   .taskit-text {
+    //     font-size: 28px;
+    //   }
+    // }
+
     .logo-container {
-      .logo {
-        width: 58px;
-        height: 58px;
-      }
-      .taskit-text {
-        font-size: 28px;
+      img {
+        height: 50px;
       }
     }
 
@@ -120,6 +132,12 @@ nav {
     // .menu-container {
     //   display: none;
     // }
+
+    .logo-container {
+      img {
+        height: 58px;
+      }
+    }
 
     .nav-buttons {
       a {

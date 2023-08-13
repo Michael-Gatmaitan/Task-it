@@ -23,9 +23,7 @@ import {
 } from "../../framer-motion-variants";
 import CreateProjectModal from "./modals/CreateProjectModal";
 
-const ProjectCard = lazy(
-  () => import("./projects/projectCard/ProjectCard")
-);
+const ProjectCard = lazy(() => import("./projects/projectCard/ProjectCard"));
 
 const Projects: React.FC = () => {
   titleChanger({ title: "Projects" });
@@ -77,8 +75,8 @@ const Projects: React.FC = () => {
           {projects !== undefined
             ? projects.map((project, i) => (
                 <Suspense
-                  fallback={<CustomStyledSkeleton componentName='project' />}
                   key={i}
+                  fallback={<CustomStyledSkeleton componentName='project' />}
                 >
                   <ProjectCard
                     project={project}

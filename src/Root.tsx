@@ -13,7 +13,7 @@ import { getUserLoggedIn, getActiveUser } from "./slices/userSlice";
 // MUI Icons
 import {
   HomeRounded as HomeIcon,
-  SettingsRounded as SettingsIcon,
+  // SettingsRounded as SettingsIcon,
   DashboardRounded as ProjectsIcon,
   LogoDevRounded as ContactIcon,
   InfoRounded as AboutIcon,
@@ -52,11 +52,6 @@ const Root: React.FC = () => {
             text: "About",
             path: "about",
             Icon: AboutIcon,
-          },
-          {
-            text: "Settings",
-            path: "settings",
-            Icon: SettingsIcon,
           },
         ]
       : [

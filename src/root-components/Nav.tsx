@@ -17,6 +17,8 @@ import { useAppSelector } from "../app/hooks";
 
 import type { NavButtons } from "../types/types";
 
+import TaskitLogo from "../assets/logos/Taskit-logo-full-black.svg";
+
 interface NavProps {
   navBarButtons: NavButtons;
   toggleSidebar: boolean;
@@ -32,8 +34,11 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
     <nav>
       {/* Logo */}
       <div className='logo-container'>
-        <div className='logo'></div>
-        <div className='taskit-text'>Taskit</div>
+        {/* <div className='logo'></div>
+        <div className='taskit-text'>Taskit</div> */}
+        <Link to='/'>
+          <img src={TaskitLogo} alt='taskit-logo' />
+        </Link>
       </div>
 
       {/* Buttons */}

@@ -57,11 +57,6 @@ export const staggerAnimation = {
     },
     exit: {
       opacity: 0,
-      transition: {
-        duration: 2,
-        // staggerChildren: 0.1,
-        // ease: "easeInOut",
-      },
     },
   },
 

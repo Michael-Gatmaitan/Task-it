@@ -1,0 +1,52 @@
+.contact .more-info {
+  margin-top: 24px;
+}
+.contact .socmed-container {
+  margin-top: 24px;
+}
+.contact .socmed-container .socmeds {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.contact .socmed-container .socmeds img {
+  width: 50px;
+  height: 50px;
+}
+.contact .buymeacoffee {
+  margin-top: 24px;
+}
+.contact .buymeacoffee .buymeacoffee-button button {
+  margin-top: 12px;
+  background-color: #fd0;
+  padding: 12px 16px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  font-family: "Nunito sans", sans-serif;
+  color: #121212;
+  font-size: 15px;
+  font-weight: 600;
+}
+.contact .buymeacoffee .buymeacoffee-button button :hover {
+  background-color: #fcdb00;
+}
+.contact .my-portfolio {
+  margin-top: 24px;
+}
+.contact .my-portfolio .my-portfolio-link {
+  font-family: "Nunito sans", sans-serif;
+  color: #121212;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+@media (min-width: 700px) {
+  .contact .socmed-container .socmeds {
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: nowrap;
+  }
+}/*# sourceMappingURL=Contact.css.map */

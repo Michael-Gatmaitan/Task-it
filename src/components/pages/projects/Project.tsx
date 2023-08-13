@@ -17,8 +17,12 @@ import CustomStyledSkeleton from "../../CustomStyledSkeleton";
 
 // Framer motion
 import { motion } from "framer-motion";
-import { variantsForPages } from "../../../framer-motion-variants";
+import {
+  variantsForPages,
+  staggerAnimation,
+} from "../../../framer-motion-variants";
 import { getShowCardModal } from "../../../slices/stateSlice";
+import LoadingComponent from "../../loading-component";
 
 // State reducers
 // import { getShowSelectedCard } from "../../../slices/stateSlice";
@@ -105,7 +109,10 @@ const Project: React.FC = () => {
         <div className='date-created card-title'>{time}</div>
       </div>
 
-      <div
+      <motion.div
+        variants={staggerAnimation.container}
+        initial='hidden'
+        animate='show'
         className='boards-container'
         style={{
           gridTemplateColumns: `repeat(${
@@ -120,7 +127,11 @@ const Project: React.FC = () => {
                 key={i}
                 fallback={<CustomStyledSkeleton componentName='board' />}
               >
-                <Board board={board} projectID={parseInt(projectID)} />
+                <Board
+                  board={board}
+                  projectID={parseInt(projectID)}
+                  variantItem={staggerAnimation.item}
+                />
               </Suspense>
             ))
           : null}
@@ -144,7 +155,7 @@ const Project: React.FC = () => {
             Add Board
           </Button>
         )}
-      </div>
+      </motion.div>
 
       {/* {showSelectedCard ? (
         <Suspense fallback={<div>HAHA</div>}>
@@ -153,7 +164,9 @@ const Project: React.FC = () => {
       ) : null} */}
 
       {showCardModal ? (
-        <Suspense fallback={<div>HAHA</div>}>
+        <Suspense
+          fallback={<LoadingComponent loadingMessage='Loading card...' />}
+        >
           <SelectedCardModal />
         </Suspense>
       ) : null}

@@ -1,0 +1,58 @@
+.about .about-description {
+  max-width: 650px;
+  margin-top: 12px;
+}
+.about .struct-and-func {
+  margin-top: 24px;
+}
+.about .struct-and-func .saf-description {
+  margin-top: 12px;
+  max-width: 650px;
+}
+.about .techs-tools {
+  margin-top: 24px;
+}
+.about .techs-tools .techs-card-container {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 700px) {
+  .about .techs-tools .techs-card-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .about .techs-tools .techs-card-container {
+    grid-template-columns: repeat(auto-fill, 200px);
+  }
+}
+.about .visit-gh-repo {
+  margin-top: 24px;
+}
+.about .visit-gh-repo .visit-gh-repo-button {
+  width: -moz-max-content;
+  width: max-content;
+  display: flex;
+  padding: 0;
+  background-color: #000;
+  border-radius: 6px;
+  margin-top: 12px;
+}
+.about .visit-gh-repo .visit-gh-repo-button .btn-gh-logo {
+  padding: 8px;
+  height: 0;
+}
+.about .visit-gh-repo .visit-gh-repo-button .btn-gh-logo img {
+  width: 35px;
+  height: 35px;
+  filter: invert(100%);
+}
+.about .visit-gh-repo .visit-gh-repo-button .btn-gh-txt {
+  padding: 16px 23px 16px 0;
+  font-family: "Inter", sans-serif;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}/*# sourceMappingURL=About.css.map */

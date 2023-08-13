@@ -14,6 +14,8 @@ import CustomStyledSkeleton from "../../../CustomStyledSkeleton";
 import BoardOptions from "./BoardOptions";
 import DeleteModal from "../../modals/DeleteModal";
 
+import { motion, Variants } from "framer-motion";
+
 import "../../../styles/projects/boards/Board.css";
 
 const Card = lazy(() => import("./cards/Card"));
@@ -21,10 +23,11 @@ const Card = lazy(() => import("./cards/Card"));
 interface BoardProps {
   board: BoardType;
   projectID: number;
+  variantItem: Variants;
 }
 
 const Board: React.FC<BoardProps> = (props) => {
-  const { board, projectID } = props;
+  const { board, projectID, variantItem } = props;
 
   const dispatch = useAppDispatch();
 
@@ -58,7 +61,7 @@ const Board: React.FC<BoardProps> = (props) => {
   const deleteBoardFunc = () => dispatch(deleteBoard({ projectID, board }));
 
   return (
-    <div className='board bordered-container'>
+    <motion.div variants={variantItem} className='board bordered-container'>
       <DeleteModal
         showDeleteModal={showDeleteBoard}
         setShowDeleteModal={setShowDeleteBoard}
@@ -129,7 +132,7 @@ const Board: React.FC<BoardProps> = (props) => {
           Add card
         </Button>
       )}
-    </div>
+    </motion.div>
   );
 };
 

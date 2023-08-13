@@ -10,21 +10,8 @@ nav {
   margin-bottom: 35px;
   z-index: 100;
 }
-nav .logo-container {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-nav .logo-container .logo {
-  width: 42px;
+nav .logo-container img {
   height: 42px;
-  background-color: #eee;
-  border-radius: 8px;
-}
-nav .logo-container .taskit-text {
-  font-family: "Inter", sans-serif;
-  font-size: 20px;
-  font-weight: 600;
 }
 nav .nav-buttons {
   gap: 12px;
@@ -81,12 +68,8 @@ nav .get-started-button-container {
     padding: 15px 0;
     margin-bottom: 24px;
   }
-  nav .logo-container .logo {
-    width: 58px;
-    height: 58px;
-  }
-  nav .logo-container .taskit-text {
-    font-size: 28px;
+  nav .logo-container img {
+    height: 50px;
   }
   nav .nav-buttons {
     display: flex;
@@ -99,6 +82,9 @@ nav .get-started-button-container {
   }
 }
 @media (min-width: 1024px) {
+  nav .logo-container img {
+    height: 58px;
+  }
   nav .nav-buttons a span {
     display: block;
   }

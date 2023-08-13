@@ -16,7 +16,7 @@ const Home = lazy(() => import("./components/pages/Home"));
 const About = lazy(() => import("./components/pages/About"));
 const Page404 = lazy(() => import("./components/pages/404"));
 const Contact = lazy(() => import("./components/pages/Contact"));
-const Settings = lazy(() => import("./components/pages/Settings"));
+// const Settings = lazy(() => import("./components/pages/Settings"));
 const GetStarted = lazy(() => import("./components/pages/GetStarted"));
 const Projects = lazy(() => import("./components/pages/Projects"));
 // v
@@ -40,11 +40,11 @@ export const AnimatePresenceRoutes: React.FC = () => {
     <GetStarted />
   );
 
-  const SettingsPage = loggedIn ? (
-    <Settings />
-  ) : (
-    <Navigate replace to={"/get-started"} />
-  );
+  // const SettingsPage = loggedIn ? (
+  //   <Settings />
+  // ) : (
+  //   <Navigate replace to={"/get-started"} />
+  // );
 
   const ProjectsPage = loggedIn ? (
     <Projects />
@@ -66,7 +66,7 @@ export const AnimatePresenceRoutes: React.FC = () => {
           <Route path='get-started' element={GetStartedPage} />
           <Route path='about' element={<About />} />
           <Route path='contact' element={<Contact />} />
-          <Route path='settings' element={SettingsPage} />
+          {/* <Route path='settings' element={SettingsPage} /> */}
 
           {/* Dynamic routing for projects */}
 

@@ -1,0 +1,73 @@
+@import "./mixins";
+
+$innerMargin: 12px;
+$outerMargin: 24px;
+
+.contact {
+  .more-info {
+    margin-top: $outerMargin;
+  }
+
+  .socmed-container {
+    margin-top: $outerMargin;
+
+    .socmeds {
+      margin-top: $innerMargin;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      // .socmed-link-tag
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  .buymeacoffee {
+    margin-top: $outerMargin;
+
+    .buymeacoffee-button {
+      button {
+        margin-top: $innerMargin;
+        background-color: #fd0;
+        padding: 12px 16px;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        @include fontProps($nunito, #121212, 15px, 600);
+
+        :hover {
+          background-color: darken(#fd0, 0.5);
+        }
+      }
+    }
+  }
+
+  .my-portfolio {
+    margin-top: $outerMargin;
+
+    .my-portfolio-link {
+      @include fontProps($nunito, #121212, 16px, 600);
+      margin-top: $innerMargin;
+    }
+  }
+
+  @include tablet {
+    .socmed-container {
+      .socmeds {
+        justify-content: flex-start;
+        gap: 20px;
+        flex-wrap: nowrap;
+      }
+    }
+  }
+
+  @include desktop {
+    $outerMargin: 100px;
+    $innerMargin: 120px;
+  }
+}

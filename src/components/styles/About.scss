@@ -1,0 +1,68 @@
+@import "./mixins";
+
+$innerMargin: 12px;
+$outerMargin: 24px;
+
+.about {
+  .about-description {
+    max-width: 650px;
+    margin-top: $innerMargin;
+  }
+
+  .struct-and-func {
+    margin-top: $outerMargin;
+
+    .saf-description {
+      margin-top: $innerMargin;
+      max-width: 650px;
+    }
+  }
+
+  .techs-tools {
+    margin-top: $outerMargin;
+
+    .techs-card-container {
+      margin-top: $innerMargin;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+
+      @include tablet {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      @include desktop {
+        grid-template-columns: repeat(auto-fill, 200px);
+      }
+    }
+  }
+
+  .visit-gh-repo {
+    margin-top: $outerMargin;
+
+    .visit-gh-repo-button {
+      width: max-content;
+      display: flex;
+      padding: 0;
+      background-color: #000;
+      border-radius: 6px;
+      margin-top: $innerMargin;
+
+      .btn-gh-logo {
+        padding: 8px;
+        height: 0;
+
+        img {
+          width: 35px;
+          height: 35px;
+          filter: invert(100%);
+        }
+      }
+
+      .btn-gh-txt {
+        padding: 16px 23px 16px 0;
+        @include fontProps($inter, #fff, 16px, 600);
+      }
+    }
+  }
+}

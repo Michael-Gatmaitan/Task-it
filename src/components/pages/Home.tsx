@@ -9,6 +9,10 @@ import { titleChanger } from "../../app/titleChanger";
 import { motion } from "framer-motion";
 import { variantsForPages } from "../../framer-motion-variants";
 
+import ProjectsSVG from "../../assets/presents/projects-present.svg";
+import BoardsSVG from "../../assets/presents/boards-present.svg";
+import CardsSVG from "../../assets/presents/cards-present.svg";
+
 const Home: React.FC = () => {
   titleChanger({ title: "Home" });
 
@@ -37,18 +41,21 @@ const Home: React.FC = () => {
       cardDescription: `This will act as your Project's parent component, where
         Boards and Cards are placed. Enjoy creating projects by using
         Taskit as your project organizer.`,
+      svg: ProjectsSVG,
     },
     {
       cardTitle: "Boards",
       cardDescription: `Boards will act as container of your cards, boards can have a 
         label like “On going”, “Processing” , “Done”. Just like a Kanban 
         board, this will make you see the progress.`,
+      svg: BoardsSVG,
     },
     {
       cardTitle: "Cards",
       cardDescription: `Boards will act as container of your cards, boards can have a 
         label like “On going”, “Processing” , “Done”. Just like a Kanban board, 
         this will make you see the progress.`,
+      svg: CardsSVG,
     },
   ];
 
@@ -117,7 +124,9 @@ const Home: React.FC = () => {
       <div className='cards'>
         {cardValues.map((card, i) => (
           <div className='card-container bordered-container' key={i}>
-            <div className='card-presenter bordered-container'></div>
+            <div className='card-presenter bordered-container'>
+              <img src={card.svg} alt={card.cardTitle} />
+            </div>
 
             <div className='card-info'>
               <div className='home-card-title header2'>{card.cardTitle}</div>

@@ -97,6 +97,7 @@
         .card-presenter {
           margin-bottom: 24px;
           height: 150px;
+          @include flexCenter;
         }
       }
     }
