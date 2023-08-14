@@ -54,12 +54,19 @@
 }
 .home .cards .card-container {
   padding: 12px 12px 30px 12px;
+  min-width: calc((100% - 40px) / 3);
 }
 .home .cards .card-container .card-presenter {
   width: 100%;
   border-radius: 8px !important;
-  height: 80px;
+  padding: 10px;
   margin-bottom: 12px;
+}
+.home .cards .card-container .card-presenter img {
+  min-height: 100px;
+  width: auto;
+  background-color: #f00;
+  overflow: hidden;
 }
 .home .cards .card-container .card-info {
   display: grid;
@@ -74,10 +81,10 @@
   }
   .home .cards .card-container {
     padding: 18px 18px 30px 18px;
+    min-width: calc((100% - 40px) / 3);
   }
   .home .cards .card-container .card-presenter {
     margin-bottom: 24px;
-    height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;

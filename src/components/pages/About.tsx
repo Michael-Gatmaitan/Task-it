@@ -131,6 +131,7 @@ const About: React.FC = () => {
           {techsAndTools.map((tech) => (
             <Suspense fallback={<div>Ediwow</div>}>
               <TechCard
+                variantItem={staggerAnimation.item}
                 imgSrc={tech.imgSrc}
                 techTitle={tech.title}
                 techLabel={tech.label}

@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import "../../styles/about/TechCard.css";
 
 interface TechCardProps {
@@ -7,6 +7,7 @@ interface TechCardProps {
   techTitle: string;
   techLabel: string;
   techLink: string;
+  variantItem: Variants
 }
 
 const TechCard: React.FC<TechCardProps> = (props: TechCardProps) => {

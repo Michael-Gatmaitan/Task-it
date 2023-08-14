@@ -125,7 +125,7 @@ const Home: React.FC = () => {
         {cardValues.map((card, i) => (
           <div className='card-container bordered-container' key={i}>
             <div className='card-presenter bordered-container'>
-              <img src={card.svg} alt={card.cardTitle} />
+              <img src={card.svg} alt={card.cardTitle} loading='lazy' />
             </div>
 
             <div className='card-info'>

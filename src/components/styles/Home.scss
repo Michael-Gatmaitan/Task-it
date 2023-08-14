@@ -70,13 +70,23 @@
 
     .card-container {
       padding: 12px 12px 30px 12px;
+      min-width: calc((100% - 40px) / 3);
 
       .card-presenter {
         width: 100%;
         // Change height base on input image
         border-radius: 8px !important;
-        height: 80px;
+        padding: 10px;
+        // height: 80px;
         margin-bottom: 12px;
+
+        img {
+          min-height: 100px;
+          width: auto;
+          background-color: #f00;
+          overflow: hidden;
+          // max-width: 90%;
+        }
       }
 
       .card-info {
@@ -93,10 +103,11 @@
 
       .card-container {
         padding: 18px 18px 30px 18px;
+        min-width: calc((100% - 40px) / 3);
 
         .card-presenter {
           margin-bottom: 24px;
-          height: 150px;
+          // height: 150px;
           @include flexCenter;
         }
       }
