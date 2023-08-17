@@ -77,10 +77,24 @@ const CreateAccount: React.FC = () => {
 
   useEffect(() => {
     // Disable 'create acount' button if 1 or both of input is empty.
-    setInvalidInput(
-      deferredUsernameValue.trim() === "" ||
-        (usernameExist && (!isImageLinkValid || selectedImage === ""))
-    );
+
+    function unableToCreateAccount(): boolean {
+      if (deferredUsernameValue.trim() === "" || usernameExist) {
+        return true;
+      }
+
+      if (selectedImage !== "") {
+        return false;
+      } else if (deferredImageLinkValue.trim() === "") {
+        return true;
+      } else if (!isImageLinkValid) {
+        return true;
+      }
+
+      return false;
+    }
+
+    setInvalidInput(unableToCreateAccount());
   }, [
     deferredUsernameValue,
     deferredImageLinkValue,

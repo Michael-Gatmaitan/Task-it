@@ -4,6 +4,7 @@ import React, {
   useDeferredValue,
   useCallback,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Box, TextField } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
 import { useAppDispatch } from "../../../app/hooks";
@@ -32,6 +33,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   } = props;
 
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   // Deferred value for editUsernameValue state.
   const [editUsernameValue, setEditUsernameValue] = useState<string>("");
@@ -81,7 +84,24 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     // setUserInputError(
     //   usernameVal.trim() === "" || !isImageLinkValid || imgVal.trim() === ""
     // );
-    setUserInputError(!isImageLinkValid);
+    // setUserInputError(!isImageLinkValid);
+    function unableToEdit(): boolean {
+      if (deferredEditUsernameValue === username) {
+        return true;
+      } else if (deferredEditUsernameValue.trim() === "") {
+        return true;
+      }
+
+      if (profileImageLink === deferredEditImageLinkValue) {
+        return true;
+      } else if (isImageLinkValid) {
+        return false;
+      }
+
+      return false;
+    }
+
+    setUserInputError(unableToEdit());
 
     setDisablePreviewImage(imgVal === "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -230,7 +250,10 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
         <Button
           variant='outlined'
           color='error'
-          onClick={() => dispatch(logoutUser())}
+          onClick={() => {
+            dispatch(logoutUser());
+            navigate("/get-started");
+          }}
         >
           Log out
         </Button>

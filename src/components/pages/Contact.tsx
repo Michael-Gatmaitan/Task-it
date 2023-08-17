@@ -63,7 +63,7 @@ const Contact: React.FC = () => {
       initial='hidden'
       animate='show'
     >
-      <motion.div variants={staggerAnimation.item} className='header2'>
+      <motion.div variants={staggerAnimation.item} className='header1'>
         Contact
       </motion.div>
 
