@@ -26,6 +26,7 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => {
       variants={staggerAnimation.container}
       initial='hidden'
       animate='show'
+      exit='exit'
       className='sidebar'
     >
       <ProfileRibbon platform='mobile' />

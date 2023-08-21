@@ -1,0 +1,26 @@
+{
+  "short_name": "Task-it",
+  "name": "Task it, a personal project organizer.",
+  "description": "A Web-based personal project organizer developed using ReactJS and designed using Figma by Michael Gatmaitan.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/z-icon"
+    },
+    {
+      "src": "taskit192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "taskit512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#5b87f8",
+  "background_color": "#0f1975"
+}

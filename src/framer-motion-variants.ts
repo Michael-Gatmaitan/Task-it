@@ -57,6 +57,9 @@ export const staggerAnimation = {
     },
     exit: {
       opacity: 0,
+      transition: {
+        duration: 2,
+      },
     },
   },
 
