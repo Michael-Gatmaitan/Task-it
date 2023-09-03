@@ -129,7 +129,7 @@ const About: React.FC = () => {
           className='techs-card-container'
         >
           {techsAndTools.map((tech) => (
-            <Suspense fallback={<div>Ediwow</div>}>
+            <Suspense fallback={<div>Ediwow</div>} key={tech.key}>
               <TechCard
                 variantItem={staggerAnimation.item}
                 imgSrc={tech.imgSrc}
